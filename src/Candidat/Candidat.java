@@ -102,5 +102,4 @@ public class Candidat {
 		dir = createDirectory("Candidats a contacter") ;
 		fic = createFile(dir.getAbsolutePath()+"\\"+nom+" "+prenom+".txt") ;
 	}
-
 }
