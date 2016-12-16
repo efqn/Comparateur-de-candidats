@@ -9,12 +9,4 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 		for(int i=0; i<4; i++)
 			this.values[i] = s[i] ;
 	}
-
-	public String[] getValues() {
-		return values;
-	}
-
-	public void setValues(String[] values) {
-		this.values = values;
-	}
 }

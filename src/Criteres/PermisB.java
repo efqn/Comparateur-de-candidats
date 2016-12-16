@@ -8,12 +8,4 @@ public class PermisB extends CritereFaible implements ScoreChoixSimple {
 	public PermisB(boolean value) {
 		this.value = value ;
 	}
-
-	public boolean isValue() {
-		return value;
-	}
-
-	public void setValue(boolean value) {
-		this.value = value;
-	}
 }
