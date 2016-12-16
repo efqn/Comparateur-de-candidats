@@ -8,4 +8,12 @@ public class Region extends CritereFaible implements ScoreChoixSimple {
 	public Region(String s) {
 		this.value = s ;
 	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 }
