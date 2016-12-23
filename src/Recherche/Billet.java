@@ -1,15 +1,15 @@
 package Recherche;
 
+import java.util.ArrayList;
 import Candidat.Candidat;
 import Criteres.Critere;
 
 public class Billet {
 	private Candidat candidat ;
-	private Critere[] criteres ;		//Arraylist ?
+	private ArrayList<Critere> criteres = new ArrayList<>(10) ;
 	
-	public Billet(Candidat candidat, Critere criteres) {
+	public Billet(Candidat candidat, ArrayList<Critere> criteres) {
 		this.candidat = candidat ;
-		for(int i=0; i<8; i++)
-			this.criteres[i] = criteres ;
+		this.criteres.addAll(criteres) ;
 	}
 }

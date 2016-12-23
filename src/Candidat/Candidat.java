@@ -2,9 +2,9 @@ package Candidat ;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import Criteres.Critere;
 
@@ -13,16 +13,14 @@ public class Candidat {
 	private String prenom ;
 	private String mail ;
 	private String telephone ;
-	private Critere[] criteres ;
+	private ArrayList<Critere> criteres = new ArrayList<>(10) ;							//a mettre dans billet? doublons
 	
-	public Candidat(String nom, String prenom, String mail, String tel) {
+	public Candidat(String nom, String prenom, String mail, String tel, ArrayList<Critere> criteres) {
 		this.nom = nom ;
 		this.prenom = prenom ;
 		this.mail = mail ;
 		this.telephone = tel ;
-		
-		/*for(int i=0; i<9; i++)
-			this.criteres[i] = criteres[i] ;*/
+		this.criteres.addAll(criteres) ;
 	}
 	
 	/**
