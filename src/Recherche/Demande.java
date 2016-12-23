@@ -1,7 +1,6 @@
 package Recherche;
 
 import java.util.ArrayList;
-
 import Criteres.Critere;
 
 public class Demande {
@@ -27,6 +26,5 @@ public class Demande {
 		 *  - fin de la recherche
 		 * 
 		 */
-		
 	}
 }

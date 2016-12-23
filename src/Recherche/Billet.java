@@ -1,7 +1,6 @@
 package Recherche;
 
 import java.util.ArrayList;
-
 import Candidat.Candidat;
 import Criteres.Critere;
 
