@@ -6,4 +6,12 @@ public class Filiere extends CritereFort {
 	public Filiere(String s) {
 		this.value = s ;
 	}
+	
+	public String getContent() {
+		return value ;
+	}
+	
+	public String toString() {
+		return value ;
+	}
 }

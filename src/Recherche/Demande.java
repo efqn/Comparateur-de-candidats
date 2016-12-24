@@ -1,6 +1,7 @@
 package Recherche;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import Criteres.Critere;
 
@@ -16,8 +17,9 @@ public class Demande {
 	 * Cette fonction ira rechercher les meilleurs resultats dans la base de donnees
 	 * Le nombre de resultats est limite a 10
 	 */
-	public void rechercheResultats() {
-		ArrayList<Billet> tmp = new ArrayList<>() ;
+	public void rechercheResultats(ArrayList<Billet> all) {
+		ArrayList<Billet> tmp = all ;
+		Billet min ;
 		/*
 		 * - Recuperer tous les candidats correspondants aux criteres forts
 		 * - Remplir 'resultats' avec les 10 premiers trouves
@@ -28,5 +30,35 @@ public class Demande {
 		 * 
 		 */
 		
+		Iterator iter = tmp.iterator() ;
+		while(iter.hasNext()) {
+			this.resultats.add((Billet)iter.next()) ;
+		}
 	}
+
+	public ArrayList<Critere> getRecherche() {
+		return recherche;
+	}
+
+	public void setRecherche(ArrayList<Critere> recherche) {
+		this.recherche = recherche;
+	}
+
+	public ArrayList<Billet> getResultats() {
+		return resultats;
+	}
+
+	public void setResultats(ArrayList<Billet> resultats) {
+		this.resultats = resultats;
+	}
+	
+	public String toString() {
+		String result = "" ;
+		Iterator iter = this.resultats.iterator() ;
+		while(iter.hasNext()) {
+			result = result + iter.next() + "\n";
+		}
+		return result ;
+	}
+	
 }
