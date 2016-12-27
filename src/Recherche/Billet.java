@@ -27,7 +27,7 @@ public class Billet implements ScoreFinal {
 		this.candidat = candidat;
 	}
 	
-	public int getScore() {
+	public int getScore(ArrayList<Critere> criteres) {
 		return this.score ;
 	}
 	
@@ -46,10 +46,35 @@ public class Billet implements ScoreFinal {
 		return "Billet [candidat=" + candidat + ", criteres=" + criteres + "]";
 	}
 
-	/*@Override
-	public int getScore(int borneInf, int borneSup) {
+	/////////////////////////////////////////////////////////////////wtf
+	@Override
+	public int getScore(boolean flag, ArrayList<String> reference) {
 		// TODO Auto-generated method stub
 		return 0;
-	}*/
-	
+	}
+
+	@Override
+	public int getScore(boolean flag, String s) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getScore(boolean flag, int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getScore(boolean flag, int borneInf, int borneSup) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getScore() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	/////////////////////////////////////////////////////////////////////////
 }

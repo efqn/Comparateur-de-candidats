@@ -20,10 +20,20 @@ public class Region extends CritereFaible implements ScoreChoixSimple {
 
 	/**
 	 * Calcul du score :
-	 * 		si value == s, 100
-	 * 		sinon 0
+	 * 
+	 * Si ce critere n'a pas d'importance, le score sera de 100.
+	 * 
+	 * Sinon :
+	 * 		- 100 si s == value
+	 * 		- 0   sinon
+	 * 
 	 */
-	public int getScore(String s) {
-		return this.value.equals(s)? 100 : 0 ;
+	public int getScore(boolean flag, String s) {
+		int baseScore = 100 ;
+		
+		if( flag )
+			return this.value.equals(s)? baseScore : 0 ;
+		else
+			return baseScore ;
 	}
 }

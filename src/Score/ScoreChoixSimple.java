@@ -1,5 +1,5 @@
 package Score;
 
-public interface ScoreChoixSimple {
-	public int getScore(String s) ;
+public interface ScoreChoixSimple{
+	public int getScore(boolean flag, String s) ;
 }

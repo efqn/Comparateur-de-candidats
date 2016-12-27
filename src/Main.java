@@ -14,9 +14,12 @@ public class Main {
 		criteres.add(new Age(String.valueOf(i))) ;
 		criteres.add(new PermisB(true)) ;
 		criteres.add(new Region("BDR")) ;
-		criteres.add(new NiveauEtude("Master")) ;
+		criteres.add(new NiveauEtude(5)) ;
 		criteres.add(new ExperiencePro(3)) ;
-		criteres.add(new Langue("Anglais")) ;
+		ArrayList<String> langues = new ArrayList<>() ;
+		langues.add("Anglais") ;
+		langues.add("Espagnol") ;
+		criteres.add(new Langue(langues)) ;
 	}
 	
 	public static void main(String[]args) throws FileNotFoundException {
@@ -57,10 +60,41 @@ public class Main {
 		
 		System.out.println("\ntest score intervalle") ;
 		Age age = new Age("23") ;
-		System.out.println(age.getScore(25, 30));
+		System.out.println(age.getScore(true, 25, 30));
 		
-		System.out.println("\ntest score simple") ;
+		System.out.println("\ntest score simple1") ;
 		Region PACA = new Region("PACA") ;
-		System.out.println(PACA.getScore("PACA")) ;
+		System.out.println(PACA.getScore(true, "PACA")) ;
+		
+		System.out.println("\ntest score simple2") ;
+		PermisB pB = new PermisB(false) ;
+		System.out.println(PACA.getScore(true, "")) ;
+		
+		System.out.println("\ntest score simple pond") ;
+		NiveauEtude lvlE = new NiveauEtude(0) ;
+		System.out.println(lvlE.getScore(true, 7)) ;
+		
+		System.out.println("\ntest score mult") ;
+		ArrayList<String> langues = new ArrayList<>() ;
+		langues.add("Anglais") ;
+		langues.add("Espagnol") ;
+		ArrayList<String> ref = new ArrayList<>() ;
+		ref.add("Anglais") ;
+		ref.add("caca") ;
+		ref.add("caccaa") ;
+		ref.add("caccaaa") ;
+		ref.add("cacfaa") ;
+		ref.add("cacga") ;
+		ref.add("chsa") ;
+		ref.add("aza") ;
+		ref.add("azz") ;
+		ref.add("aze") ;
+		ref.add("azr") ;
+		ref.add("azt") ;
+		
+		Langue langue = new Langue(langues) ;
+		System.out.println(langue.getScore(true, ref)) ;
+		System.out.println(ref);
+		
 	}
 }

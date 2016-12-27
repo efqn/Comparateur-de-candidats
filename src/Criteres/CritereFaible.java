@@ -10,5 +10,9 @@ public class CritereFaible extends Critere {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void identifier() {
+		
+	}
 
 }

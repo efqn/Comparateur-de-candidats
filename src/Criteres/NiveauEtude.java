@@ -20,11 +20,17 @@ public class NiveauEtude extends CritereFaible implements ScoreChoixSimplePond {
 
 	/**
 	 * Calcul du score :
-	 * 	
+	 * 			baseScore - ecart*facteur
+	 * 
+	 * L'ecart peut etre de 0, 1, 2, 3, 5 ou 7 (bac+2, +3, +5 ou +7).
+	 * Si l'ecart est positif (candidat surqualifie), il n'y aura pas de points bonus. 
 	 */
-	public int getScore(int i) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getScore(boolean flag, int i) {
+		int baseScore = 100 ;
+		int facteur = 10 ;
+		
+		if( flag )
+			baseScore = baseScore - (i - this.value)*facteur ;
+		return baseScore ;
 	}
-
 }

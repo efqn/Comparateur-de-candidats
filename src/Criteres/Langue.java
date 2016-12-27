@@ -1,19 +1,50 @@
 package Criteres;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import Score.ScoreChoixMult;
 
 public class Langue extends CritereFaible implements ScoreChoixMult {
-	private String values ;						//a voir si on fait un tableau de bool ou comme ca
+	private ArrayList<String> values = new ArrayList<>() ;
 	
-	public Langue(String s) {
-			this.values = s ;
+	public Langue(ArrayList<String> langues) {
+			this.values.addAll(langues) ;
 	}
 	
 	public String getContent() {
-		return values ;
+		Iterator iter = this.values.iterator() ;
+		String res = "" ;
+		String current ;
+		
+		while( iter.hasNext() ) {
+			current = iter.next()+"/" ;
+			res = res + current ;
+		}
+		return res ;
 	}
 	
-	public String toString() {
-		return values ;
+	/**
+	 * Calcul du score :
+	 * 		baseScore - ecart
+	 * 
+	 * L'ecart sera calcule en fonction du nombre de langue non presentes par rapport a la reference.
+	 * Le baseScore sera divise par le nombre de langue dans la reference. Si l'ecart est de 0, le candidat aura 'toute les parts' du baseScore.
+	 * Sinon, une 'part' sera perdue pour chaque langue non presente
+	 */
+	public int getScore(boolean flag, ArrayList<String> reference) {
+		int baseScore = 100 ;
+		
+		if( flag ) {
+			int onePart = baseScore/reference.size() ;
+			Iterator iter = reference.iterator() ;
+			
+			while( iter.hasNext() ) {
+				String current = (String)iter.next() ;
+				if( !this.values.contains(current) ) 
+					baseScore = baseScore - onePart ;
+			}
+		}	
+		return baseScore ;
 	}
 }
