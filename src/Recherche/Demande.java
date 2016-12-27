@@ -8,9 +8,20 @@ import Criteres.Critere;
 public class Demande {
 	private ArrayList<Critere> recherche = new ArrayList<>(10) ;
 	private ArrayList<Billet> resultats = new ArrayList<>(10) ;
+	private boolean[] flags ;
 	
-	public Demande(ArrayList<Critere> criteres) {
+	/**
+	 * 
+	 * @param criteres : Criteres de references
+	 * 					---> dans l'ordre : Filiere, type de contrat, Age, PermisB, Region, NiveauEtude, ExperiencePro, Langue
+	 * @param flags    : Criteres Faibles a prendre en compte
+	 * 					---> dans l'ordre : Age, PermisB, Region, NiveauEtude, ExperiencePro, Langue
+	 */
+	public Demande(ArrayList<Critere> criteres, boolean[]flags) {
 			this.recherche.addAll(criteres) ;
+			this.flags = new boolean[this.recherche.size()-2] ;							// les -2 correspond aux criteres forts, qui ne sont pas pris en compte ici
+			for(int i=0; i<this.flags.length; i++)
+				this.flags[i] = flags[i] ;
 	}
 	
 	/**

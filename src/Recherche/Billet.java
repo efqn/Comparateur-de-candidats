@@ -1,13 +1,15 @@
 package Recherche;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import Candidat.Candidat;
-import Criteres.Critere;
+import Criteres.*;
 import Score.ScoreFinal;
 
 public class Billet implements ScoreFinal {
 	private Candidat candidat ;
-	private ArrayList<Critere> criteres = new ArrayList<>(10) ;
+	private ArrayList<Critere> criteres = new ArrayList<>(8) ;
 	private int score = 0;
 	
 	public Billet(Candidat candidat, ArrayList<Critere> criteres) {
@@ -15,20 +17,49 @@ public class Billet implements ScoreFinal {
 		this.criteres.addAll(criteres) ;
 	}
 	
+	/**
+	 * 
+	 * @param criteres 	: Criteres a comparer avec la collection
+	 * @param flags		: tableau de boolean pour savoir si il faut prendre en compte le critere concerne
+
+	 * @return	Score final
+	 */
+	public int getScore(ArrayList<Critere> criteres, boolean[] flags) {
+		Iterator iter = this.criteres.iterator() ;
+		Iterator iter2 = criteres.iterator() ;
+		
+		//Les 2 premiers champs d'une arraylist de criteres seront des criteres forts. Ils ne sont pas utilises pour le calcul
+		for(int i=0; i<2; i++)
+			iter.next() ;
+		for(int i=0; i<2; i++)
+			iter2.next() ;
+		
+		CritereFaible current ;														//critere du billet
+		CritereFaible current2 ;													//critere de reference
+		int i = 0 ;
+		while( iter.hasNext() && iter2.hasNext() ) {
+			current = (CritereFaible)iter.next() ;
+			current2 = (CritereFaible)iter2.next();
+			System.out.println("Calcul score :");
+			System.out.println("Reference : " + current2) ;
+			System.out.println("current : "+ current) ;
+			System.out.println("Score current : "+ current.getScore(current2, flags[i]));
+			this.score = this.score + current.getScore(current2, flags[i++]) ;
+		}
+		
+		return this.score ;
+	}
+	
 	public void afficher() {
 		System.out.println("");
 	}
-
+	
 	public Candidat getCandidat() {
 		return candidat;
 	}
 
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
-	}
-	
-	public int getScore(ArrayList<Critere> criteres) {
-		return this.score ;
 	}
 	
 	/// a voir 
@@ -67,12 +98,6 @@ public class Billet implements ScoreFinal {
 
 	@Override
 	public int getScore(boolean flag, int borneInf, int borneSup) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getScore() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

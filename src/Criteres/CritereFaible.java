@@ -1,5 +1,7 @@
 package Criteres;
 
+import java.util.ArrayList;
+
 public class CritereFaible extends Critere {
 
 	public CritereFaible(){
@@ -11,8 +13,7 @@ public class CritereFaible extends Critere {
 		return null;
 	}
 	
-	public void identifier() {
-		
+	public int getScore(CritereFaible critereF, boolean flag) {
+		return 0 ;
 	}
-
 }

@@ -1,23 +1,30 @@
 package Criteres;
 
+import java.util.ArrayList;
+
 import Score.ScoreIntervalle;
 
 public class Age extends CritereFaible implements ScoreIntervalle {
-	private String value ;
+	private int value ;
+	private int borneInf ;
+	private int borneSup ;
 	private int score ;
 	
-	public Age(String s) {
-		this.value = s ;
+	//Constructeur cote client
+	public Age(String age) {
+		this.value = Integer.parseInt(age) ;
+		this.borneInf = value ;
+		this.borneSup = value ;
 	}
 	
-	public String getContent() {
-		return value ;
-	}
-	
-	public String toString() {
-		return value ;
-	}
 
+	//Constructeur cote recruteur
+	public Age(String borneInf, String borneSup) {
+		this.borneInf = Integer.parseInt(borneInf) ;
+		this.borneSup = Integer.parseInt(borneSup) ;
+		this.value = -1 ;
+	}
+	
 	/**
 	 * Calcul du score :
 	 * 		 baseScore - (ecart avec les bornes)
@@ -26,16 +33,15 @@ public class Age extends CritereFaible implements ScoreIntervalle {
 	 * 		--> si ecartMax est atteint, le score devient 0
 	 */
 	public int getScore(boolean flag, int borneInf, int borneSup) {
-		int value = Integer.parseInt(this.value) ;
 		int baseScore = 100 ;
 		int facteur = 10 ;
 		int ecartMax = 10 ;
 
 		if( flag ) {
-			if( value > borneSup && value < borneInf ) {
+			if( this.value > borneSup || this.value < borneInf ) {
 				int res = Math.abs(value);
-				if( value < borneInf )
-					res = borneInf - value ;
+				if( this.value < borneInf )
+					res = borneInf - this.value ;
 				else
 					res = value - borneSup ;
 				
@@ -44,5 +50,44 @@ public class Age extends CritereFaible implements ScoreIntervalle {
 		}
 		
 		return baseScore ;
+	}
+	
+	public int getScore(CritereFaible critere, boolean flag) {
+		Age age = (Age)critere ;
+		return this.getScore(flag, age.getBorneInf(), age.getBorneSup()) ;
+	}
+	
+	
+	//Valeur cote client. Pour avoir la 'fourchette' du cote du recruteur, utiliser les get/set specifiques
+	public String getContent() {
+		return String.valueOf(this.value) ;
+	}
+	
+	public int getValue() {
+		return this.value ;
+	}
+	
+	public int getBorneInf() {
+		return this.borneInf ;
+	}
+	
+	public int getBorneSup() {
+		return this.borneSup ;
+	}
+	
+	public void setBorneInf(int i) {
+		this.borneInf = i ;
+	}
+	
+	public void setBorneSup(int i) {
+		this.borneSup = i ;
+	}
+	
+	public void setValue(int i) {
+		this.value = i ;
+	}
+	
+	public String toString() {
+		return "Value = "+String.valueOf(this.value)+", BorneInf = "+this.borneInf+", BorneSup = "+this.borneSup ;
 	}
 }
