@@ -11,19 +11,7 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	public Langue(ArrayList<String> langues) {
 			this.values.addAll(langues) ;
 	}
-	
-	public String getContent() {
-		Iterator iter = this.values.iterator() ;
-		String res = "" ;
-		String current ;
 		
-		while( iter.hasNext() ) {
-			current = iter.next()+"/" ;
-			res = res + current ;
-		}
-		return res ;
-	}
-	
 	/**
 	 * Calcul du score :
 	 * 		baseScore - ecart
@@ -46,5 +34,34 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 			}
 		}	
 		return baseScore ;
+	}
+	
+	public int getScore(CritereFaible critere, boolean flag) {
+		Langue langue = (Langue)critere ;
+		return getScore(flag, langue.getValues()) ;
+	}
+	
+	public String getContent() {
+		Iterator<String> iter = this.values.iterator() ;
+		String res = "" ;
+		String current ;
+		
+		while( iter.hasNext() ) {
+			current = iter.next()+"/" ;
+			res = res + current ;
+		}
+		return res ;
+	}
+	
+	public ArrayList<String> getValues() {
+		return this.values ;
+	}
+	
+	public void setValue(ArrayList<String> s) {
+		this.values = s ;
+	}
+	
+	public String toString() {
+		return this.getContent() ;
 	}
 }

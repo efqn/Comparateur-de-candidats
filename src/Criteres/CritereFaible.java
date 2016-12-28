@@ -11,8 +11,7 @@ public class CritereFaible extends Critere {
 		return null;
 	}
 	
-	public void identifier() {
-		
+	public int getScore(CritereFaible critereF, boolean flag) {
+		return 0 ;
 	}
-
 }

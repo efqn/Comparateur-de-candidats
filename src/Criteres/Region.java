@@ -4,18 +4,9 @@ import Score.ScoreChoixSimple;
 
 public class Region extends CritereFaible implements ScoreChoixSimple {
 	private String value ;
-	private int score ;
 	
 	public Region(String s) {
 		this.value = s ;
-	}
-	
-	public String getContent() {
-		return value ;
-	}
-	
-	public String toString() {
-		return value ;
 	}
 
 	/**
@@ -35,5 +26,25 @@ public class Region extends CritereFaible implements ScoreChoixSimple {
 			return this.value.equals(s)? baseScore : 0 ;
 		else
 			return baseScore ;
+	}
+	
+	public int getScore(CritereFaible critere, boolean flag) {
+		return getScore(flag, critere.getContent()) ;
+	}
+	
+	public String getContent() {
+		return value ;
+	}
+	
+	public String getValue() {
+		return getContent() ;
+	}
+	
+	public void setValue(String s) {
+		this.value = s ;
+	}
+	
+	public String toString() {
+		return value ;
 	}
 }

@@ -14,20 +14,37 @@ public class Main {
 		criteres.add(new Age(String.valueOf(i))) ;
 		criteres.add(new PermisB(true)) ;
 		criteres.add(new Region("BDR")) ;
-		criteres.add(new NiveauEtude(5)) ;
-		criteres.add(new ExperiencePro(3)) ;
+		criteres.add(new NiveauEtude(3)) ;
+		criteres.add(new ExperiencePro(1)) ;
 		ArrayList<String> langues = new ArrayList<>() ;
 		langues.add("Anglais") ;
 		langues.add("Espagnol") ;
 		criteres.add(new Langue(langues)) ;
 	}
 	
+	public static void addC2(ArrayList<Critere> criteres, int i, int i2) {
+		criteres.add(new Filiere("Info")) ;
+		criteres.add(new CDD(true)) ;
+		criteres.add(new Age(String.valueOf(i), String.valueOf(i2))) ;
+		criteres.add(new PermisB(false)) ;
+		criteres.add(new Region("aze")) ;
+		criteres.add(new NiveauEtude(7)) ;
+		criteres.add(new ExperiencePro(5)) ;
+		ArrayList<String> langues = new ArrayList<>() ;
+		langues.add("Anglais") ;
+		langues.add("Espagnol") ;
+		langues.add("Italiano piano") ;
+		langues.add("Allemand") ;
+		langues.add("Russe") ;
+		criteres.add(new Langue(langues)) ;
+	}
+	
 	public static void main(String[]args) throws FileNotFoundException {
 		
 		
-		ArrayList<Critere> criteres = new ArrayList<>(10) ;
-		ArrayList<Critere> criteres2 = new ArrayList<>(10) ;
-		ArrayList<Critere> criteres3 = new ArrayList<>(10) ;
+		ArrayList<Critere> criteres = new ArrayList<>(8) ;
+		ArrayList<Critere> criteres2 = new ArrayList<>(8) ;
+		ArrayList<Critere> criteres3 = new ArrayList<>(8) ;
 		
 		/*criteres.add(new Filiere("Info")) ;
 		criteres.add(new CDD(true)) ;
@@ -38,8 +55,8 @@ public class Main {
 		criteres.add(new ExperiencePro(3)) ;
 		criteres.add(new Langue("Anglais")) ;*/
 		addC(criteres, 25) ;
-		addC(criteres2, 26) ;
-		addC(criteres3, 27) ;
+		addC(criteres2, 20) ;
+		addC(criteres3, 60) ;
 		
 		Candidat c = new Candidat("John","Smith","azerty@gmail.com", "07xxxxxxxx") ;
 		c.saveC();
@@ -48,17 +65,21 @@ public class Main {
 		Billet b = new Billet(c, criteres) ;
 		Billet b2 = new Billet(c, criteres2) ;
 		Billet b3 = new Billet(c, criteres3) ;
-		System.out.println(b) ;
+		//System.out.println(b) ;
 		barray.add(b) ;
 		barray.add(b2) ;
 		barray.add(b3) ;
 		
-		System.out.println("\nResultat recherche") ;
-		Demande d = new Demande(criteres) ;
+		boolean[] flags = {true, true, true, true, true, true} ;
+			
+		System.out.println("\nResultat recherche + score") ;
+		ArrayList<Critere> critest = new ArrayList<>(8) ;
+		addC2(critest, 23, 26) ;
+		Demande d = new Demande(critest, flags) ;
 		d.rechercheResultats(barray) ;
 		System.out.println(d) ;
-		
-		System.out.println("\ntest score intervalle") ;
+/////////////////////		TESTS SCORE		//////////////////////////	
+		/*System.out.println("\ntest score intervalle") ;
 		Age age = new Age("23") ;
 		System.out.println(age.getScore(true, 25, 30));
 		
@@ -94,7 +115,10 @@ public class Main {
 		
 		Langue langue = new Langue(langues) ;
 		System.out.println(langue.getScore(true, ref)) ;
-		System.out.println(ref);
-		
+		System.out.println(ref);*/
+		System.out.println("Critere recherches :\n"+ critest) ;
+		System.out.println("Contenu billet :\n" + b2.getCriteres()) ;
+		System.out.println("Score billet 1 :" + b2.getScore(critest, flags)) ;
+///////////////////////////////////////////////////////////////////////////////		
 	}
 }
