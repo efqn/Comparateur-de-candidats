@@ -1,5 +1,8 @@
 package Score;
 
-public interface ScoreFinal extends ScoreIntervalle, ScoreChoixSimple, ScoreChoixSimplePond, ScoreChoixMult{
-	public int getScore() ;
+import java.util.ArrayList;
+import Criteres.Critere;
+
+public interface ScoreFinal extends ScoreChoixMult, ScoreChoixSimple, ScoreChoixSimplePond, ScoreIntervalle{
+	public int getScore(ArrayList<Critere> criteres, boolean[] flags) ;
 }

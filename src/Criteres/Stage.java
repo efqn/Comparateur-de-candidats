@@ -6,4 +6,12 @@ public class Stage extends CritereFort {
 	public Stage(boolean value) {
 		this.value = value ;
 	}
+	
+	public String getContent() {
+		return "ok" ;
+	}
+	
+	public String toString() {
+		return String.valueOf(value) ;
+	}
 }

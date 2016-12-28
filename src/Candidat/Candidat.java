@@ -13,14 +13,12 @@ public class Candidat {
 	private String prenom ;
 	private String mail ;
 	private String telephone ;
-	private ArrayList<Critere> criteres = new ArrayList<>(10) ;							//a mettre dans billet? doublons
 	
-	public Candidat(String nom, String prenom, String mail, String tel, ArrayList<Critere> criteres) {
+	public Candidat(String nom, String prenom, String mail, String tel) {
 		this.nom = nom ;
 		this.prenom = prenom ;
 		this.mail = mail ;
 		this.telephone = tel ;
-		this.criteres.addAll(criteres) ;
 	}
 	
 	/**
@@ -100,4 +98,42 @@ public class Candidat {
 		dir = createDirectory("Candidats a contacter") ;
 		fic = createFile(dir.getAbsolutePath()+"\\"+nom+" "+prenom+".txt") ;
 	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	@Override
+	public String toString() {
+		return "Candidat [nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", telephone=" + telephone + "]";
+	}
+
 }

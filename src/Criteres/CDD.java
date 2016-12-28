@@ -6,4 +6,12 @@ public class CDD extends CritereFort {
 	public CDD(boolean value) {
 		this.value = value ;
 	}
+	
+	public String getContent() {
+		return "ok" ;
+	}
+	
+	public String toString() {
+		return String.valueOf(value) ;
+	}
 }
