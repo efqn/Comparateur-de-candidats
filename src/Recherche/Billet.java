@@ -25,8 +25,9 @@ public class Billet implements ScoreFinal {
 	 * @return	Score final
 	 */
 	public int getScore(ArrayList<Critere> criteres, boolean[] flags) {
-		Iterator iter = this.criteres.iterator() ;
-		Iterator iter2 = criteres.iterator() ;
+		Iterator<Critere> iter = this.criteres.iterator() ;
+		Iterator<Critere> iter2 = criteres.iterator() ;
+		this.score = 0 ;															//si on veut recompter pour une autre demande
 		
 		//Les 2 premiers champs d'une arraylist de criteres seront des criteres forts. Ils ne sont pas utilises pour le calcul
 		for(int i=0; i<2; i++)
@@ -40,7 +41,7 @@ public class Billet implements ScoreFinal {
 		while( iter.hasNext() && iter2.hasNext() ) {
 			current = (CritereFaible)iter.next() ;
 			current2 = (CritereFaible)iter2.next();
-			System.out.println("Calcul score :");
+			System.out.println("\n\nCalcul score :");
 			System.out.println("Reference : " + current2) ;
 			System.out.println("current : "+ current) ;
 			System.out.println("Score current : "+ current.getScore(current2, flags[i]));
@@ -52,6 +53,11 @@ public class Billet implements ScoreFinal {
 	
 	public void afficher() {
 		System.out.println("");
+	}
+	
+	//contrairement a getScore(), cette fonction n'effectue pas de calcul
+	public int getThisScore() {
+		return this.score ;
 	}
 	
 	public Candidat getCandidat() {

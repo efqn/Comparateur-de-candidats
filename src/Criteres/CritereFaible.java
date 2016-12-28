@@ -1,7 +1,5 @@
 package Criteres;
 
-import java.util.ArrayList;
-
 public class CritereFaible extends Critere {
 
 	public CritereFaible(){

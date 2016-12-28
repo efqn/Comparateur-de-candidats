@@ -2,8 +2,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
 import Candidat.Candidat ;
 import Criteres.*;
 import Recherche.*; 
@@ -67,12 +65,12 @@ public class Main {
 		Billet b = new Billet(c, criteres) ;
 		Billet b2 = new Billet(c, criteres2) ;
 		Billet b3 = new Billet(c, criteres3) ;
-		System.out.println(b) ;
+		//System.out.println(b) ;
 		barray.add(b) ;
 		barray.add(b2) ;
 		barray.add(b3) ;
 		
-		boolean[] flags = {false, true, true, true, true, true} ;
+		boolean[] flags = {true, true, true, true, true, true} ;
 			
 		System.out.println("\nResultat recherche + score") ;
 		ArrayList<Critere> critest = new ArrayList<>(8) ;

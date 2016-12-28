@@ -1,12 +1,9 @@
 package Criteres;
 
-import java.util.ArrayList;
-
 import Score.ScoreChoixSimplePond;
 
 public class NiveauEtude extends CritereFaible implements ScoreChoixSimplePond {
 	private int value ;
-	private int score ;
 	
 	public NiveauEtude(int value) {
 		this.value = value ;

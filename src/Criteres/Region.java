@@ -1,12 +1,9 @@
 package Criteres;
 
-import java.util.ArrayList;
-
 import Score.ScoreChoixSimple;
 
 public class Region extends CritereFaible implements ScoreChoixSimple {
 	private String value ;
-	private int score ;
 	
 	public Region(String s) {
 		this.value = s ;

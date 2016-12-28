@@ -1,7 +1,5 @@
 package Criteres;
 
-import java.util.ArrayList;
-
 import Score.ScoreChoixSimple;
 
 public class PermisB extends CritereFaible implements ScoreChoixSimple {

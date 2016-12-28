@@ -1,14 +1,11 @@
 package Criteres;
 
-import java.util.ArrayList;
-
 import Score.ScoreIntervalle;
 
 public class Age extends CritereFaible implements ScoreIntervalle {
 	private int value ;
 	private int borneInf ;
 	private int borneSup ;
-	private int score ;
 	
 	//Constructeur cote client
 	public Age(String age) {

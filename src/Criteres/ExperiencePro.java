@@ -1,7 +1,5 @@
 package Criteres;
 
-import java.util.ArrayList;
-
 import Score.ScoreChoixSimplePond;
 
 public class ExperiencePro extends CritereFaible implements ScoreChoixSimplePond {

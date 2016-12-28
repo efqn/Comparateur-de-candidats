@@ -42,7 +42,7 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	}
 	
 	public String getContent() {
-		Iterator iter = this.values.iterator() ;
+		Iterator<String> iter = this.values.iterator() ;
 		String res = "" ;
 		String current ;
 		
@@ -59,5 +59,9 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	
 	public void setValue(ArrayList<String> s) {
 		this.values = s ;
+	}
+	
+	public String toString() {
+		return this.getContent() ;
 	}
 }

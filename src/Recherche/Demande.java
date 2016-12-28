@@ -41,9 +41,23 @@ public class Demande {
 		 * 
 		 */
 		
-		Iterator iter = tmp.iterator() ;
+		Iterator<Billet> iter = tmp.iterator() ;
+		
+		// remplir 'resultats' avec les 10 premiers trouves
+		for(int i=0; i<10; i++) {
+			if( iter.hasNext() )
+				this.resultats.add((Billet)iter.next()) ;
+		}
+		
+		/* 
+		 * Parcourir le reste des candidats 
+		 * et les mettre dans 'resultats' si ils sont meilleurs que le min courant dans 'resultats'
+		*/
 		while(iter.hasNext()) {
-			this.resultats.add((Billet)iter.next()) ;
+			Billet current ;
+			current = (Billet)iter.next() ;
+			System.out.println("Score = "+current.getScore(recherche, flags));
+			//this.resultats.add((Billet)iter.next()) ;
 		}
 	}
 
@@ -65,7 +79,7 @@ public class Demande {
 	
 	public String toString() {
 		String result = "" ;
-		Iterator iter = this.resultats.iterator() ;
+		Iterator<Billet> iter = this.resultats.iterator() ;
 		while(iter.hasNext()) {
 			result = result + iter.next() + "\n";
 		}
