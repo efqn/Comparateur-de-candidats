@@ -17,8 +17,8 @@ public class ExperiencePro extends CritereFaible implements ScoreChoixSimplePond
 	 * Si l'ecart est positif (plus d'exp que demande, i.e i < value), il n'y aura pas de points bonus. 
 	 */
 	public int getScore(boolean flag, int i) {
-		int baseScore = 100 ;
-		int facteur = 10 ;
+		this.baseScore = 200 ;
+		this.facteur = 20 ;
 		
 		if( flag )
 			if( this.value <= i )

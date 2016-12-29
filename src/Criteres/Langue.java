@@ -21,11 +21,10 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	 * Sinon, une 'part' sera perdue pour chaque langue non presente
 	 */
 	public int getScore(boolean flag, ArrayList<String> reference) {
-		int baseScore = 100 ;
 		
 		if( flag ) {
 			int onePart = baseScore/reference.size() ;
-			Iterator iter = reference.iterator() ;
+			Iterator<String> iter = reference.iterator() ;
 			
 			while( iter.hasNext() ) {
 				String current = (String)iter.next() ;

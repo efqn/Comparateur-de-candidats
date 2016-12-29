@@ -7,7 +7,7 @@ import Candidat.Candidat;
 import Criteres.*;
 import Score.ScoreFinal;
 
-public class Billet implements ScoreFinal {
+public class Billet implements ScoreFinal, Comparable<Billet> {
 	private Candidat candidat ;
 	private ArrayList<Critere> criteres = new ArrayList<>(8) ;
 	private int score = 0;
@@ -83,7 +83,7 @@ public class Billet implements ScoreFinal {
 		return "Billet [candidat=" + candidat + ", criteres=" + criteres + "]";
 	}
 
-	/////////////////////////////////////////////////////////////////wtf
+///////	Methodes a implementer pour les interfaces meres	////////////////
 	@Override
 	public int getScore(boolean flag, ArrayList<String> reference) {
 		// TODO Auto-generated method stub
@@ -107,5 +107,16 @@ public class Billet implements ScoreFinal {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public int compareTo(Billet b) {
+		if( this.score < b.getThisScore() )
+			return -1 ;
+		else if ( this.score == b.getThisScore() )
+			return 0 ;
+		else
+			return 1 ;
+			
+	}
 }

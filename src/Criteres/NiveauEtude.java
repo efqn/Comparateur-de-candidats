@@ -17,9 +17,6 @@ public class NiveauEtude extends CritereFaible implements ScoreChoixSimplePond {
 	 * Si l'ecart est positif (candidat surqualifie, i.e value > i), il n'y aura pas de points bonus. 
 	 */
 	public int getScore(boolean flag, int i) {
-		int baseScore = 100 ;
-		int facteur = 10 ;
-		
 		if( flag )
 			if( this.value <= i )
 			baseScore = baseScore - (i - this.value)*facteur ;

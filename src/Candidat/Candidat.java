@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import Criteres.Critere;
 
 public class Candidat {
 	private String nom ;
@@ -93,10 +90,9 @@ public class Candidat {
 	 */
 	public void saveC() throws FileNotFoundException {
 		File dir = null ;
-		File fic = null ;
 		
 		dir = createDirectory("Candidats a contacter") ;
-		fic = createFile(dir.getAbsolutePath()+"\\"+nom+" "+prenom+".txt") ;
+		createFile(dir.getAbsolutePath()+"\\"+nom+" "+prenom+".txt") ;
 	}
 
 	public String getNom() {

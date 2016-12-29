@@ -30,8 +30,8 @@ public class Age extends CritereFaible implements ScoreIntervalle {
 	 * 		--> si ecartMax est atteint, le score devient 0
 	 */
 	public int getScore(boolean flag, int borneInf, int borneSup) {
-		int baseScore = 100 ;
-		int facteur = 10 ;
+		this.baseScore = 150 ;
+		this.facteur = 15 ;
 		int ecartMax = 10 ;
 
 		if( flag ) {
