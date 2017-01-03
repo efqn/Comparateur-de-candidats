@@ -1,5 +1,5 @@
 package ui;
-
+//azaza
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.regex.Pattern;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,86 +24,87 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
-
+//
 public class FormulaireCand extends JFrame implements ActionListener{  
 
-	private JFrame frame;
-	private JPanel container;
+	protected JPanel container;
 	  
-	private JTextField boiteNom;
-	private JLabel nom;
+	protected JTextField boiteNom;
+	protected JLabel nom;
 	  
-	private JTextField boitePrenom;
-	private JLabel prenom;
+	protected JTextField boitePrenom;
+	protected JLabel prenom;
 	  
-	private JSpinner boiteAge;
-	private JLabel age;
+	protected JSpinner boiteAge;
+	protected JLabel age;
 	  
-	private JComboBox boiteRegion;
-	private JLabel region;
+	protected JComboBox boiteRegion;
+	protected JLabel region;
 	  
-	private JTextField boiteNumero;
-	private JLabel numero;
+	protected JTextField boiteNumero;
+	protected JLabel numero;
 	  
-	private JTextField boiteEmail;
-	private JLabel email;
+	protected JTextField boiteEmail;
+	protected JLabel email;
 	  
-	private JLabel permis;
-	private ButtonGroup bgpermis;
-	private JRadioButton oui;
-	private JRadioButton non; 
+	protected JLabel permis;
+	protected ButtonGroup bgpermis;
+	protected JRadioButton oui;
+	protected JRadioButton non; 
 	  
-	private JLabel typEmploi;
-	private ButtonGroup bgEmploi;
-	private JRadioButton stage;
-	private JRadioButton interim; 
-	private JRadioButton CDD;
-	private JRadioButton CDI;
+	protected JLabel typEmploi;
+	protected ButtonGroup bgEmploi;
+	protected JRadioButton stage;
+	protected JRadioButton interim; 
+	protected JRadioButton CDD;
+	protected JRadioButton CDI;
 	  
-	private JComboBox boiteNivEtude;
-	private JLabel nivEtude;
+	protected JComboBox boiteNivEtude;
+	protected JLabel nivEtude;
 	  
-	private JComboBox boiteFiliere;
-	private JLabel filiere;
+	protected JComboBox boiteFiliere;
+	protected JLabel filiere;
 	  
-	private JSpinner boiteExperience;
-	private JLabel experience;
+	protected JSpinner boiteExperience;
+	protected JLabel experience;
 	
-	private JLabel languesPratique;
-	
-	private JLabel anglais;
-	private ButtonGroup bganglais;
-	private JLabel allemand;
-	private ButtonGroup bgallemand;
-	private JLabel espagnol;
-	private ButtonGroup bgespagnol;
-	private JLabel italien;
-	private ButtonGroup bgitalien;
-	private JLabel chinois;
-	private ButtonGroup bgchinois;
-	private JRadioButton NP;
-	private JRadioButton A1;
-	private JRadioButton A2; 
-	private JRadioButton B1; 
-	private JRadioButton B2;
-	private JRadioButton C1; 
-	private JRadioButton C2;
-	
-	private JTextPane ExpA;
-	
-	  
-	private JButton retour;
-	private JButton ajouter;
-	
-	private Choix retourAccueil;
-	private JLabel lblLanguesPratiques;
+	protected JLabel languesPratique;
+	protected JLabel lblLanguesPratiques;
 
-
-
-	 
+	protected JLabel anglais;
+	protected ButtonGroup bganglais;
+	protected JLabel allemand;
+	protected ButtonGroup bgallemand;
+	protected JLabel espagnol;
+	protected ButtonGroup bgespagnol;
+	protected JLabel italien;
+	protected ButtonGroup bgitalien;
+	protected JLabel chinois;
+	protected ButtonGroup bgchinois;
+	protected JRadioButton NP;
+	protected JRadioButton A1;
+	protected JRadioButton A2; 
+	protected JRadioButton B1; 
+	protected JRadioButton B2;
+	protected JRadioButton C1; 
+	protected JRadioButton C2;
+	
+	protected JTextPane ExpA;
+	
+	  
+	protected JButton retour;
+	protected JButton ajouter;
+	
+	protected Choix retourAccueil;
+	//protected Candidats ajouterProfil;
+	
+	protected JLabel FormulaireFaux;
+	
+/**************************** CONSTRUCTEUR *********************************/
+	
 	public FormulaireCand(){		  
 		// Fenetre du formulaire
-		setTitle("Recherche");
+		setTitle("Comparateur de candidats");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(0, 0, 1000,1000);
@@ -122,7 +124,7 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		nom.setBounds(118, 125, 41, 22);
 		nom.setForeground(Color.BLACK);
 		container.add(nom);
-		boiteNom = new JTextField("Votre nom");
+		boiteNom = new JTextField();
 		boiteNom.setBounds(174, 122, 181, 28);
 		boiteNom.setForeground(Color.GRAY);
 		container.add(boiteNom);
@@ -134,7 +136,7 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		prenom.setBounds(405, 125, 69, 22);
 		prenom.setForeground(Color.BLACK);
 		container.add(prenom);
-		boitePrenom = new JTextField("Votre prénom");
+		boitePrenom = new JTextField();
 		boitePrenom.setBounds(489, 122, 181, 28);
 		boitePrenom.setPreferredSize(new Dimension(180, 50));
 		boitePrenom.setForeground(Color.GRAY);
@@ -147,7 +149,7 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		container.add(age);
 		boiteAge = new JSpinner();
 		boiteAge.setBounds(801, 122, 46, 28);
-		boiteAge.setModel(new SpinnerNumberModel(0, 0, 60, 1));
+		boiteAge.setModel(new SpinnerNumberModel(18, 18, 60, 1));
 		boiteAge.setPreferredSize(new Dimension(50, 50));
 		boiteAge.setForeground(Color.GRAY);
 		container.add(boiteAge);
@@ -191,18 +193,18 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		numero.setBounds(558, 177, 190, 22);
 		numero.setForeground(Color.BLACK);
 		container.add(numero);
-		boiteNumero = new JTextField("Numéro");
+		boiteNumero = new JTextField();
 		boiteNumero.setBounds(761, 174, 181, 28);
 		boiteNumero.setPreferredSize(new Dimension(180, 50));
 		boiteNumero.setForeground(Color.GRAY);
-		container.add(boiteNumero);		
+		container.add(boiteNumero);
 		  		  		  
 		// Boite Email
 		email = new JLabel("Email");
 		email.setBounds(140, 232, 49, 22);
 		email.setForeground(Color.BLACK);
 		container.add(email);
-		boiteEmail = new JTextField("Votre email");
+		boiteEmail = new JTextField();
 		boiteEmail.setBounds(204, 229, 270, 28);
 		boiteEmail.setPreferredSize(new Dimension(250, 50));
 		boiteEmail.setForeground(Color.GRAY);
@@ -310,226 +312,225 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		
 		
 		// Langues pratiqué
-				languesPratique = new JLabel("Langue(s) pratiquée(s)");
-				languesPratique.setBounds(418, 553, 160, 20);
-				container.add(languesPratique);
-				
-				anglais = new JLabel("Anglais:");
-				anglais.setBounds(51, 614, 80, 22);		  		  		  
-				container.add(anglais);	
-				bganglais = new ButtonGroup ();
-				NP = new JRadioButton("Non pratiqué");
-				NP.setBounds(140, 613, 125, 24);
-				NP.setSelected ( true );
-				NP.addActionListener(this);
-				bganglais.add(NP);
-				container.add(NP);
-				A1 = new JRadioButton("A1");
-				A1.setBounds(295, 614, 80, 22);
-				A1.addActionListener(this);
-				bganglais.add(A1);
-				container.add(A1);
-				A2 = new JRadioButton("A2");
-				A2.setBounds(404, 614, 80, 22);
-				A2.addActionListener(this);
-				bganglais.add(A2);
-				container.add(A2);
-				B1 = new JRadioButton("B1");
-				B1.setBounds(517, 614, 80, 22);
-				B1.addActionListener(this);
-				bganglais.add(B1);
-				container.add(B1);
-				B2 = new JRadioButton("B2");
-				B2.setBounds(631, 614, 80, 22);
-				B2.addActionListener(this);
-				bganglais.add(B2);
-				container.add(B2);
-				bganglais.add(A2);
-				container.add(A2);
-				C1 = new JRadioButton("C1");
-				C1.setBounds(741, 614, 80, 22);
-				C1.addActionListener(this);
-				bganglais.add(C1);
-				container.add(C1);
-				C2 = new JRadioButton("C2");
-				C2.setBounds(853, 614, 80, 22);
-				C2.addActionListener(this);
-				bganglais.add(C2);
-				container.add(C2);
-				
-				
-				allemand = new JLabel("Allemand:");
-				allemand.setBounds(39, 649, 80, 22);		  		  		  
-				container.add(allemand);	
-				bgallemand = new ButtonGroup ();
-				NP = new JRadioButton("Non pratiqué");
-				NP.setBounds(140, 648, 125, 24);
-				NP.setSelected ( true );
-				NP.addActionListener(this);
-				bgallemand.add(NP);
-				container.add(NP);
-				A1 = new JRadioButton("A1");
-				A1.setBounds(295, 649, 80, 22);
-				A1.addActionListener(this);
-				bgallemand.add(A1);
-				container.add(A1);
-				A2 = new JRadioButton("A2");
-				A2.setBounds(404, 649, 80, 22);
-				A2.addActionListener(this);
-				bganglais.add(A2);
-				container.add(A2);
-				B1 = new JRadioButton("B1");
-				B1.setBounds(517, 649, 80, 22);
-				B1.addActionListener(this);
-				bgallemand.add(B1);
-				container.add(B1);
-				B2 = new JRadioButton("B2");
-				B2.setBounds(631, 649, 80, 22);
-				B2.addActionListener(this);
-				bgallemand.add(B2);
-				container.add(B2);
-				bgallemand.add(A2);
-				container.add(A2);
-				C1 = new JRadioButton("C1");
-				C1.setBounds(739, 649, 80, 22);
-				C1.addActionListener(this);
-				bgallemand.add(C1);
-				container.add(C1);
-				C2 = new JRadioButton("C2");
-				C2.setBounds(853, 649, 80, 22);
-				C2.addActionListener(this);
-				bgallemand.add(C2);
-				container.add(C2);
+		languesPratique = new JLabel("Langue(s) pratiquée(s)");
+		languesPratique.setBounds(418, 553, 160, 20);
+		container.add(languesPratique);
+		anglais = new JLabel("Anglais:");
+		anglais.setBounds(51, 614, 80, 22);		  		  		  
+		container.add(anglais);	
+		bganglais = new ButtonGroup ();
+		NP = new JRadioButton("Non pratiqué");
+		NP.setBounds(140, 613, 125, 24);
+		NP.setSelected ( true );
+		NP.addActionListener(this);
+		bganglais.add(NP);
+		container.add(NP);
+		A1 = new JRadioButton("A1");
+		A1.setBounds(295, 614, 80, 22);
+		A1.addActionListener(this);
+		bganglais.add(A1);
+		container.add(A1);
+		A2 = new JRadioButton("A2");
+		A2.setBounds(404, 614, 80, 22);
+		A2.addActionListener(this);
+		bganglais.add(A2);
+		container.add(A2);
+		B1 = new JRadioButton("B1");
+		B1.setBounds(517, 614, 80, 22);
+		B1.addActionListener(this);
+		bganglais.add(B1);
+		container.add(B1);
+		B2 = new JRadioButton("B2");
+		B2.setBounds(631, 614, 80, 22);
+		B2.addActionListener(this);
+		bganglais.add(B2);
+		container.add(B2);
+		bganglais.add(A2);
+		container.add(A2);
+		C1 = new JRadioButton("C1");
+		C1.setBounds(741, 614, 80, 22);
+		C1.addActionListener(this);
+		bganglais.add(C1);
+		container.add(C1);
+		C2 = new JRadioButton("C2");
+		C2.setBounds(853, 614, 80, 22);
+		C2.addActionListener(this);
+		bganglais.add(C2);
+		container.add(C2);
 				
 				
-				espagnol = new JLabel("Espagnol:");
-				espagnol.setBounds(39, 687, 80, 22);		  		  		  
-				container.add(espagnol);	
-				bgespagnol = new ButtonGroup ();
-				NP = new JRadioButton("Non pratiqué");
-				NP.setBounds(140, 686, 125, 24);
-				NP.setSelected ( true );
-				NP.addActionListener(this);
-				bgespagnol.add(NP);
-				container.add(NP);
-				A1 = new JRadioButton("A1");
-				A1.setBounds(295, 687, 80, 22);
-				A1.addActionListener(this);
-				bgespagnol.add(A1);
-				container.add(A1);
-				A2 = new JRadioButton("A2");
-				A2.setBounds(404, 687, 80, 22);
-				A2.addActionListener(this);
-				bganglais.add(A2);
-				container.add(A2);
-				B1 = new JRadioButton("B1");
-				B1.setBounds(517, 687, 80, 22);
-				B1.addActionListener(this);
-				bgespagnol.add(B1);
-				container.add(B1);
-				B2 = new JRadioButton("B2");
-				B2.setBounds(631, 687, 80, 22);
-				B2.addActionListener(this);
-				bgespagnol.add(B2);
-				container.add(B2);
-				bgespagnol.add(A2);
-				container.add(A2);
-				C1 = new JRadioButton("C1");
-				C1.setBounds(739, 687, 80, 22);
-				C1.addActionListener(this);
-				bgespagnol.add(C1);
-				container.add(C1);
-				C2 = new JRadioButton("C2");
-				C2.setBounds(853, 687, 80, 22);
-				C2.addActionListener(this);
-				bgespagnol.add(C2);
-				container.add(C2);
+		allemand = new JLabel("Allemand:");
+		allemand.setBounds(39, 649, 80, 22);		  		  		  
+		container.add(allemand);	
+		bgallemand = new ButtonGroup ();
+		NP = new JRadioButton("Non pratiqué");
+		NP.setBounds(140, 648, 125, 24);
+		NP.setSelected ( true );
+		NP.addActionListener(this);
+		bgallemand.add(NP);
+		container.add(NP);
+		A1 = new JRadioButton("A1");
+		A1.setBounds(295, 649, 80, 22);
+		A1.addActionListener(this);
+		bgallemand.add(A1);
+		container.add(A1);
+		A2 = new JRadioButton("A2");
+		A2.setBounds(404, 649, 80, 22);
+		A2.addActionListener(this);
+		bganglais.add(A2);
+		container.add(A2);
+		B1 = new JRadioButton("B1");
+		B1.setBounds(517, 649, 80, 22);
+		B1.addActionListener(this);
+		bgallemand.add(B1);
+		container.add(B1);
+		B2 = new JRadioButton("B2");
+		B2.setBounds(631, 649, 80, 22);
+		B2.addActionListener(this);
+		bgallemand.add(B2);
+		container.add(B2);
+		bgallemand.add(A2);
+		container.add(A2);
+		C1 = new JRadioButton("C1");
+		C1.setBounds(739, 649, 80, 22);
+		C1.addActionListener(this);
+		bgallemand.add(C1);
+		container.add(C1);
+		C2 = new JRadioButton("C2");
+		C2.setBounds(853, 649, 80, 22);
+		C2.addActionListener(this);
+		bgallemand.add(C2);
+		container.add(C2);
 				
-				italien = new JLabel("Italien:");
-				italien.setBounds(51, 727, 50, 20);		  		  		  
-				container.add(italien);	
-				bgitalien = new ButtonGroup ();
-				NP = new JRadioButton("Non pratiqué");
-				NP.setBounds(140, 725, 125, 24);
-				NP.setSelected ( true );
-				NP.addActionListener(this);
-				bgitalien.add(NP);
-				container.add(NP);
-				A1 = new JRadioButton("A1");
-				A1.setBounds(295, 725, 80, 22);
-				A1.addActionListener(this);
-				bgitalien.add(A1);
-				container.add(A1);
-				A2 = new JRadioButton("A2");
-				A2.setBounds(404, 725, 80, 22);
-				A2.addActionListener(this);
-				bgitalien.add(A2);
-				container.add(A2);
-				B1 = new JRadioButton("B1");
-				B1.setBounds(517, 725, 80, 22);
-				B1.addActionListener(this);
-				bgitalien.add(B1);
-				container.add(B1);
-				B2 = new JRadioButton("B2");
-				B2.setBounds(631, 725, 80, 22);
-				B2.addActionListener(this);
-				bgitalien.add(B2);
-				container.add(B2);
-				bgitalien.add(A2);
-				container.add(A2);
-				C1 = new JRadioButton("C1");
-				C1.setBounds(739, 725, 80, 22);
-				C1.addActionListener(this);
-				bgitalien.add(C1);
-				container.add(C1);
-				C2 = new JRadioButton("C2");
-				C2.setBounds(853, 725, 80, 22);
-				C2.addActionListener(this);
-				bgitalien.add(C2);
-				container.add(C2);
 				
-				chinois = new JLabel("Chinois:");
-				chinois.setBounds(51, 765, 58, 20);		  		  		  
-				container.add(chinois);	
-				bgchinois = new ButtonGroup ();
-				NP = new JRadioButton("Non pratiqué");
-				NP.setBounds(140, 763, 125, 24);
-				NP.setSelected ( true );
-				NP.addActionListener(this);
-				bgchinois.add(NP);
-				container.add(NP);
-				A1 = new JRadioButton("A1");
-				A1.setBounds(295, 763, 80, 22);
-				A1.addActionListener(this);
-				bgchinois.add(A1);
-				container.add(A1);
-				A2 = new JRadioButton("A2");
-				A2.setBounds(404, 763, 80, 22);
-				A2.addActionListener(this);
-				bgchinois.add(A2);
-				container.add(A2);
-				B1 = new JRadioButton("B1");
-				B1.setBounds(517, 763, 80, 22);
-				B1.addActionListener(this);
-				bgchinois.add(B1);
-				container.add(B1);
-				B2 = new JRadioButton("B2");
-				B2.setBounds(631, 763, 80, 22);
-				B2.addActionListener(this);
-				bgchinois.add(B2);
-				container.add(B2);
-				bgchinois.add(A2);
-				container.add(A2);
-				C1 = new JRadioButton("C1");
-				C1.setBounds(739, 763, 80, 22);
-				C1.addActionListener(this);
-				bgchinois.add(C1);
-				container.add(C1);
-				C2 = new JRadioButton("C2");
-				C2.setBounds(853, 763, 80, 22);
-				C2.addActionListener(this);
-				bgchinois.add(C2);
-				container.add(C2);
+		espagnol = new JLabel("Espagnol:");
+		espagnol.setBounds(39, 687, 80, 22);		  		  		  
+		container.add(espagnol);	
+		bgespagnol = new ButtonGroup ();
+		NP = new JRadioButton("Non pratiqué");
+		NP.setBounds(140, 686, 125, 24);
+		NP.setSelected ( true );
+		NP.addActionListener(this);
+		bgespagnol.add(NP);
+		container.add(NP);
+		A1 = new JRadioButton("A1");
+		A1.setBounds(295, 687, 80, 22);
+		A1.addActionListener(this);
+		bgespagnol.add(A1);
+		container.add(A1);
+		A2 = new JRadioButton("A2");
+		A2.setBounds(404, 687, 80, 22);
+		A2.addActionListener(this);
+		bganglais.add(A2);
+		container.add(A2);
+		B1 = new JRadioButton("B1");
+		B1.setBounds(517, 687, 80, 22);
+		B1.addActionListener(this);
+		bgespagnol.add(B1);
+		container.add(B1);
+		B2 = new JRadioButton("B2");
+		B2.setBounds(631, 687, 80, 22);
+		B2.addActionListener(this);
+		bgespagnol.add(B2);
+		container.add(B2);
+		bgespagnol.add(A2);
+		container.add(A2);
+		C1 = new JRadioButton("C1");
+		C1.setBounds(739, 687, 80, 22);
+		C1.addActionListener(this);
+		bgespagnol.add(C1);
+		container.add(C1);
+		C2 = new JRadioButton("C2");
+		C2.setBounds(853, 687, 80, 22);
+		C2.addActionListener(this);
+		bgespagnol.add(C2);
+		container.add(C2);
+				
+		italien = new JLabel("Italien:");
+		italien.setBounds(51, 727, 50, 20);		  		  		  
+		container.add(italien);	
+		bgitalien = new ButtonGroup ();
+		NP = new JRadioButton("Non pratiqué");
+		NP.setBounds(140, 725, 125, 24);
+		NP.setSelected ( true );
+		NP.addActionListener(this);
+		bgitalien.add(NP);
+		container.add(NP);
+		A1 = new JRadioButton("A1");
+		A1.setBounds(295, 725, 80, 22);
+		A1.addActionListener(this);
+		bgitalien.add(A1);
+		container.add(A1);
+		A2 = new JRadioButton("A2");
+		A2.setBounds(404, 725, 80, 22);
+		A2.addActionListener(this);
+		bgitalien.add(A2);
+		container.add(A2);
+		B1 = new JRadioButton("B1");
+		B1.setBounds(517, 725, 80, 22);
+		B1.addActionListener(this);
+		bgitalien.add(B1);
+		container.add(B1);
+		B2 = new JRadioButton("B2");
+		B2.setBounds(631, 725, 80, 22);
+		B2.addActionListener(this);
+		bgitalien.add(B2);
+		container.add(B2);
+		bgitalien.add(A2);
+		container.add(A2);
+		C1 = new JRadioButton("C1");
+		C1.setBounds(739, 725, 80, 22);
+		C1.addActionListener(this);
+		bgitalien.add(C1);
+		container.add(C1);
+		C2 = new JRadioButton("C2");
+		C2.setBounds(853, 725, 80, 22);
+		C2.addActionListener(this);
+		bgitalien.add(C2);
+		container.add(C2);
+				
+		chinois = new JLabel("Chinois:");
+		chinois.setBounds(51, 765, 58, 20);		  		  		  
+		container.add(chinois);	
+		bgchinois = new ButtonGroup ();
+		NP = new JRadioButton("Non pratiqué");
+		NP.setBounds(140, 763, 125, 24);
+		NP.setSelected ( true );
+		NP.addActionListener(this);
+		bgchinois.add(NP);
+		container.add(NP);
+		A1 = new JRadioButton("A1");
+		A1.setBounds(295, 763, 80, 22);
+		A1.addActionListener(this);
+		bgchinois.add(A1);
+		container.add(A1);
+		A2 = new JRadioButton("A2");
+		A2.setBounds(404, 763, 80, 22);
+		A2.addActionListener(this);
+		bgchinois.add(A2);
+		container.add(A2);
+		B1 = new JRadioButton("B1");
+		B1.setBounds(517, 763, 80, 22);
+		B1.addActionListener(this);
+		bgchinois.add(B1);
+		container.add(B1);
+		B2 = new JRadioButton("B2");
+		B2.setBounds(631, 763, 80, 22);
+		B2.addActionListener(this);
+		bgchinois.add(B2);
+		container.add(B2);
+		bgchinois.add(A2);
+		container.add(A2);
+		C1 = new JRadioButton("C1");
+		C1.setBounds(739, 763, 80, 22);
+		C1.addActionListener(this);
+		bgchinois.add(C1);
+		container.add(C1);
+		C2 = new JRadioButton("C2");
+		C2.setBounds(853, 763, 80, 22);
+		C2.addActionListener(this);
+		bgchinois.add(C2);
+		container.add(C2);
 		
 		  
 		// Bouton ajouter
@@ -537,7 +538,6 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		ajouter.setFont(new Font("Tahoma", Font.BOLD, 14));
 		ajouter.setBounds(280, 891, 191, 31);
 		ajouter.addActionListener(this);
-
 		container.add(ajouter);
 			
 		  		  
@@ -556,6 +556,7 @@ public class FormulaireCand extends JFrame implements ActionListener{
 		Aide.setBounds(350, 834, 247, 20);
 		container.add(Aide);
 		
+		// Affiche l'aide
 		Aide.addMouseListener(new MouseListener() {
 		     
 	        public void mouseClicked(MouseEvent e){}
@@ -590,17 +591,17 @@ public class FormulaireCand extends JFrame implements ActionListener{
 	    });
 		
 		
-		this.setContentPane(container);
 		this.setVisible(true);
 	  }
 	
-	  
-	
+	/************************* METHODES	***************************************/
+	  	
 	  // Action des boutons
 	@Override
 	  public void actionPerformed(ActionEvent e) {
 		  Object source = e.getSource();
 		  if(source == ajouter){
+			  Verification();
 		  } 
 		  if(source == retour){
 			  retourAccueil=new Choix();	
@@ -608,4 +609,65 @@ public class FormulaireCand extends JFrame implements ActionListener{
 			  this.dispose();
 		  }	
 	  }
+	
+	
+	// Vérifie si le numero est bon
+	public boolean VerificationNumero(){
+		if((boiteNumero.getText().matches("[0-9]*" )) && (boiteNumero.getText().length()==10)){
+			numero.setForeground(Color.BLACK);	
+			return false;
+		}
+		else{
+			numero.setForeground(Color.RED);
+			return true;
+		}	
+	}
+	
+	// Vérifie si l'email est du type: moi@coucou.com
+	public boolean VerificationEmail(){
+		if(Pattern.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$", (CharSequence) boiteEmail)){
+			email.setForeground(Color.BLACK);	
+			return false;
+		}
+		else{
+			email.setForeground(Color.RED);
+			return true;
+		}	
+	}
+			
+	
+	// Vérifie si tous les champs du formulaire sont remplis
+	public void VerificationTextFiled(){
+		if(boiteNom.getText().isEmpty() || boitePrenom.getText().isEmpty() || VerificationNumero() || VerificationEmail()){
+			FormulaireFaux = new JLabel("Vous n'avez pas rempli tout le formulaire. Veuillez remplir le(s) champ(s) en rouge.");
+			FormulaireFaux.setBounds(118, 73, 729, 24);
+			FormulaireFaux.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+			FormulaireFaux.setForeground(Color.RED);
+			container.add(FormulaireFaux);
+		}
+		else{
+			container.remove(FormulaireFaux);
+    		container.repaint();
+		}
+		
+		if(boiteNom.getText().isEmpty()){
+			nom.setForeground(Color.RED);
+		}
+		else
+			nom.setForeground(Color.BLACK);
+			
+		if(boitePrenom.getText().isEmpty()){
+			prenom.setForeground(Color.RED);
+		}
+		else
+			prenom.setForeground(Color.BLACK);
+	}
+	
+	
+	// Vérification finale
+	public void Verification(){
+		VerificationNumero();
+		VerificationEmail();
+		VerificationTextFiled();
+	}
 }

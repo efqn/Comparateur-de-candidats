@@ -95,7 +95,8 @@ public class RechercheCritere extends JFrame implements ActionListener {
 		container.setBorder(new EmptyBorder(5, 5, 5, 5));
 		container.setBackground(Color.white);
 		container.setLayout(null);
-		  
+		this.setContentPane(container);
+		
 		// Phrase du début
 		JLabel label = new JLabel("Veuillez rentrer vos critères de recherche.  ");
 		label.setBounds(307, 47, 380, 24);
@@ -394,11 +395,11 @@ public class RechercheCritere extends JFrame implements ActionListener {
 		retour.addActionListener(this);
 		container.add(retour);
 				
-		
-		this.setContentPane(container);
 		this.setVisible(true);
 	  }
 	  
+/************************* METHODES	***************************************/
+
 	
 	  // Action des boutons
 	  public void actionPerformed(ActionEvent e) {
