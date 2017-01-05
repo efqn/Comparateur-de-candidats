@@ -8,17 +8,17 @@ public class Age extends CritereFaible implements ScoreIntervalle {
 	private int borneSup ;
 	
 	//Constructeur cote client
-	public Age(String age) {
-		this.value = Integer.parseInt(age) ;
+	public Age(int age) {
+		this.value = age ;
 		this.borneInf = value ;
 		this.borneSup = value ;
 	}
 	
 
 	//Constructeur cote recruteur
-	public Age(String borneInf, String borneSup) {
-		this.borneInf = Integer.parseInt(borneInf) ;
-		this.borneSup = Integer.parseInt(borneSup) ;
+	public Age(int borneInf, int borneSup) {
+		this.borneInf = borneInf ;
+		this.borneSup = borneSup ;
 		this.value = -1 ;
 	}
 	

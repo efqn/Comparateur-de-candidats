@@ -11,7 +11,7 @@ public class Main {
 	public static void addC(ArrayList<Critere> criteres, int i) {
 		criteres.add(new Filiere("Info")) ;
 		criteres.add(new CDD(true)) ;
-		criteres.add(new Age(String.valueOf(i))) ;
+		criteres.add(new Age(i)) ;
 		criteres.add(new PermisB(true)) ;
 		criteres.add(new Region("BDR")) ;
 		criteres.add(new NiveauEtude(2)) ;
@@ -24,7 +24,7 @@ public class Main {
 	public static void addC2(ArrayList<Critere> criteres, int i, int i2) {
 		criteres.add(new Filiere("Info")) ;
 		criteres.add(new CDD(true)) ;
-		criteres.add(new Age(String.valueOf(i), String.valueOf(i2))) ;
+		criteres.add(new Age(i, i2)) ;
 		criteres.add(new PermisB(false)) ;
 		criteres.add(new Region("aze")) ;
 		criteres.add(new NiveauEtude(7)) ;
@@ -41,7 +41,7 @@ public class Main {
 	public static void addC3(ArrayList<Critere> criteres, int i) {
 		criteres.add(new Filiere("Info")) ;
 		criteres.add(new CDD(true)) ;
-		criteres.add(new Age(String.valueOf(i))) ;
+		criteres.add(new Age(i)) ;
 		criteres.add(new PermisB(false)) ;
 		criteres.add(new Region("aze")) ;
 		criteres.add(new NiveauEtude(7)) ;
