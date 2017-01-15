@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import Criteres.Critere;
+import database.SQLRequest;
 
 public class Demande {
 	private ArrayList<Critere> recherche = new ArrayList<>(10) ;
@@ -23,6 +24,11 @@ public class Demande {
 			this.flags = new boolean[this.recherche.size()-2] ;							// les -2 correspond aux criteres forts, qui ne sont pas pris en compte ici
 			for(int i=0; i<this.flags.length; i++)
 				this.flags[i] = flags[i] ;
+	}
+	
+	public void retrieveData(String s) {
+		SQLRequest request = new SQLRequest();
+		
 	}
 	
 	/**
