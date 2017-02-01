@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -11,8 +12,11 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-//import Candidat.Candidats;
-//import Score.ScoreFinal;
+import Candidat.Candidat;
+import Criteres.Critere;
+import Recherche.Billet;
+import Recherche.Demande;
+
 import net.miginfocom.swing.MigLayout;
 
 public class ResultFrame extends TailleFenetre {
@@ -25,32 +29,38 @@ public class ResultFrame extends TailleFenetre {
 	 * 
 	 * @param r  		tous les résultats des candidats d'une recherche
 	 */
-	public ResultFrame( Results r) {
+	public ResultFrame( Demande r) {
 		super();
 		container = new JPanel();
 		container.setBorder(new EmptyBorder(5, 5, 5, 5));
 		container.setBackground(UIManager.getColor("Button.background"));
-		contentPane.setLayout(new MigLayout("insets 5 5 5 5", "", ""));
+		container.setLayout(new MigLayout("insets 5 5 5 5", "", ""));
+		//container.setLayout(null);
 		this.setContentPane(container);
 		
+		// Menu 
+		menu = new MenuHeader();
+		menu.setLocation(0, 0);
+		menu.setSize(844, 37);
+		container.add(menu);
+		
 
-		JScrollPane scrollpane = new JScrollPane(container);
-	    getContentPane().add(scrollpane);
+		//JScrollPane scrollpane = new JScrollPane(container);
+	    //this.getContentPane().add(scrollpane);
+		ArrayList<Critere> cand = new ArrayList<Critere>();
+		Iterator<Critere> it = cand.iterator();
 	    
-	    TreeMap<Float, ArrayList<Candidats>> rl = r.getResults();
-	    
-	    int i= r.countResults();
-	    for (Map.Entry<Float,ArrayList<Candidats>> entry : rl.entrySet()) {
-	    	ArrayList<Candidats> alp = entry.getValue();
-	        Float score = entry.getKey();
-	        
-	        for(Candidats cand : alp){
-	        	container.add(new ProfilCandidats(score, cand, ((SearchFrame) parent).getIsAdmin(), ResultFrame.this), "cell 0 "+ i );
-	        	i--;
-	        }
-	        
+		Candidat c=null;
+		
+	    int i=10;
+	    while(it.hasNext()){
+	    	container.add(new ProfilCandidats(c), "cell 0 "+i);
+	    	
+	    	//container.add(new ProfilCandidats(cand, ((ConnexionAdmin) parent).isSucceeded(), ResultFrame.this), "cell 0 "+i);
+
+	    	i --;
 	    }
-	    
+	        
 		this.setVisible(true);
 
 	        
