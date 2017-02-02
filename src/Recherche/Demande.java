@@ -26,6 +26,7 @@ public class Demande {
 				this.flags[i] = flags[i] ;
 	}
 	
+	//Recupere les donnees dans la base de donnee
 	public void retrieveData(String s) {
 		SQLRequest request = new SQLRequest();
 		
