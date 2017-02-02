@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import Candidat.Candidat;
 import Criteres.Critere;
+import Recherche.Billet;
 import net.miginfocom.swing.MigLayout;
 
 public class ProfilCandidats extends JPanel {
@@ -38,10 +39,10 @@ public class ProfilCandidats extends JPanel {
 	 * 
 	 * @param f   			Score
 	 * @param c  			 Represente un candidat
+	 * @param  
 	 * @param adminstatus  si on est en mode administrateur ou non
-	 * @param parent
 	 */
-	public ProfilCandidats(Candidat c ){
+	public ProfilCandidats(Billet c){
 		
 		// Layout
 		setLayout(new MigLayout("insets 10 10 10 10","[120px][400px][160px!]",""));
@@ -49,30 +50,29 @@ public class ProfilCandidats extends JPanel {
 		// Border
 		DecimalFormat PourcentFormat= new DecimalFormat("00.00");
 	
-		// Candidat
-		cand =c;
+
 		
 	/*	// Photo Candidat
 		img_panel = new ImagePanel(c.getImage());  // Ajouter image 
 		add(img_panel, "cell 0 0 1 8, grow");
 	*/	
 		// Nom
-		candNom = new JLabel(c.getNom());  
+		candNom = new JLabel(cand.getNom());  
 		candNom.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		add(candNom, "cell 1 0, gapleft 20");
 		
 		// Prénom
-		candPrenom = new JLabel(c.getPrenom());  
+		candPrenom = new JLabel(cand.getPrenom());  
 		candPrenom.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		add(candPrenom, "cell 1 0, gapleft 20");
 		
 		// Email
-		candEmail = new JLabel(c.getMail());
+		candEmail = new JLabel(cand.getMail());
 		candEmail.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		add(candEmail, "cell 1 0, gapleft 20");
 		
 		// Numero de telephone
-		candNumero = new JLabel(c.getTelephone()); // ??????????
+		candNumero = new JLabel(cand.getTelephone()); // ??????????
 		candNumero.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		add(candNumero, "cell 1 0, gapleft 20");
 				

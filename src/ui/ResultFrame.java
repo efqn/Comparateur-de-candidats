@@ -16,7 +16,6 @@ import Candidat.Candidat;
 import Criteres.Critere;
 import Recherche.Billet;
 import Recherche.Demande;
-
 import net.miginfocom.swing.MigLayout;
 
 public class ResultFrame extends TailleFenetre {
@@ -24,6 +23,9 @@ public class ResultFrame extends TailleFenetre {
 	private JPanel contentPane;
 	private JPanel container;
 	protected MenuHeader menu;
+	
+	private Billet r1;
+
 	
 	/**
 	 * 
@@ -47,20 +49,15 @@ public class ResultFrame extends TailleFenetre {
 
 		//JScrollPane scrollpane = new JScrollPane(container);
 	    //this.getContentPane().add(scrollpane);
-		ArrayList<Critere> cand = new ArrayList<Critere>();
-		Iterator<Critere> it = cand.iterator();
-	    
-		Candidat c=null;
 		
-	    int i=10;
-	    while(it.hasNext()){
-	    	container.add(new ProfilCandidats(c), "cell 0 "+i);
-	    	
-	    	//container.add(new ProfilCandidats(cand, ((ConnexionAdmin) parent).isSucceeded(), ResultFrame.this), "cell 0 "+i);
-
-	    	i --;
-	    }
-	        
+		
+		ArrayList<Billet> rl = r.getResultats();
+	    ProfilCandidats pc;
+		for (Billet entry : rl) {
+	    	pc= new ProfilCandidats(entry);
+	    	container.add(pc);
+		}
+   
 		this.setVisible(true);
 
 	        

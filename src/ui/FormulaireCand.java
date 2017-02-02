@@ -279,10 +279,11 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		boiteNivEtude = new JComboBox();
 		boiteNivEtude.setBounds(358, 345, 269, 28);
 		boiteNivEtude.setPreferredSize(new Dimension(300, 50));
-		boiteNivEtude.addItem("BEP/CAP");
 		boiteNivEtude.addItem("Employé/Opérateur/Bac");
 		boiteNivEtude.addItem("Technicien/Employé bac+2");
+		boiteNivEtude.addItem("Licence/Bac+3");
 		boiteNivEtude.addItem("Ingénieur/Cadre/Bac+5");
+		boiteNivEtude.addItem("Doctorant/Bac+7");
 		container.add(boiteNivEtude);
 		
 		  
@@ -699,4 +700,7 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 			  this.dispose();
 		  }	
 	  }
+	
+	
+	
 }
