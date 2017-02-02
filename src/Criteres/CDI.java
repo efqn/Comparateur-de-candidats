@@ -12,6 +12,6 @@ public class CDI extends CritereFort {
 	}
 	
 	public String toString() {
-		return String.valueOf(value) ;
+		return "CDI" ;
 	}
 }

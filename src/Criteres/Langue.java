@@ -14,15 +14,16 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 		int key ;
 		for(String lang : langues) {
 			System.out.println("lang : "+lang);
-			str = lang.substring(0, lang.indexOf(" ")) ;						//Format langue : (langue+ espace + niveau)
+			str = lang.substring(0, lang.indexOf("+")) ;						//Format langue : (langue+ espace + niveau)
 			System.out.println("str : "+str+", taille : "+str.length());
-			System.out.println(lang.charAt(lang.indexOf(" ")+1)) ;
+			/*System.out.println(lang.charAt(lang.indexOf(" ")+1)) ;
 			System.out.println(Integer.valueOf(lang.charAt(lang.indexOf(" ")+1))) ;
-			System.out.println(String.valueOf(lang.charAt(lang.indexOf(" ")+1))) ;
-			tmp = "" + lang.charAt(lang.indexOf(" ")+1) ;
+			System.out.println(String.valueOf(lang.charAt(lang.indexOf(" ")+1))) ;*/
+			tmp = "" + lang.charAt(lang.indexOf("+")+1) ;
 			key = Integer.parseInt(tmp) ;
-			System.out.println("key : "+key);
+			//System.out.println("key : "+key);
 			values.put(str, key) ;
+			//System.out.println("Creation successful");
 		}
 	}
 		
@@ -49,10 +50,10 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 				
 				if( this.values.containsKey(ref) ) {
 					my_lvl = this.values.get(ref) ;								//la clÅEref existe aussi dans this.val
-					System.out.println("my_lvl = "+my_lvl);
-					System.out.println("lvl_ref = "+lvl_ref);
+					//System.out.println("my_lvl = "+my_lvl);
+					//System.out.println("lvl_ref = "+lvl_ref);
 					if( my_lvl < lvl_ref ) {
-						System.out.println("lvl_ref - my_lvl = "+Math.abs(lvl_ref - my_lvl));
+						//System.out.println("lvl_ref - my_lvl = "+Math.abs(lvl_ref - my_lvl));
 						baseScore = baseScore - Math.abs(lvl_ref - my_lvl)*coeff ;
 					}
 				}

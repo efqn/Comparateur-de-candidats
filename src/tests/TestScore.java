@@ -102,7 +102,7 @@ public class TestScore {
 		addC3(criteres12, 25) ;
 		
 		
-		Candidat c = new Candidat("John","Smith","azerty@gmail.com", "07xxxxxxxx") ;
+		Candidat c = new Candidat("John","Smith","azerty@gmail.com", "07xxxxxxxx", 1) ;
 		c.saveC();
 		
 		ArrayList<Billet> barray = new ArrayList<>() ;

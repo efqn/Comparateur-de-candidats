@@ -12,6 +12,6 @@ public class CDD extends CritereFort {
 	}
 	
 	public String toString() {
-		return String.valueOf(value) ;
+		return "CDD" ;
 	}
 }

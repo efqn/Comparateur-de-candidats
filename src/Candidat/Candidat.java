@@ -10,12 +10,14 @@ public class Candidat {
 	private String prenom ;
 	private String mail ;
 	private String telephone ;
+	private int id_candidat ;	
 	
-	public Candidat(String nom, String prenom, String mail, String tel) {
+	public Candidat(String nom, String prenom, String mail, String tel, int id_candidat) {
 		this.nom = nom ;
 		this.prenom = prenom ;
 		this.mail = mail ;
 		this.telephone = tel ;
+		this.id_candidat = id_candidat ;
 	}
 	
 	/**
