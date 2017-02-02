@@ -1,6 +1,7 @@
 package Recherche;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import Candidat.Candidat;
@@ -85,7 +86,7 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 
 ///////	Methodes a implementer pour les interfaces meres	////////////////
 	@Override
-	public int getScore(boolean flag, ArrayList<String> reference) {
+	public int getScore(boolean flag, HashMap<String, Integer> reference) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

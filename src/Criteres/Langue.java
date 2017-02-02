@@ -1,15 +1,29 @@
 package Criteres;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 import Score.ScoreChoixMult;
 
 public class Langue extends CritereFaible implements ScoreChoixMult {
-	private ArrayList<String> values = new ArrayList<>() ;
+	private HashMap<String, Integer> values = new HashMap<>() ;
 	
 	public Langue(ArrayList<String> langues) {
-			this.values.addAll(langues) ;
+		String str, tmp ;
+		int key ;
+		for(String lang : langues) {
+			System.out.println("lang : "+lang);
+			str = lang.substring(0, lang.indexOf(" ")) ;						//Format langue : (langue+ espace + niveau)
+			System.out.println("str : "+str+", taille : "+str.length());
+			System.out.println(lang.charAt(lang.indexOf(" ")+1)) ;
+			System.out.println(Integer.valueOf(lang.charAt(lang.indexOf(" ")+1))) ;
+			System.out.println(String.valueOf(lang.charAt(lang.indexOf(" ")+1))) ;
+			tmp = "" + lang.charAt(lang.indexOf(" ")+1) ;
+			key = Integer.parseInt(tmp) ;
+			System.out.println("key : "+key);
+			values.put(str, key) ;
+		}
 	}
 		
 	/**
@@ -20,16 +34,31 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	 * Le baseScore sera divise par le nombre de langue dans la reference. Si l'ecart est de 0, le candidat aura 'toute les parts' du baseScore.
 	 * Sinon, une 'part' sera perdue pour chaque langue non presente
 	 */
-	public int getScore(boolean flag, ArrayList<String> reference) {
+	public int getScore(boolean flag, HashMap<String, Integer> reference) {
+		
+		int coeff = 2 ;
 		
 		if( flag ) {
 			int onePart = baseScore/reference.size() ;
-			Iterator<String> iter = reference.iterator() ;
+			String ref ;
+			int lvl_ref, my_lvl ;
 			
-			while( iter.hasNext() ) {
-				String current = (String)iter.next() ;
-				if( !this.values.contains(current) ) 
+			for(Map.Entry<String, Integer> entree : reference.entrySet()) {
+				ref = entree.getKey() ;
+				lvl_ref = entree.getValue() ;
+				
+				if( this.values.containsKey(ref) ) {
+					my_lvl = this.values.get(ref) ;								//la clÅEref existe aussi dans this.val
+					System.out.println("my_lvl = "+my_lvl);
+					System.out.println("lvl_ref = "+lvl_ref);
+					if( my_lvl < lvl_ref ) {
+						System.out.println("lvl_ref - my_lvl = "+Math.abs(lvl_ref - my_lvl));
+						baseScore = baseScore - Math.abs(lvl_ref - my_lvl)*coeff ;
+					}
+				}
+				else {
 					baseScore = baseScore - onePart ;
+				}
 			}
 		}	
 		return baseScore ;
@@ -41,23 +70,24 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	}
 	
 	public String getContent() {
-		Iterator<String> iter = this.values.iterator() ;
 		String res = "" ;
-		String current ;
 		
-		while( iter.hasNext() ) {
-			current = iter.next()+"/" ;
-			res = res + current ;
+		for(Map.Entry<String, Integer> entry: this.values.entrySet()) {
+			res = res + entry.getKey() + "/"  ;
 		}
 		return res ;
 	}
 	
-	public ArrayList<String> getValues() {
+	public HashMap<String, Integer> getValues() {
 		return this.values ;
 	}
 	
-	public void setValue(ArrayList<String> s) {
-		this.values = s ;
+	public void setValue(HashMap<String, Integer> map) {
+		this.values = map ;
+	}
+	
+	public void setVal(HashMap<String, Integer> map) {
+		this.values = map;
 	}
 	
 	public String toString() {
