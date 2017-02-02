@@ -11,6 +11,7 @@ import Score.ScoreFinal;
 public class Billet implements ScoreFinal, Comparable<Billet> {
 	private Candidat candidat ;
 	private ArrayList<Critere> criteres = new ArrayList<>(8) ;
+	private int ID_crit ;
 	private int score = 0;
 	
 	public Billet(Candidat candidat, ArrayList<Critere> criteres) {

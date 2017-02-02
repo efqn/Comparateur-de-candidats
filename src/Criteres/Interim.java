@@ -12,6 +12,6 @@ public class Interim extends CritereFort {
 	}
 	
 	public String toString() {
-		return String.valueOf(value) ;
+		return "Interim" ;
 	}
 }
