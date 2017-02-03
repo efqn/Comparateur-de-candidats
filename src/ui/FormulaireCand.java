@@ -190,7 +190,7 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		boiteRegion.addItem("Lorraine");
 		boiteRegion.addItem("Midi-Pyrénées");
 		boiteRegion.addItem("Nord-Pas-de-Calais");
-		boiteRegion.addItem("Pays de la Loiret");
+		boiteRegion.addItem("Pays de la Loire");
 		boiteRegion.addItem("Picardie");
 		boiteRegion.addItem("Poitou-Charentes");
 		boiteRegion.addItem("Provence-Alpes-Côte-d'Azur");
