@@ -30,11 +30,12 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	public String convertLangueToBDDFormat() {
 		String result = "" ;
 		
-		for( Map.Entry<String, Integer> entry: this.values.entrySet() )
-			result = result + entry.getKey()+"+"+entry.getValue()+", " ;
-		
-		result = result.substring(0, result.length()-2) ;
-		
+		if( !this.values.entrySet().isEmpty() ) {
+			for( Map.Entry<String, Integer> entry: this.values.entrySet() )
+				result = result + entry.getKey()+"+"+entry.getValue()+", " ;
+			
+			result = result.substring(0, result.length()-2) ;
+		}
 		return result ;
 	}
 		
