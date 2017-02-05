@@ -22,8 +22,7 @@ public class Recherche {
 	
 	public Recherche() {
 		SQLRequest request = new SQLRequest();
-		request.selectRequest("Critere");
-		ResultSet resultat = request.getResult();
+		ResultSet resultat ;
 		
 	    //on cree les objets correspondants
 	    ArrayList<Critere> critere ;
@@ -40,10 +39,13 @@ public class Recherche {
 	    String langue;
 
 		 try {	 
-			 while(resultat.next()) {
+			 request.selectRequest("Critere");
+			 resultat = request.getResult();
+			  
+			 while(resultat.next()) { 
 			   critere = new ArrayList<>();
 			   //cand = this.allCandidats.get(resultat.getInt("ID_candidat")) ;
-			   cand = Candidat.allCandidats.get(resultat.getInt("ID_candidat")) ;
+			   cand = Candidat.getAllCandidats().get(resultat.getInt("ID_candidat")) ;
 			   System.out.println("\nID_cand = "+resultat.getInt("ID_candidat")+"\n");
 			   fili = new Filiere(resultat.getString("Filiere"));
 			   type_c = new CritereFort(resultat.getString("Type_contrat"));
@@ -82,7 +84,7 @@ public class Recherche {
 				critere.add(nivEt);
 				critere.add(expp);
 				critere.add(lang);
-			    billet = new Billet(cand, critere) ;
+			    billet = new Billet(resultat.getInt("ID_crit"), cand, critere) ;
 			    this.allResults.add(billet);
 		   }
 		} 

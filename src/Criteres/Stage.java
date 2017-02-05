@@ -8,7 +8,7 @@ public class Stage extends CritereFort {
 	}
 	
 	public String getContent() {
-		return "ok" ;
+		return "Stage" ;
 	}
 	
 	public String toString() {

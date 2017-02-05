@@ -82,12 +82,7 @@ public class Langue extends CritereFaible implements ScoreChoixMult {
 	}
 	
 	public String getContent() {
-		String res = "" ;
-		
-		for(Map.Entry<String, Integer> entry: this.values.entrySet()) {
-			res = res + entry.getKey() + "/"  ;
-		}
-		return res ;
+		return this.convertLangueToBDDFormat() ;
 	}
 	
 	public HashMap<String, Integer> getValues() {

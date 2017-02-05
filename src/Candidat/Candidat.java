@@ -16,7 +16,8 @@ public class Candidat {
 	private String mail ;
 	private String telephone ;
 	private int id_candidat ;
-	public static HashMap<Integer, Candidat> allCandidats = new HashMap<>();
+	
+	private static HashMap<Integer, Candidat> allCandidats = new HashMap<>();						//Liste des candidats actuellement dans la base
 	
 	public Candidat(String nom, String prenom, String mail, String tel, int id_candidat) {
 		this.nom = nom ;
@@ -29,6 +30,40 @@ public class Candidat {
 	public Candidat getCandidatById(int id) {
 		return allCandidats.get(id) ;
 	}
+	
+	//Insertion dans la base de donnees et MaJ allCandidats
+	public void insertCandidatIntoDatabase() {
+		SQLRequest request = new SQLRequest() ;
+		try {
+			request.setInsertOption(this) ;
+			request.insertRequest("Candidat") ;
+			allCandidats.put(this.id_candidat, this) ;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			request.closeConnection();
+		}
+	}
+	
+	//Suppression de la base de donnees et MaJ allCandidats
+	public void deleteCandidatFromDatabase() {
+		SQLRequest request = new SQLRequest() ;
+		try {
+			request.setInsertOption(this) ;
+			request.deleteRequest("Candidat", "ID_candidat", this.id_candidat) ;
+			allCandidats.remove(this.id_candidat) ;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			request.closeConnection();
+		}
+	}
+	
+////////////////////////// METHODES STATIQUES /////////////////////////////////////
 	
 	//Selectionne le premier ID non utilise en partant de 1
 	public static int getUnusedId() {
@@ -44,6 +79,10 @@ public class Candidat {
 		}
 		
 		return result ;
+	}
+	
+	public static HashMap<Integer, Candidat> getAllCandidats() {
+		return allCandidats ;
 	}
 	
 	public static void initCandidats() {
@@ -68,6 +107,7 @@ public class Candidat {
 		}
 	}
 		
+///////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * 
 	 * @param String s : Nom du fichier a creer
@@ -184,7 +224,7 @@ public class Candidat {
 	public void setId_candidat(int id_candidat) {
 		this.id_candidat = id_candidat;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Candidat [nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", telephone=" + telephone + "]";

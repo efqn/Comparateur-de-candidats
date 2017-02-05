@@ -8,7 +8,7 @@ public class Interim extends CritereFort {
 	}
 	
 	public String getContent() {
-		return "ok" ;
+		return "Interim" ;
 	}
 	
 	public String toString() {

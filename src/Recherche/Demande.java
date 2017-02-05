@@ -20,7 +20,7 @@ import Criteres.Region;
 import database.SQLRequest;
 
 public class Demande {
-	private ArrayList<Critere> recherche = new ArrayList<>(10) ;
+	private ArrayList<Critere> recherche = new ArrayList<>(8) ;
 	private ArrayList<Billet> resultats = new ArrayList<>(10) ;
 	private ArrayList<Billet> all = new ArrayList<>() ;
 	private HashMap<Integer, Candidat> allCandidats = new HashMap<>();
@@ -45,10 +45,8 @@ public class Demande {
 		//On recupere les elements dans la base de donnees
 		SQLRequest request = new SQLRequest();
 		request.setSelectOption("Filiere", "Type_contrat", filiere, typeContrat);
-		request.selectRequest("Critere");
-		ResultSet resultat = request.getResult();
 		
-	    //on creer les objets correspondants
+	    //on cree les objets correspondants
 	    ArrayList<Critere> critere ;
 	    CritereFort fili;
 	    CritereFort type_c;
@@ -61,12 +59,14 @@ public class Demande {
 	    Candidat cand ;
 	    Billet billet ;
 	    String langue;
-
 		 try {
+			  request.selectRequest("Critere");
+			  ResultSet resultat = request.getResult();
+				
 			 while(resultat.next()) {
 			   critere = new ArrayList<>();
 			   //cand = this.allCandidats.get(resultat.getInt("ID_candidat")) ;
-			   cand = Candidat.allCandidats.get(resultat.getInt("ID_candidat")) ;
+			   cand = Candidat.getAllCandidats().get(resultat.getInt("ID_candidat")) ;
 			   System.out.println("\nID_cand = "+resultat.getInt("ID_candidat")+"\n");
 			   fili = new Filiere(resultat.getString("Filiere"));
 			   type_c = new CritereFort(resultat.getString("Type_contrat"));
@@ -105,7 +105,7 @@ public class Demande {
 				critere.add(nivEt);
 				critere.add(expp);
 				critere.add(lang);
-			    billet = new Billet(cand, critere) ;
+			    billet = new Billet( resultat.getInt("ID_crit"),cand, critere) ;
 			    this.all.add(billet);
 		   }
 		} 
@@ -115,9 +115,7 @@ public class Demande {
 		}
 		finally {
 			request.closeConnection() ;
-			//request_cand.closeConnection();
 		}
-		 
 	}
 	
 	/**
