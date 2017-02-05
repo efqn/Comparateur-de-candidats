@@ -210,10 +210,10 @@ public class TestBDD {
 		d.retrieveData("Juridique/Droit", "Stage");
 		System.out.println("salut sa va");
 		System.out.println("taille all : "+d.getAll().size()) ;
-		/*for( Billet b : d.getAll() ) {
+		for( Billet b : d.getAll() ) {
 			System.out.println(b) ;
 			System.out.println("Candidat ID :"+b.getCandidat().getId_candidat());
-		}*/
+		}
 		
 		System.out.println("test formatage langue ");
 		ArrayList<String> yo = new ArrayList<>() ;
