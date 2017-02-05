@@ -8,7 +8,7 @@ public class CDI extends CritereFort {
 	}
 	
 	public String getContent() {
-		return "ok" ;
+		return "CDI" ;
 	}
 	
 	public String toString() {

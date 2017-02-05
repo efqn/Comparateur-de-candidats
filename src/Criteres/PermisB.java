@@ -31,7 +31,7 @@ public class PermisB extends CritereFaible implements ScoreChoixSimple {
 	}
 	
 	public String getContent() {
-		return String.valueOf(this.value) ;
+		return ( value ? "Oui" : "Non") ;
 	}
 	
 	public boolean getValue() {

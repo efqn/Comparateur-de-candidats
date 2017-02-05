@@ -28,7 +28,7 @@ public class TestScore {
 		criteres.add(new NiveauEtude(2)) ;
 		criteres.add(new ExperiencePro(1)) ;
 		ArrayList<String> langues = new ArrayList<>() ;
-		langues.add("Anglais 3") ;
+		langues.add("Anglais+3") ;
 		criteres.add(new Langue(langues)) ;
 	}
 	
@@ -41,11 +41,11 @@ public class TestScore {
 		criteres.add(new NiveauEtude(7)) ;
 		criteres.add(new ExperiencePro(5)) ;
 		ArrayList<String> langues = new ArrayList<>() ;
-		langues.add("Anglais 3") ;
-		langues.add("Espagnol 3") ;
-		langues.add("Italien 3") ;
-		langues.add("Allemand 3") ;
-		langues.add("Russe 3") ;
+		langues.add("Anglais+3") ;
+		langues.add("Espagnol+3") ;
+		langues.add("Italien+3") ;
+		langues.add("Allemand+3") ;
+		langues.add("Russe+3") ;
 		criteres.add(new Langue(langues)) ;
 	}
 	
@@ -58,11 +58,11 @@ public class TestScore {
 		criteres.add(new NiveauEtude(7)) ;
 		criteres.add(new ExperiencePro(5)) ;
 		ArrayList<String> langues = new ArrayList<>() ;
-		langues.add("Anglais 3") ;
-		langues.add("Espagnol 3") ;
-		langues.add("Italiano 3") ;
-		langues.add("Allemand 3") ;
-		langues.add("Russe 3") ;
+		langues.add("Anglais+3") ;
+		langues.add("Espagnol+3") ;
+		langues.add("Italiano+3") ;
+		langues.add("Allemand+3") ;
+		langues.add("Russe+3") ;
 		criteres.add(new Langue(langues)) ;
 	}
 	
@@ -106,18 +106,18 @@ public class TestScore {
 		c.saveC();
 		
 		ArrayList<Billet> barray = new ArrayList<>() ;
-		Billet b = new Billet(c, criteres) ;
-		Billet b2 = new Billet(c, criteres2) ;
-		Billet b3 = new Billet(c, criteres3) ;
-		Billet b4 = new Billet(c, criteres4) ;
-		Billet b5 = new Billet(c, criteres5) ;
-		Billet b6 = new Billet(c, criteres6) ;
-		Billet b7 = new Billet(c, criteres7) ;
-		Billet b8 = new Billet(c, criteres8) ;
-		Billet b9 = new Billet(c, criteres9) ;
-		Billet b10 = new Billet(c, criteres10) ;
-		Billet b11 = new Billet(c, criteres11) ;
-		Billet b12 = new Billet(c, criteres12) ;
+		Billet b = new Billet(1,c, criteres) ;
+		Billet b2 = new Billet(2,c, criteres2) ;
+		Billet b3 = new Billet(3,c, criteres3) ;
+		Billet b4 = new Billet(4,c, criteres4) ;
+		Billet b5 = new Billet(5,c, criteres5) ;
+		Billet b6 = new Billet(6,c, criteres6) ;
+		Billet b7 = new Billet(7,c, criteres7) ;
+		Billet b8 = new Billet(8,c, criteres8) ;
+		Billet b9 = new Billet(9,c, criteres9) ;
+		Billet b10 = new Billet(10,c, criteres10) ;
+		Billet b11 = new Billet(11,c, criteres11) ;
+		Billet b12 = new Billet(12,c, criteres12) ;
 		//System.out.println(b) ;
 		barray.add(b) ;
 		barray.add(b2) ;
@@ -161,8 +161,8 @@ public class TestScore {
 		
 		System.out.println("\ntest score mult") ;
 		ArrayList<String> langues = new ArrayList<>() ;
-		langues.add("Anglais 2") ;
-		langues.add("Espagnol 2") ;
+		langues.add("Anglais+2") ;
+		langues.add("Espagnol+2") ;
 		/*ArrayList<String> ref = new ArrayList<>() ;
 		ref.add("Anglais") ;
 		ref.add("caca") ;

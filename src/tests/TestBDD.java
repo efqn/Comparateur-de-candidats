@@ -39,6 +39,23 @@ public class TestBDD {
 		criteres.add(new Langue(langues)) ;
 	}
 	
+	public static void addC3(ArrayList<Critere> criteres, int i) {
+		criteres.add(new Filiere("Info")) ;
+		criteres.add(new CDD(true)) ;
+		criteres.add(new Age(i)) ;
+		criteres.add(new PermisB(false)) ;
+		criteres.add(new Region("aze")) ;
+		criteres.add(new NiveauEtude(7)) ;
+		criteres.add(new ExperiencePro(5)) ;
+		ArrayList<String> langues = new ArrayList<>() ;
+		langues.add("Anglais+3") ;
+		langues.add("Espagnol+3") ;
+		langues.add("Italiano+3") ;
+		langues.add("Allemand+3") ;
+		langues.add("Russe+3") ;
+		criteres.add(new Langue(langues)) ;
+	}
+	
 	public static void main(String[]args) {
 ///////////////////////////////////////////////////////////////////////
 /////////////////////		TESTS BDD		//////////////////////////	
@@ -46,6 +63,7 @@ public class TestBDD {
 		// TEST DE RECUPERATION DU CONTENU DE LA BASE
 		
 		Candidat.initCandidats() ;
+		Billet.initBillets();
 		/*System.out.println("////////////////////////////    TESTS BDD    //////////////////////////////////");
 		SQLRequest request = new SQLRequest();
 		SQLRequest request_cand = new SQLRequest();
@@ -119,7 +137,7 @@ public class TestBDD {
 				crita.add(nivEt);
 				crita.add(expp);
 				crita.add(lagg);
-			    bill = new Billet(cand, crita) ;
+			    bill = new Billet(resultat.getInt("ID_crit"), cand, crita) ;
 			    resb.add(bill);
 			    System.out.println("\n\n");
 		   }
@@ -192,10 +210,10 @@ public class TestBDD {
 		d.retrieveData("Juridique/Droit", "Stage");
 		System.out.println("salut sa va");
 		System.out.println("taille all : "+d.getAll().size()) ;
-		for( Billet b : d.getAll() ) {
+		/*for( Billet b : d.getAll() ) {
 			System.out.println(b) ;
 			System.out.println("Candidat ID :"+b.getCandidat().getId_candidat());
-		}
+		}*/
 		
 		System.out.println("test formatage langue ");
 		ArrayList<String> yo = new ArrayList<>() ;
@@ -208,20 +226,28 @@ public class TestBDD {
 		System.out.println(lang.convertLangueToBDDFormat()+"/");
 		
 		System.out.println("\n\n TEST INSERT\n\n");
-		Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",Candidat.getUnusedId()) ;
+		//Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",Candidat.getUnusedId()) ;
+		Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",804) ;
+		ArrayList<Critere> crit2 = new ArrayList<>() ;
+		addC3(crit2, 50) ;
+		//Billet bambi = new Billet(Billet.getUnusedId(), cadi, crit2) ;
+		Billet bambi = new Billet(801, cadi, crit2) ;
 		SQLRequest request = new SQLRequest() ;
 		SQLRequest request2 = new SQLRequest() ;
 		try {
 			//request.setInsertOption(cadi) ;
 			//request2.setInsertOption(id, filiere, typeContrat, age, permis, region, lvlEtu, exp, langue);
 			//request.insertRequest("Candidat");
-			request2.deleteRequest("Candidat", "ID_candidat", 801);
+			//request2.deleteRequest("Candidat", "ID_candidat", 801);
+			//bambi.insertEntryIntoDatabase();
+			bambi.deleteEntryFromDatabase();
 		}
 		catch(Exception e) {
 			System.out.println("MARCHE PAS");
 		}
 		finally {
-			request.closeConnection();
+			//request.closeConnection();
+			//request2.closeConnection();
 		}
 	}
 ///////////////////////////////////////////////////////////////////////////////	
