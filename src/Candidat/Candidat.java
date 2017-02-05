@@ -4,13 +4,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import database.SQLRequest;
 
 public class Candidat {
 	private String nom ;
 	private String prenom ;
 	private String mail ;
 	private String telephone ;
-	private int id_candidat ;	
+	private int id_candidat ;
+	public static HashMap<Integer, Candidat> allCandidats = new HashMap<>();
 	
 	public Candidat(String nom, String prenom, String mail, String tel, int id_candidat) {
 		this.nom = nom ;
@@ -20,6 +26,48 @@ public class Candidat {
 		this.id_candidat = id_candidat ;
 	}
 	
+	public Candidat getCandidatById(int id) {
+		return allCandidats.get(id) ;
+	}
+	
+	//Selectionne le premier ID non utilise en partant de 1
+	public static int getUnusedId() {
+		int result = 1 ;
+		boolean done = false ;
+		
+		while( !done ) {
+			if( allCandidats.containsKey(result)) {
+				result++;
+			}
+			else
+				done = true ;
+		}
+		
+		return result ;
+	}
+	
+	public static void initCandidats() {
+		SQLRequest request_cand = new SQLRequest();
+		Candidat cand ;
+		try {
+			request_cand.selectRequest("Candidat") ;
+			ResultSet resultat_cand = request_cand.getResult();
+		
+			while( resultat_cand.next() ){
+				 cand = new Candidat(resultat_cand.getString("Nom"), resultat_cand.getString("Prenom"), resultat_cand.getString("Mail"), resultat_cand.getString("Telephone"),  resultat_cand.getInt("ID_candidat"));
+				 //this.allCandidats.put(cand.getId_candidat(), cand) ;
+				 Candidat.allCandidats.put(cand.getId_candidat(), cand ) ;
+			 }
+		}
+		catch(SQLException e) {
+			e.printStackTrace() ;
+			System.out.println("ko");
+		}
+		finally {
+			request_cand.closeConnection() ;
+		}
+	}
+		
 	/**
 	 * 
 	 * @param String s : Nom du fichier a creer
@@ -127,6 +175,14 @@ public class Candidat {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public int getId_candidat() {
+		return id_candidat;
+	}
+
+	public void setId_candidat(int id_candidat) {
+		this.id_candidat = id_candidat;
 	}
 
 	@Override
