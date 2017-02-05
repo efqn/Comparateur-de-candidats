@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import Candidat.Candidat;
@@ -22,6 +23,7 @@ public class Demande {
 	private ArrayList<Critere> recherche = new ArrayList<>(10) ;
 	private ArrayList<Billet> resultats = new ArrayList<>(10) ;
 	private ArrayList<Billet> all = new ArrayList<>() ;
+	private HashMap<Integer, Candidat> allCandidats = new HashMap<>();
 	private boolean[] flags ;
 	
 	/**
@@ -40,15 +42,13 @@ public class Demande {
 	
 	//Recupere les donnees dans la base de donnee
 	public void retrieveData(String filiere, String typeContrat) {
+		//On recupere les elements dans la base de donnees
 		SQLRequest request = new SQLRequest();
-		SQLRequest request_cand = new SQLRequest();
-		request.selectRequest("Critere");
 		request.setSelectOption("Filiere", "Type_contrat", filiere, typeContrat);
+		request.selectRequest("Critere");
 		ResultSet resultat = request.getResult();
-		request_cand.selectRequest("Candidat") ;
-		ResultSet resultat_cand = request_cand.getResult();
-
-	    //recuperer toute la base
+		
+	    //on creer les objets correspondants
 	    ArrayList<Critere> critere ;
 	    CritereFort fili;
 	    CritereFort type_c;
@@ -60,12 +60,14 @@ public class Demande {
 	    Langue lang;
 	    Candidat cand ;
 	    Billet billet ;
-	    String langues;
+	    String langue;
 
 		 try {
-			 while(resultat.next() && resultat_cand.next() ) {
+			 while(resultat.next()) {
 			   critere = new ArrayList<>();
-			   cand = new Candidat(resultat_cand.getString("Nom"), resultat_cand.getString("Prenom"), resultat_cand.getString("Mail"), resultat_cand.getString("Telephone"),  resultat_cand.getInt("ID_candidat"));
+			   //cand = this.allCandidats.get(resultat.getInt("ID_candidat")) ;
+			   cand = Candidat.allCandidats.get(resultat.getInt("ID_candidat")) ;
+			   System.out.println("\nID_cand = "+resultat.getInt("ID_candidat")+"\n");
 			   fili = new Filiere(resultat.getString("Filiere"));
 			   type_c = new CritereFort(resultat.getString("Type_contrat"));
 			   age = new Age(resultat.getInt("Age"));
@@ -77,23 +79,23 @@ public class Demande {
 				nivEt = new NiveauEtude(resultat.getInt("NiveauEtude")) ;
 				expp = new ExperiencePro(resultat.getInt("ExperiencePro"));
 				
-				ArrayList<String> azaza = new ArrayList<>();
-				langues = resultat.getString("Langue") ;
-				if( !langues.equals("") ) {															//il se peut que le champ "langue" soit vide
+				ArrayList<String> listlangue = new ArrayList<>();
+				langue = resultat.getString("Langue") ;
+				if( !langue.equals("") ) {															//il se peut que le champ "langue" soit vide
 					   int nb = 0 ;
-					   langues = langues.replaceAll(" ", "");
-					   String tmp = langues ;
-					   nb = langues.length() - langues.replace(",", "").length() ;					//nombre d'occurences de la virgule : on aura nb+1 valeurs a recuperer
+					   langue = langue.replaceAll(" ", "");
+					   String tmp = langue ;
+					   nb = langue.length() - langue.replace(",", "").length() ;					//nombre d'occurences de la virgule : on aura nb+1 valeurs a recuperer
 					   
 					   for(int i=0; i<nb; i++) {
-							tmp = langues.substring(0, langues.indexOf(",")) ;						//Format langue : (langue+ "+" + niveau)
-							langues = langues.substring(langues.indexOf(",")+1) ;
-							azaza.add(tmp) ;
+							tmp = langue.substring(0, langue.indexOf(",")) ;						//Format langue : (langue+ "+" + niveau)
+							langue = langue.substring(langue.indexOf(",")+1) ;
+							listlangue.add(tmp) ;
 						}
-					   tmp = langues.substring(0) ;													//on enleve le dernier espace (le traitement de la derniere valeur est specifique)
-					   azaza.add(tmp) ;
+					   tmp = langue.substring(0) ;													//on enleve le dernier espace (le traitement de la derniere valeur est specifique)
+					   listlangue.add(tmp) ;
 				}
-				lang = new Langue(azaza);
+				lang = new Langue(listlangue);
 				
 				critere.add(fili);
 				critere.add(type_c);
@@ -113,7 +115,7 @@ public class Demande {
 		}
 		finally {
 			request.closeConnection() ;
-			request_cand.closeConnection();
+			//request_cand.closeConnection();
 		}
 		 
 	}
@@ -122,8 +124,8 @@ public class Demande {
 	 * Cette fonction ira rechercher les meilleurs resultats dans la base de donnees
 	 * Le nombre de resultats est limite a 10
 	 */
-	public void rechercheResultats(ArrayList<Billet> all) {
-		ArrayList<Billet> tmp = all ;
+	public void rechercheResultats() {
+		ArrayList<Billet> tmp = this.all ;
 		Billet min ;	
 		Iterator<Billet> iter = tmp.iterator() ;
 		
@@ -157,7 +159,7 @@ public class Demande {
 		Collections.reverse(this.resultats) ;
 		System.out.println("Score min : "+Collections.min(this.resultats).getThisScore()) ;
 	}
-
+	
 	public ArrayList<Critere> getRecherche() {
 		return recherche;
 	}

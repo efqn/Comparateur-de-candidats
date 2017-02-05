@@ -138,7 +138,8 @@ public class TestScore {
 		ArrayList<Critere> critest = new ArrayList<>(8) ;
 		addC2(critest, 23, 26) ;
 		Demande d = new Demande(critest, flags) ;
-		d.rechercheResultats(barray) ;
+		d.setAll(barray);
+		d.rechercheResultats() ;
 		System.out.println(d) ;
 		
 /////////////////////		TESTS SCORE		//////////////////////////	

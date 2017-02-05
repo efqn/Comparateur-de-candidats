@@ -5,7 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
+import Candidat.Candidat;
 
 public class SQLRequest {
 	private String option;										//option pour les commandes SQL
@@ -13,7 +14,6 @@ public class SQLRequest {
 	private PreparedStatement preparedStatement = null ;
 	private ResultSet result = null ;
 	
-	//Constructeur utilise lorsqu'on ignore complement les criteres forts
 	public SQLRequest() {
 		this.option = "";
 	}
@@ -69,6 +69,8 @@ public class SQLRequest {
 		try {
 		   this.connect() ;
 		   this.preparedStatement = this.connexion.prepareStatement("SELECT * FROM \""+ table +"\" "+ option +";") ;
+		   System.out.println("OK ON SELECT");
+		   System.out.println("\n\n\nSELECT * FROM \""+ table +"\" "+ option +";\n\n\n");
 		   this.result = preparedStatement.executeQuery() ;
 	   } catch (Exception e) {
 	      e.printStackTrace();
@@ -85,24 +87,41 @@ public class SQLRequest {
 		this.option = "WHERE (\"" + colonne1+ "\" = '"+ arg1 + "' AND \"" + colonne2+ "\" = '"+ arg2 + "')";
 	}
 	
-	public void insertRequest(String table, String option) {
+	public void insertRequest(String table) {
 		try {
 		   this.connect() ;
-		   this.preparedStatement = this.connexion.prepareStatement("INSERT INTO \""+ table +"\" VALUES( "+ option +";") ;
-		   this.result = preparedStatement.executeQuery() ;
+		   this.preparedStatement = this.connexion.prepareStatement("INSERT INTO \""+ table +"\" VALUES( "+ option +");") ;
+		   System.out.println("\n\nINSERT INTO \""+ table +"\" VALUES( "+ option +");");
+		   preparedStatement.executeUpdate() ;
 	   } catch (Exception e) {
 	      e.printStackTrace();
 	   }
 	}
 	
-	public void setInsertValuesCandidat(ArrayList<String> liste) {
-		
+	//pour candidat
+	public void setInsertOption(Candidat candidat) {
+		this.option = candidat.getId_candidat()+",'"+candidat.getNom()+"','"+candidat.getPrenom()+"','"+candidat.getTelephone()+"','"+candidat.getMail()+"'" ;
 	}
 	
-	public void setInsertValuesCritere(ArrayList<String> liste) {
-		
+	//pour critere
+	public void setInsertOption(int id, String filiere, String typeContrat, int age, String permis, String region, String lvlEtu, String exp, String langue) {
+		this.option = id+",'"+filiere+"','"+typeContrat+age+"','"+permis+"','"+region+"','"+lvlEtu+"','"+exp+"','"+langue+"'";
 	}
-
+	
+	//pour la table des candidats retenus
+	public void setInsertOption(int idCandidat, int idCritere) {
+		this.option = idCandidat+","+idCritere ;
+	}
+	
+	public void deleteRequest(String table, String idname, int id) {
+		try {
+			   this.connect() ;
+			   this.preparedStatement = this.connexion.prepareStatement("DELETE FROM \""+ table +"\" WHERE( \""+idname+"\" = "+ id +");") ;
+			   preparedStatement.executeUpdate() ;
+		   } catch (Exception e) {
+		      e.printStackTrace();
+		   }
+	}
 	
 	public String getOption() {
 		return option;

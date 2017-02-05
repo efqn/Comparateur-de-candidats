@@ -17,6 +17,7 @@ import Criteres.NiveauEtude;
 import Criteres.PermisB;
 import Criteres.Region;
 import Recherche.Billet;
+import Recherche.Demande;
 import database.SQLRequest;
 
 public class TestBDD {
@@ -41,7 +42,11 @@ public class TestBDD {
 	public static void main(String[]args) {
 ///////////////////////////////////////////////////////////////////////
 /////////////////////		TESTS BDD		//////////////////////////	
-		System.out.println("////////////////////////////    TESTS BDD    //////////////////////////////////");
+		
+		// TEST DE RECUPERATION DU CONTENU DE LA BASE
+		
+		Candidat.initCandidats() ;
+		/*System.out.println("////////////////////////////    TESTS BDD    //////////////////////////////////");
 		SQLRequest request = new SQLRequest();
 		SQLRequest request_cand = new SQLRequest();
 		request.selectRequest("Critere");
@@ -127,7 +132,7 @@ public class TestBDD {
 		   for(Billet b : resb) {
 			   score = b.getScore(crit, bool) ;
 			   System.out.println(b) ;
-		   }
+		   }*/
 		  // System.out.println(resb) ;
 		  /* Iterator<Billet> it = resb.iterator() ;
 		   it.next();
@@ -167,17 +172,58 @@ public class TestBDD {
 			    lang = resultat.getString( "Langue" );
 			    System.out.println(idCrit+". Filiere: "+filiere+", Type_contrat : "+t_cont+", Age : "+age+", Permis : "+permis
 			    		   +", Region : "+reg+", NiveauEtude : "+lvlE+", ExperiencePro : "+exp+", Langues : "+lang);
-		    }*/
-		    
-		} catch(/*SQLException*/Exception e) {
+		    }
+		
+		} catch(SQLExceptionException e) {
 			e.printStackTrace() ;
 			System.out.println("ko");
 		}
 		finally{
 			request.closeConnection() ;
 			request_cand.closeConnection();
+		}*/
+		
+		//TEST D'OPERATION SUR LA BASE
+		
+		ArrayList<Critere> crit = new ArrayList<>(8) ;
+		boolean[]bool = {true, true, true, true, true, true} ;
+		addC2(crit, 30, 50) ;
+		Demande d = new Demande(crit, bool) ;
+		d.retrieveData("Juridique/Droit", "Stage");
+		System.out.println("salut sa va");
+		System.out.println("taille all : "+d.getAll().size()) ;
+		for( Billet b : d.getAll() ) {
+			System.out.println(b) ;
+			System.out.println("Candidat ID :"+b.getCandidat().getId_candidat());
 		}
-///////////////////////////////////////////////////////////////////////////////	
+		
+		System.out.println("test formatage langue ");
+		ArrayList<String> yo = new ArrayList<>() ;
+		yo.add("Anglais+3") ;
+		yo.add("Espagnol+3") ;
+		yo.add("Italien+3") ;
+		yo.add("Allemand+3") ;
+		yo.add("Russe+3") ;
+		Langue lang = new Langue(yo) ;
+		System.out.println(lang.convertLangueToBDDFormat()+"/");
+		
+		System.out.println("\n\n TEST INSERT\n\n");
+		Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",Candidat.getUnusedId()) ;
+		SQLRequest request = new SQLRequest() ;
+		SQLRequest request2 = new SQLRequest() ;
+		try {
+			//request.setInsertOption(cadi) ;
+			//request2.setInsertOption(id, filiere, typeContrat, age, permis, region, lvlEtu, exp, langue);
+			//request.insertRequest("Candidat");
+			request2.deleteRequest("Candidat", "ID_candidat", 801);
+		}
+		catch(Exception e) {
+			System.out.println("MARCHE PAS");
+		}
+		finally {
+			request.closeConnection();
+		}
 	}
-
+///////////////////////////////////////////////////////////////////////////////	
 }
+
