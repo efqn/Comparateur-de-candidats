@@ -85,6 +85,7 @@ public class Candidat {
 		return allCandidats ;
 	}
 	
+	//A utiliser au lancement du programme pour avoir une vision de l'etat de la base de donnees
 	public static void initCandidats() {
 		SQLRequest request_cand = new SQLRequest();
 		Candidat cand ;
@@ -94,7 +95,6 @@ public class Candidat {
 		
 			while( resultat_cand.next() ){
 				 cand = new Candidat(resultat_cand.getString("Nom"), resultat_cand.getString("Prenom"), resultat_cand.getString("Mail"), resultat_cand.getString("Telephone"),  resultat_cand.getInt("ID_candidat"));
-				 //this.allCandidats.put(cand.getId_candidat(), cand) ;
 				 Candidat.allCandidats.put(cand.getId_candidat(), cand ) ;
 			 }
 		}

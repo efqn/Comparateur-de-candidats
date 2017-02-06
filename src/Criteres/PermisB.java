@@ -17,7 +17,6 @@ public class PermisB extends CritereFaible implements ScoreChoixSimple {
 	 * Sinon :
 	 * 		- baseScore si value = true
 	 * 		- 0   sinon
-	 * 
 	 */
 	public int getScore(boolean flag, String s) {
 		if( flag )
@@ -26,6 +25,10 @@ public class PermisB extends CritereFaible implements ScoreChoixSimple {
 			return baseScore ;
 	}
 	
+	/**
+	 * fonction commune a tous les criteres faibles.
+	 * Appelle la bonne fonction getScore() qui effectuera le calcul du score
+	 */
 	public int getScore(CritereFaible critere, boolean flag) {
 		return getScore(flag, critere.getContent()) ;
 	}

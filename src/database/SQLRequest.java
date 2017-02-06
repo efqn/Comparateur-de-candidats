@@ -13,11 +13,18 @@ public class SQLRequest {
 	private Connection connexion = null ;
 	private PreparedStatement preparedStatement = null ;
 	private ResultSet result = null ;
-	
+
 	public SQLRequest() {
 		this.option = "";
 	}
 	
+	/**
+	 * Etablit une connexion avec la base de donnee locale.
+	 * Fonctionne pour une base de donnee PostgreSQL.
+	 * Pour etablir une connexion avec une base de donnee situee autre part, il faut changer :
+	 * 			- le driver selon le type de base de donnee
+	 * 			- le login et le mot de passe en fonction de la base
+	 */
 	public void connect() {
 		try {
 		   Class.forName("org.postgresql.Driver");
@@ -35,7 +42,12 @@ public class SQLRequest {
 	   } 
 	}
 	
-	// A UTILISER POUR CLOTURER LES CONNEXIONS
+	
+	/**
+	 * IMPORTANT
+	 * A UTILISER POUR CLOTURER LES CONNEXIONS
+	 * 
+	 */
 	public void closeConnection() {
 		if (this.result != null) {
 			try {
@@ -65,6 +77,15 @@ public class SQLRequest {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * Effectue une selection dans la table specifiee en parametre. 
+	 * Option est defini par les setSelectOption si il y a besoin d'affiner le retour de la base
+	 * 
+	 * @param table 		: table dans laquelle la requete de selection doit etre faite
+	 * @throws SQLException
+	 */
 	public void selectRequest(String table) throws SQLException {
 		try {
 		   this.connect() ;
@@ -77,16 +98,37 @@ public class SQLRequest {
 	   }
 	}
 	
-	//Pour prendre en compte un seul critere fort
+	
+	/**
+	 * On utilise cette fonction si on veut juste prendre en compte un seul critere fort (dans le cadre de l'application)
+	 * On lui preferera la version a 2 criteres forts qui affine mieux la recherche
+	 * 
+	 * @param colonne	: Colonne dans la table de la base de donnee sur laquelle il faut donner des precisions
+	 * @param arg		: Valeur pour la colonne sur laquelle on veut des precisions
+	 */
 	public void setSelectOption(String colonne, String arg) {
 		this.option = "WHERE (\"" + colonne+ "\" = '"+ arg + "')";
 	}
 	
-	//Pour prendre en compte 2 criteres forts
+	
+	/**
+	 * Version a 2 criteres forts de setSelectOption
+	 * 
+	 * @param colonne1	: 1ere colonne dans la table de la base de donnee sur laquelle il faut donner des precisions
+	 * @param colonne2	: 2eme colonne dans la table de la base de donnee sur laquelle il faut donner des precisions
+	 * @param arg1		: Valeur pour la 1ere colonne
+	 * @param arg2		: Valeur pour la 2eme colonne
+	 */
 	public void setSelectOption(String colonne1, String colonne2, String arg1, String arg2) {
 		this.option = "WHERE (\"" + colonne1+ "\" = '"+ arg1 + "' AND \"" + colonne2+ "\" = '"+ arg2 + "')";
 	}
 	
+	
+	/**
+	 * Effectue une requete d'insertion dans la table specifiee en parametre
+	 * @param table			: table dans laquelle effectuer l'insertion
+	 * @throws SQLException
+	 */
 	public void insertRequest(String table) throws SQLException {
 		try {
 		   this.connect() ;
@@ -98,21 +140,52 @@ public class SQLRequest {
 	   }
 	}
 	
-	//pour candidat
+	
+	/**
+	 * Definit les valeurs a inserer dans la base de donnees pour la table Candidat
+	 * @param candidat : le candidat a inserer
+	 */
 	public void setInsertOption(Candidat candidat) {
 		this.option = candidat.getId_candidat()+",'"+candidat.getNom()+"','"+candidat.getPrenom()+"','"+candidat.getTelephone()+"','"+candidat.getMail()+"'" ;
 	}
 	
-	//pour critere
+	
+	/**
+	 * Definit les valeurs a inserer dans la base de donnees pour la table Critere.
+	 * Les parametres suivants correspondent aux champs a inserer dans la base
+	 * @param id
+	 * @param filiere
+	 * @param typeContrat
+	 * @param age
+	 * @param permis
+	 * @param region
+	 * @param lvlEtu
+	 * @param exp
+	 * @param langue
+	 * @param id_candidat
+	 */
 	public void setInsertOption(int id, String filiere, String typeContrat, int age, String permis, String region, int lvlEtu, int exp, String langue, int id_candidat) {
 		this.option = id+",'"+filiere+"','"+typeContrat+"','"+age+"','"+permis+"','"+region+"','"+lvlEtu+"','"+exp+"','"+langue+"','"+id_candidat+"'";
 	}
 	
-	//pour la table des candidats retenus
+	
+	/**
+	 * Definit les valeurs a rentrer dans la base de donnees pour la table Retenus
+	 * @param idCandidat	: id du candidat
+	 * @param idCritere		: id du critere
+	 */
 	public void setInsertOption(int idCandidat, int idCritere) {
 		this.option = idCandidat+","+idCritere ;
 	}
 	
+	
+	/**
+	 * Effectue une requete de suppression dans la base de donnees
+	 * @param table			: table dans laquelle il faut supprimer
+	 * @param idname		: nom de la colonne contenant les id
+	 * @param id			: id de l'entree a supprimer
+	 * @throws SQLException
+	 */
 	public void deleteRequest(String table, String idname, int id) throws SQLException {
 		try {
 			   this.connect() ;

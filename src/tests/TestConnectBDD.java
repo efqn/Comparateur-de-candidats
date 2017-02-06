@@ -1,4 +1,4 @@
-package database;
+package tests;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 
 //classe test
-public class Connect {
+public class TestConnectBDD {
 
 		public static void main(String[] args) {      
 			Connection connexion = null ;

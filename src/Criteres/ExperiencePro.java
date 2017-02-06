@@ -20,12 +20,17 @@ public class ExperiencePro extends CritereFaible implements ScoreChoixSimplePond
 		this.baseScore = 200 ;
 		this.facteur = 20 ;
 		
-		if( flag )
+		if( flag ) {
 			if( this.value <= i )
 				baseScore = baseScore - (i - this.value)*facteur ;
+		}
 		return baseScore ;
 	}
 	
+	/**
+	 * fonction commune a tous les criteres faibles.
+	 * Appelle la bonne fonction getScore() qui effectuera le calcul du score
+	 */
 	public int getScore(CritereFaible critere, boolean flag) {
 		return getScore(flag, Integer.parseInt(critere.getContent())) ;
 	}
