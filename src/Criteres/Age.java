@@ -49,6 +49,10 @@ public class Age extends CritereFaible implements ScoreIntervalle {
 		return baseScore ;
 	}
 	
+	/**
+	 * fonction commune a tous les criteres faibles.
+	 * Appelle la bonne fonction getScore() qui effectuera le calcul du score
+	 */
 	public int getScore(CritereFaible critere, boolean flag) {
 		Age age = (Age)critere ;
 		return this.getScore(flag, age.getBorneInf(), age.getBorneSup()) ;

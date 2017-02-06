@@ -159,6 +159,10 @@ public class TestScore {
 		NiveauEtude lvlE = new NiveauEtude(0) ;
 		System.out.println(lvlE.getScore(true, 7)) ;
 		
+		System.out.println("\ntest score simple pond2") ;
+		ExperiencePro exp = new ExperiencePro(0) ;
+		System.out.println(exp.getScore(true, 7)) ;
+		
 		System.out.println("\ntest score mult") ;
 		ArrayList<String> langues = new ArrayList<>() ;
 		langues.add("Anglais+2") ;

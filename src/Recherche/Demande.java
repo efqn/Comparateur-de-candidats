@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import Candidat.Candidat;
@@ -20,11 +19,10 @@ import Criteres.Region;
 import database.SQLRequest;
 
 public class Demande {
-	private ArrayList<Critere> recherche = new ArrayList<>(8) ;
-	private ArrayList<Billet> resultats = new ArrayList<>(10) ;
-	private ArrayList<Billet> all = new ArrayList<>() ;
-	private HashMap<Integer, Candidat> allCandidats = new HashMap<>();
-	private boolean[] flags ;
+	private ArrayList<Critere> recherche = new ArrayList<>(8) ;						//criteres de recherche
+	private ArrayList<Billet> resultats = new ArrayList<>(10) ;						//les 10 meilleurs resultats (initialement vide)
+	private ArrayList<Billet> all = new ArrayList<>() ;								//selection de la base de donnees
+	private boolean[] flags ;														//flags permettant d'ignorer ou non les criteres correspondants a une case
 	
 	/**
 	 * 
@@ -40,9 +38,13 @@ public class Demande {
 				this.flags[i] = flags[i] ;
 	}
 	
-	//Recupere les donnees dans la base de donnee
+	/**
+	 * Recupere les entrees de la base de donnee pour lesquelles les champs specifies en parametres correspondent
+	 * @param filiere		: nom de la filiere pour laquelle la colonne "Filiere" de la base doit correspondre
+	 * @param typeContrat	: type de contrat pour lequel la colonne "Type_contrat" de la base doit correspondre
+	 */
 	public void retrieveData(String filiere, String typeContrat) {
-		//On recupere les elements dans la base de donnees
+		//On recupere les elements dans la base de donnees correspondant deux colonnes filiere et typeContrat
 		SQLRequest request = new SQLRequest();
 		request.setSelectOption("Filiere", "Type_contrat", filiere, typeContrat);
 		
@@ -119,7 +121,7 @@ public class Demande {
 	}
 	
 	/**
-	 * Cette fonction ira rechercher les meilleurs resultats dans la base de donnees
+	 * Cette fonction selectionne les 10 meilleurs resultats de la selection de la base de donnee
 	 * Le nombre de resultats est limite a 10
 	 */
 	public void rechercheResultats() {

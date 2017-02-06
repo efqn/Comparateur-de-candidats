@@ -19,7 +19,11 @@ import database.SQLRequest;
 public class Recherche {
 
 	private ArrayList<Billet> allResults = new ArrayList<>() ;
+	private ArrayList<Billet> subResults = new ArrayList<>() ;
 	
+	/**
+	 * Contient toutes les entrees de la base de donnees
+	 */
 	public Recherche() {
 		SQLRequest request = new SQLRequest();
 		ResultSet resultat ;
@@ -94,6 +98,14 @@ public class Recherche {
 		}
 		finally {
 			request.closeConnection() ;
+		}
+	}
+	
+	public void searchFilter(Critere critere) {
+		this.subResults.removeAll(subResults) ;
+		for(Billet b : this.allResults) {
+			if( b.getCriteres().contains(critere))
+				subResults.add(b) ;
 		}
 		
 	}

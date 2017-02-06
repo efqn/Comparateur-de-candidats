@@ -19,6 +19,7 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 	
 	private static HashMap<Integer, Billet> allBillets = new HashMap<>() ;					//liste de toutes les entrees de la table critere
 	
+	
 	public Billet(int id, Candidat candidat, ArrayList<Critere> criteres) {
 		this.candidat = candidat ;
 		this.criteres.addAll(criteres) ;
@@ -27,7 +28,7 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 	
 //////////////////////////METHODES STATIQUES /////////////////////////////////////
 	
-	//retorune le 1er id de libre a partir de 1
+	//retourne le 1er id de libre a partir de 1
 	public static int getUnusedId() {
 		int result = 1 ;
 		boolean done = false ;
@@ -47,7 +48,7 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 		return allBillets ;
 	}
 	
-	
+	//A utiliser au lancement du programme pour avoir une vision de l'etat de la base de donnees
 	public static void initBillets() {
 		//On recupere les elements dans la base de donnees
 		SQLRequest request = new SQLRequest();
@@ -73,7 +74,7 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 			   critere = new ArrayList<>();
 			   //cand = this.allCandidats.get(resultat.getInt("ID_candidat")) ;
 			   cand = Candidat.getAllCandidats().get(resultat.getInt("ID_candidat")) ;
-			   System.out.println("\nID_cand = "+resultat.getInt("ID_candidat")+"\n");
+			   //System.out.println("\nID_cand = "+resultat.getInt("ID_candidat")+"\n");
 			   fili = new Filiere(resultat.getString("Filiere"));
 			   type_c = new CritereFort(resultat.getString("Type_contrat"));
 			   age = new Age(resultat.getInt("Age"));
@@ -149,16 +150,19 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 		while( iter.hasNext() && iter2.hasNext() ) {
 			current = (CritereFaible)iter.next() ;
 			current2 = (CritereFaible)iter2.next();
-			System.out.println("\n\nCalcul score :");
+			/*System.out.println("\n\nCalcul score :");
 			System.out.println("Reference : " + current2) ;
 			System.out.println("current : "+ current) ;
-			System.out.println("Score current : "+ current.getScore(current2, flags[i]));
+			System.out.println("Score current : "+ current.getScore(current2, flags[i]));*/
 			this.score = this.score + current.getScore(current2, flags[i++]) ;
 		}
 		
 		return this.score ;
 	}
 	
+	/**
+	 * Insere le billet dans la base de donnees
+	 */
 	public void insertEntryIntoDatabase() {
 		SQLRequest request = new SQLRequest() ;
 		this.candidat.insertCandidatIntoDatabase() ;
@@ -185,6 +189,9 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 		}
 	}
 	
+	/**
+	 * Supprime le billet de la base de donnees
+	 */
 	public void deleteEntryFromDatabase() {
 		SQLRequest request = new SQLRequest() ;
 		try {
@@ -204,7 +211,10 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 		System.out.println("");
 	}
 	
-	//contrairement a getScore(), cette fonction n'effectue pas de calcul
+	/**
+	 * Fonction get classique mais le nom getScore et deja utilise pour le calcul du score
+	 * @return le score du billet
+	 */
 	public int getThisScore() {
 		return this.score ;
 	}

@@ -27,6 +27,10 @@ public class Region extends CritereFaible implements ScoreChoixSimple {
 			return baseScore ;
 	}
 	
+	/**
+	 * fonction commune a tous les criteres faibles.
+	 * Appelle la bonne fonction getScore() qui effectuera le calcul du score
+	 */
 	public int getScore(CritereFaible critere, boolean flag) {
 		return getScore(flag, critere.getContent()) ;
 	}
