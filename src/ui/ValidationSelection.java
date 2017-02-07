@@ -4,23 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import java.awt.Color;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-/**
- * 
- * Fenetre qui confirme la validation d'un profil candidat sur la base de données
- *
- */
-public class ValidationProfil extends JFrame implements ActionListener {
+public class ValidationSelection extends JFrame implements ActionListener {
 	
 	protected static Dimension d;
 	private JPanel container;
@@ -30,7 +25,7 @@ public class ValidationProfil extends JFrame implements ActionListener {
 	protected JButton btnRetourMenu;
 	protected Accueil menu;
 
-	public ValidationProfil(){
+	public ValidationSelection(){
 		// Création de la fenêtre du programme avec ses dimensions
 		getContentPane().setLayout(new BorderLayout() );
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -51,8 +46,9 @@ public class ValidationProfil extends JFrame implements ActionListener {
 		container.setLayout(null);
 		this.setContentPane(container);
 		
-		validation = new JLabel(" Votre Profil a bien été ajouté dans notre base de données.");
-		validation.setBounds(145, 54, 512, 24);
+		validation = new JLabel(" Vos profils selectionnés ont bien été ajoutés dans notre base de données.");
+		validation.setBackground(new Color(50, 205, 50));
+		validation.setBounds(83, 76, 632, 24);
 		validation.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		container.add(validation);
 		
@@ -85,3 +81,5 @@ public class ValidationProfil extends JFrame implements ActionListener {
 		}	
 	}	
 }
+
+

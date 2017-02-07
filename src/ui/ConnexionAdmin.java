@@ -7,7 +7,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -17,9 +16,22 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import Criteres.Critere;
+import Recherche.Billet;
+import Recherche.Demande;
+import Recherche.Recherche;
 import ui.Login;
 import ui.ConnexionAdmin;
 
+/**
+ * 
+ * @author Utilisateur
+ *  Fenêtre de connexion de l'administrateur, vérification si le bon
+ *  mot de passe et le bon utilisateur est rentré. Ceux ci sont stockés
+ *  dans la classe Login dans la package UI
+ */
+
+@SuppressWarnings("unused")
 public class ConnexionAdmin extends JDialog {
  
     private JTextField tfUsername;
@@ -28,8 +40,13 @@ public class ConnexionAdmin extends JDialog {
     private JLabel lbPassword;
     private JButton btnLogin;
     private JButton btnCancel;
-    private boolean succeeded;
+    private static boolean succeeded=false;
+    private ResultFrameAdmin candidatBD;
  
+    /**
+     * Constructeur de la fenetre Connexion administrateur
+     * @param parent fenetre parente de la fenetre connexion administrateur
+     */
     public ConnexionAdmin(Frame parent) {
         super(parent, "Connexion", true);
         JPanel panel = new JPanel(new GridBagLayout());
@@ -61,23 +78,27 @@ public class ConnexionAdmin extends JDialog {
         cs.gridwidth = 2;
         panel.add(pfPassword, cs);
         panel.setBorder(new LineBorder(Color.GRAY));
- 
+
+        
         btnLogin = new JButton("Valider");
         btnLogin.addActionListener(new ActionListener() {
         	 
             public void actionPerformed(ActionEvent e) {
                 if (Login.admin_authenticate(getUsername(), getPassword())) {
-                    succeeded = true;
-                    dispose();
+                	setSucceeded(true);
+                    candidatBD = new ResultFrameAdmin();
+                    //dispose();
+                    parent.dispose();
+                    
                 } else {
                     JOptionPane.showMessageDialog(ConnexionAdmin.this,
                             "Nom d'utilisateur ou mot de passe incorrect",
                             "Connexion échouée",
                             JOptionPane.ERROR_MESSAGE);
-                    // reset username and password
+                    // reset username et le password
                     tfUsername.setText("");
                     pfPassword.setText("");
-                    succeeded = false;
+                    setSucceeded(false);
  
                 }
             }
@@ -102,6 +123,9 @@ public class ConnexionAdmin extends JDialog {
         setLocationRelativeTo(parent);
     }
  
+ /******************** Méthodes ***********************************/
+    
+ 
     public String getUsername() {
         return tfUsername.getText().trim();
     }
@@ -110,7 +134,11 @@ public class ConnexionAdmin extends JDialog {
         return new String(pfPassword.getPassword());
     }
  
-    public boolean isSucceeded() {
+    public static boolean isSucceeded() {
         return succeeded;
+    }
+    
+    public static void setSucceeded(boolean succ){
+    	succeeded=succ;
     }
 }

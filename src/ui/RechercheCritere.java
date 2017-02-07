@@ -39,6 +39,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import Candidat.Candidat;
 import Criteres.Critere;
 import Criteres.ExperiencePro;
 import Criteres.Filiere;
@@ -59,7 +60,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 
+/**
+ * 
+ * Affichage et création du formulaire pour un recruteur qui cherche des candidats
+ * On récupère directement ici le formulaire
+ */
 
+@SuppressWarnings({ "unused", "serial" })
 public class RechercheCritere extends TailleFenetre implements ActionListener {
 
 	private JPanel container;
@@ -68,7 +75,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 	private JComboBox boiteRegion;
 	private JLabel region;
 	private Critere reg;
-	private boolean boolReg;
+	private boolean boolReg=false;
 	  
 	private JLabel permis;
 	private ButtonGroup bgpermis;
@@ -100,7 +107,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 	  
 	private JComboBox boiteFiliere;
 	private JLabel filiere;
-	private Critere fil;
+	private Filiere fil;
 
 	  
 	private JSpinner boiteExperience;
@@ -129,7 +136,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 	private JButton retour;
 	private JButton chercher;
 	
-	private Choix retourAccueil;
+	private Accueil retourAccueil;
 	private ResultFrame rechercherCand;
 	
 	protected JLabel FormulaireFaux;
@@ -156,8 +163,9 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		
 		// Phrase du début
 		JLabel label = new JLabel("Veuillez entrer vos critères de recherche.  ");
-		label.setBounds(243, 53, 380, 24);
-		label.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		label.setForeground(new Color(50, 205, 50));
+		label.setBounds(215, 53, 393, 26);
+		label.setFont(new Font("Tw Cen MT", Font.BOLD, 23));
 		container.add(label);
 		  
 		  
@@ -222,6 +230,26 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		age.setBounds(261, 166, 99, 20);
 		age.setForeground(Color.BLACK);
 		container.add(age);
+
+		boiteAgeMin = new JSpinner();
+		boiteAgeMin.setModel(new SpinnerNumberModel(18, 18, 60, 1));
+		boiteAgeMin.setPreferredSize(new Dimension(50, 50));
+		boiteAgeMin.setForeground(Color.GRAY);
+		boiteAgeMin.setBounds(388, 163, 49, 28);
+		value = ((Integer)boiteAgeMin.getValue());  
+		container.add(boiteAgeMin);
+				
+		JLabel AgeA = new JLabel("à");
+		AgeA.setForeground(Color.BLACK);
+		AgeA.setBounds(469, 166, 8, 20);
+		container.add(AgeA);
+			
+		boiteAgeMax = new JSpinner();
+		boiteAgeMax.setModel(new SpinnerNumberModel(value, value, 61, 1));
+		boiteAgeMax.setPreferredSize(new Dimension(50, 50));
+		boiteAgeMax.setForeground(Color.GRAY);
+		boiteAgeMax.setBounds(504, 163, 49, 28);
+		container.add(boiteAgeMax);
 		  
 		  		  
 		//Type d'emploi
@@ -265,7 +293,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		boiteNivEtude.setBounds(354, 314, 269, 28);
 		boiteNivEtude.setPreferredSize(new Dimension(300, 50));
 		boiteNivEtude.addItem("Employé/Opérateur/Bac");
-		boiteNivEtude.addItem("Technicien/Employé bac+2");
+		boiteNivEtude.addItem("Technicien/Bac+2");
 		boiteNivEtude.addItem("Licence/Bac+3");
 		boiteNivEtude.addItem("Ingénieur/Cadre/Bac+5");
 		boiteNivEtude.addItem("Doctorant/Bac+7");
@@ -315,8 +343,8 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		
 		  // Anglais
 		anglais = new JList();
-		anglais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		anglais.setValueIsAdjusting(true);
+		anglais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		anglais.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		anglais.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Indifférent", "Anglais A1", "Anglais A2", "Anglais B1", "Anglais B2", "Anglais C1", "Anglais C2"};
@@ -327,6 +355,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 				return values[index];
 			}
 		});
+		anglais.setSelectedIndex(0);
 		anglais.setBounds(33, 564, 124, 158);
 		container.add(anglais);
 		
@@ -340,6 +369,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 				return values[index];
 			}
 		});
+		allemand.setSelectedIndex(0);
 		allemand.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		allemand.setValueIsAdjusting(true);
 		allemand.setToolTipText("");
@@ -357,6 +387,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 				return values[index];
 			}
 		});
+		espagnole.setSelectedIndex(0);
 		espagnole.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		espagnole.setValueIsAdjusting(true);
 		espagnole.setToolTipText("");
@@ -374,6 +405,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 				return values[index];
 			}
 		});
+		italien.setSelectedIndex(0);
 		italien.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		italien.setValueIsAdjusting(true);
 		italien.setToolTipText("");
@@ -391,6 +423,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 				return values[index];
 			}
 		});
+		chinois.setSelectedIndex(0);
 		chinois.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		chinois.setValueIsAdjusting(true);
 		chinois.setToolTipText("");
@@ -399,83 +432,54 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		container.add(chinois);
 		
 		// Aide pour la compétence langue 
-				JLabel Aide = new JLabel("*Aide choix niveau(x) de langue(s)");
-				Aide.setFont(new Font("Tahoma", Font.ITALIC, 16));
-				Aide.setForeground(Color.BLUE);
-				Aide.setBounds(286, 834, 255, 20);
-				container.add(Aide);
-					
-				// Affiche l'aide
-				Aide.addMouseListener(new MouseListener() {
+		JLabel Aide = new JLabel("*Aide choix niveau(x) de langue(s)");
+		Aide.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		Aide.setForeground(new Color(50, 205, 50));
+		Aide.setBounds(286, 781, 255, 20);
+		container.add(Aide);
+	
+		// Affiche l'aide
+		Aide.addMouseListener(new MouseListener() {
 				     
-			        public void mouseClicked(MouseEvent e){}
-			 
-
-			        public void mousePressed(MouseEvent e){}
-
-			        
-			        public void mouseReleased(MouseEvent e){}
-			 
-
-			       public void mouseEntered(MouseEvent e){
-			        	ExpA = new JTextPane();
-			    		ExpA.setFont(new Font("Tahoma", Font.ITALIC, 16));
-			    		ExpA.setText("A1 : Peut comprendre et utiliser des expressions familières.\n "
-			    				+ "A2 : Peut comprendre des phrases isolées et des expressions fréquemment utilisées.\n "
-			    				+ "B1 : Peut comprendre les points essentiels quand un langage clair et standard est utilisé.\n "
-			    				+ "B2 : Peut comprendre le contenu essentiel de sujets dans un texte complexe, y compris une discussion technique. Peut communiquer avec un degré de spontanéité et d'aisance.\n"
-			    				+ "C1 : Peut comprendre une grande gamme de textes longs et exigeants. Peut s'exprimer spontanément et couramment.\n"
-			    				+ "C2 : Peut comprendre sans effort pratiquement tout ce qu'il/elle lit ou entend. Peut s'exprimer spontanément, très couramment et de façon précise.");
-			    		ExpA.setBounds(15, 369, 262, 497);
-			    		container.add(ExpA);
-			        }
-			 
-
-			        public void mouseExited(MouseEvent e)
-			        {
-			        	container.remove(ExpA);
-			        	container.repaint();
-			        }
-			 
-			    });
+			public void mouseClicked(MouseEvent e){}
+			public void mousePressed(MouseEvent e){}
+			public void mouseReleased(MouseEvent e){}
+			public void mouseEntered(MouseEvent e){		        	
+				ExpA = new JTextPane();
+			    ExpA.setFont(new Font("Tahoma", Font.ITALIC, 16));
+			    ExpA.setText("A1 : Peut comprendre et utiliser des expressions familières.\n "
+			    		+ "A2 : Peut comprendre des phrases isolées et des expressions fréquemment utilisées.\n "
+			    		+ "B1 : Peut comprendre les points essentiels quand un langage clair et standard est utilisé.\n "
+			    		+ "B2 : Peut comprendre le contenu essentiel de sujets dans un texte complexe, y compris une discussion technique. Peut communiquer avec un degré de spontanéité et d'aisance.\n"
+		  				+ "C1 : Peut comprendre une grande gamme de textes longs et exigeants. Peut s'exprimer spontanément et couramment.\n"
+		  				+ "C2 : Peut comprendre sans effort pratiquement tout ce qu'il/elle lit ou entend. Peut s'exprimer spontanément, très couramment et de façon précise.");
+			   ExpA.setBounds(15, 369, 262, 497);
+			   container.add(ExpA);
+			}
+			public void mouseExited(MouseEvent e){
+				container.remove(ExpA);
+			    container.repaint();
+			    }
+			});
 		
 		 
-		// Bouton ajouter
-		chercher = new JButton ("Rechercher");
-		chercher.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chercher.setBounds(283, 913, 123, 31);
+		// Bouton chercher
+		chercher = new JButton ("Chercher");
+		chercher.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		chercher.setBounds(235, 854, 125, 45);
 		chercher.addActionListener(this);
 		container.add(chercher);
 			
 		  		  
 		//Bouton retour
 		retour = new JButton ("Retour");
-		retour.setFont(new Font("Tahoma", Font.BOLD, 14));
-		retour.setBounds(450, 913, 91, 31);
+		retour.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		retour.setBounds(456, 854, 118, 45);
 		retour.addActionListener(this);
 		container.add(retour);
 		
-		boiteAgeMin = new JSpinner();
-		boiteAgeMin.setModel(new SpinnerNumberModel(18, 18, 60, 1));
-		boiteAgeMin.setPreferredSize(new Dimension(50, 50));
-		boiteAgeMin.setForeground(Color.GRAY);
-		boiteAgeMin.setBounds(388, 163, 49, 28);
-		value = ((Integer)boiteAgeMin.getValue());  
-		container.add(boiteAgeMin);
 		
-
 		
-		JLabel AgeA = new JLabel("à");
-		AgeA.setForeground(Color.BLACK);
-		AgeA.setBounds(469, 166, 8, 20);
-		container.add(AgeA);
-		
-		boiteAgeMax = new JSpinner();
-		boiteAgeMax.setModel(new SpinnerNumberModel(value, value, 61, 1));
-		boiteAgeMax.setPreferredSize(new Dimension(50, 50));
-		boiteAgeMax.setForeground(Color.GRAY);
-		boiteAgeMax.setBounds(504, 163, 49, 28);
-		container.add(boiteAgeMax);
 		
 		
 		this.setVisible(true);
@@ -484,35 +488,36 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 	  
 /************************* METHODES	***************************************/
 	
-	  // Action des boutons
+	  /**
+	   * Action sur les boutons
+	   */
 	  public void actionPerformed(ActionEvent e) {
 		  Object source = e.getSource();
-	
-			// Lancement de la comparaison globale :
-		  
-		  //Connect database = Connect.getInstance();
-
-		  //Billet newresults = newsearch.findInDB(database.getDB());
-
 		  if(source == chercher){
 			   RecupererFormulaire(); 		  
-			  	  
-			  rechercherCand=new ResultFrame(demand); // il faut metre ce qu'on a récupérer de la base de donnée
+			  // ArrayList<Billet> b = test();	 
+			  demand.retrieveData(fil.getContent(), empl.getContent());
+			  demand.rechercheResultats();
+			  rechercherCand=new ResultFrame(demand);
 			  this.setVisible(false);
 			  this.dispose();
 		  } 
 		  if(source == retour){
-			  retourAccueil=new Choix();	
+			  retourAccueil=new Accueil();	
 			  this.setVisible(false);
 			  this.dispose();
 		  }
 	  }
 	  
 	  
+	  /**
+	   * On récupère le formulaire et crée le billet Demande aves les critères
+	   */
 	  public void RecupererFormulaire(){
 		  
 		  // Region
 		  if (((String) boiteRegion.getSelectedItem()) == "Indifférent"){
+			  reg= new Region((String) boiteRegion.getSelectedItem());
 			  boolReg = false;
 		  }
 		  else{
@@ -523,11 +528,15 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		  // Permis
 		  if (oui.isSelected()){
 			  perm= new PermisB(true); 
+			  boolPerm=true;
+
 		  }
 		  else if (non.isSelected()){
 			  perm= new PermisB(false); 
+			  boolPerm=true;
 		  }
 		  else if (indifferent.isSelected()){
+			  perm= new PermisB(false); 
 			  boolPerm=false;
 		  }
 		 
@@ -569,10 +578,13 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 			  etu= new NiveauEtude(7);  
 		  }
 		  
+		  // filière
 		  fil= new Filiere((String) boiteFiliere.getSelectedItem());
+		  
+		  // expèrience
 		  exp = new ExperiencePro((Integer)boiteExperience.getValue());
 		 
-		  
+		  // Création de l'arrayList des critères
 		  ArrayList<Critere> crit = new ArrayList<>();
 		  crit.add(fil);
 		  crit.add(empl);
@@ -587,22 +599,22 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		  	  
 		  if((String)anglais.getSelectedValue()!="Indifférent"){
 			  if((String)anglais.getSelectedValue()=="Anglais A1"){
-				  ang= "Anglais 1";
+				  ang= "Anglais+1";
 			  }
 			  if((String)anglais.getSelectedValue()=="Anglais A2"){
-				  ang= "Anglais 2";
+				  ang= "Anglais+2";
 			  }			  
 			  if((String)anglais.getSelectedValue()=="Anglais B1"){
-				  ang= "Anglais 3";
+				  ang= "Anglais+3";
 			  }		  
 			  if((String)anglais.getSelectedValue()=="Anglais B2"){
-				  ang= "Anglais 4";
+				  ang= "Anglais+4";
 			  }
 			  if((String)anglais.getSelectedValue()=="Anglais C1"){
-				  ang= "Anglais 5";
+				  ang= "Anglais+5";
 			  }
 			  if((String)anglais.getSelectedValue()=="Anglais C2"){
-				  ang= "Anglais 6";
+				  ang= "Anglais+6";
 			  }
 			  boolLang=true;
 			  tmp.add(ang);
@@ -610,22 +622,22 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		  
 		  if((String)espagnole.getSelectedValue()!="Indifférent"){
 			  if((String)espagnole.getSelectedValue()=="Espagnol A1"){
-				  esp= "Espagnol 1";
+				  esp= "Espagnol+1";
 			  }
 			  if((String)espagnole.getSelectedValue()=="Espagnol A2"){
-				  esp= "Espagnol 2";
+				  esp= "Espagnol+2";
 			  }			  
 			  if((String)espagnole.getSelectedValue()=="Espagnol B1"){
-				  esp= "Espagnol 3";
+				  esp= "Espagnol+3";
 			  }		  
 			  if((String)espagnole.getSelectedValue()=="Espagnol B2"){
-				  esp= "Espagnol 4";
+				  esp= "Espagnol+4";
 			  }
 			  if((String)espagnole.getSelectedValue()=="Espagnol C1"){
-				  esp= "Espagnol 5";
+				  esp= "Espagnol+5";
 			  }
 			  if((String)espagnole.getSelectedValue()=="Espagnol C2"){
-				  esp= "Espagnol 6";
+				  esp= "Espagnol+6";
 			  }
 			  boolLang=true;
 			  tmp.add(esp);
@@ -633,22 +645,22 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		  
 		  if((String)allemand.getSelectedValue()!="Indifférent"){
 			  if((String)allemand.getSelectedValue()=="Allemand A1"){
-				  all= "Allemand 1";
+				  all= "Allemand+1";
 			  }
 			  if((String)allemand.getSelectedValue()=="Allemand A2"){
-				  all= "Allemand 2";
+				  all= "Allemand+2";
 			  }			  
 			  if((String)allemand.getSelectedValue()=="Allemand B1"){
-				  all= "Allemand 3";
+				  all= "Allemand+3";
 			  }		  
 			  if((String)allemand.getSelectedValue()=="Allemand B2"){
-				  all= "Allemand 4";
+				  all= "Allemand+4";
 			  }
 			  if((String)allemand.getSelectedValue()=="Allemand C1"){
-				  all= "Allemand 5";
+				  all= "Allemand+5";
 			  }
 			  if((String)allemand.getSelectedValue()=="Allemand C2"){
-				  all= "Allemand 6";
+				  all= "Allemand+6";
 			  }
 			  boolLang=true;
 			  tmp.add(all);
@@ -656,22 +668,22 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 
 		  if((String)chinois.getSelectedValue()!="Indifférent"){
 			  if((String)chinois.getSelectedValue()=="Chinois A1"){
-				  chi= "Chinois 1";
+				  chi= "Chinois+1";
 			  }
 			  if((String)chinois.getSelectedValue()=="Chinois A2"){
-				  chi= "Chinois 2";
+				  chi= "Chinois+2";
 			  }			  
 			  if((String)chinois.getSelectedValue()=="Chinois B1"){
-				  chi= "Chinois 3";
+				  chi= "Chinois+3";
 			  }		  
 			  if((String)chinois.getSelectedValue()=="Chinois B2"){
-				  chi= "Chinois 4";
+				  chi= "Chinois+4";
 			  }
 			  if((String)chinois.getSelectedValue()=="Chinois C1"){
-				  chi= "Chinois 5";
+				  chi= "Chinois+5";
 			  }
 			  if((String)chinois.getSelectedValue()=="Chinois C2"){
-				  chi= "Chinois 6";
+				  chi= "Chinois+6";
 			  }
 			  boolLang=true;
 			  tmp.add(chi);
@@ -679,22 +691,22 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		  
 		  if((String)italien.getSelectedValue()!="Indifférent"){
 			  if((String)italien.getSelectedValue()=="Italien A1"){
-				  ita= "Italien 1";
+				  ita= "Italien+1";
 			  }
 			  if((String)italien.getSelectedValue()=="Italien A2"){
-				  ita= "Italien 2";
+				  ita= "Italien+2";
 			  }			  
 			  if((String)italien.getSelectedValue()=="Italien B1"){
-				  ita= "Italien 3";
+				  ita= "Italien+3";
 			  }		  
 			  if((String)italien.getSelectedValue()=="Italien B2"){
-				  ita= "Italien 4";
+				  ita= "Italien+4";
 			  }
 			  if((String)italien.getSelectedValue()=="Italien C1"){
-				  ita= "Italien 5";
+				  ita= "Italien+5";
 			  }
 			  if((String)italien.getSelectedValue()=="Italien C2"){
-				  ita= "Italien 6";
+				  ita= "Italien+6";
 			  }
 			  boolLang=true;
 			  tmp.add(ita);
@@ -702,6 +714,7 @@ public class RechercheCritere extends TailleFenetre implements ActionListener {
 		  Langue langue = new Langue(tmp);
 		  crit.add(langue);
 		  
+		  		  
 		  boolean [] bb={true,boolPerm,boolReg,true,true,boolLang} ;
 		  demand = new Demande(crit, bb);
 

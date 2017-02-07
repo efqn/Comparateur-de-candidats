@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.swing.AbstractListModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,9 +20,27 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+
+import Candidat.Candidat;
+import Criteres.Age;
+import Criteres.CDD;
+import Criteres.CDI;
+import Criteres.Critere;
+import Criteres.ExperiencePro;
+import Criteres.Filiere;
+import Criteres.Interim;
+import Criteres.Langue;
+import Criteres.NiveauEtude;
+import Criteres.PermisB;
+import Criteres.Region;
+import Criteres.Stage;
+import Recherche.Billet;
+import Recherche.Demande;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
@@ -28,7 +48,19 @@ import javax.swing.JFormattedTextField;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.JLayeredPane;
+import javax.swing.JList;
 
+
+/**
+ * 
+ * @author Utilisateur
+ *  Affichage et création du formulaire pour le candidat. Permet au candidat
+ *  d'ajouter son profil sur la base de données. 
+ *  On vérifie directement ici que le formulaire est rempli correctement.
+ *  C'est ici directement que le profil est ajouté à la base de données.
+ */
+
+@SuppressWarnings("unused")
 public class FormulaireCand extends TailleFenetre implements ActionListener{  
 
 	protected JPanel container;
@@ -36,26 +68,36 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 	  
 	protected JTextField boiteNom;
 	protected JLabel nom;
+	protected String n;
 	  
 	protected JTextField boitePrenom;
 	protected JLabel prenom;
-	  
+	protected String p;
+  
 	protected JSpinner boiteAge;
 	protected JLabel age;
+	private Critere ag;
+	private int value;
 	  
 	protected JComboBox boiteRegion;
 	protected JLabel region;
+	private Critere reg;
+	private boolean boolReg;
 	  
 	protected JTextField boiteNumero;
 	protected JLabel numero;
+	protected String num;
 	  
 	protected JTextField boiteEmail;
 	protected JLabel email;
+	protected String em;
 	  
 	protected JLabel permis;
 	protected ButtonGroup bgpermis;
 	protected JRadioButton oui;
-	protected JRadioButton non; 
+	protected JRadioButton non;
+	private Critere perm;
+	private boolean boolPerm;
 	  
 	protected JLabel typEmploi;
 	protected ButtonGroup bgEmploi;
@@ -63,36 +105,32 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 	protected JRadioButton interim; 
 	protected JRadioButton CDD;
 	protected JRadioButton CDI;
+	private Critere empl;
 	  
 	protected JComboBox boiteNivEtude;
 	protected JLabel nivEtude;
+	private Critere etu;
 	  
 	protected JComboBox boiteFiliere;
 	protected JLabel filiere;
+	private Critere fil;
 	  
 	protected JSpinner boiteExperience;
 	protected JLabel experience;
+	private Critere exp;
 	
-	protected JLabel languesPratique;
-	protected JLabel lblLanguesPratiques;
-
-	protected JLabel anglais;
-	protected ButtonGroup bganglais;
-	protected JLabel allemand;
-	protected ButtonGroup bgallemand;
-	protected JLabel espagnol;
-	protected ButtonGroup bgespagnol;
-	protected JLabel italien;
-	protected ButtonGroup bgitalien;
-	protected JLabel chinois;
-	protected ButtonGroup bgchinois;
-	protected JRadioButton NP;
-	protected JRadioButton A1;
-	protected JRadioButton A2; 
-	protected JRadioButton B1; 
-	protected JRadioButton B2;
-	protected JRadioButton C1; 
-	protected JRadioButton C2;
+	private JLabel languesPratique;
+	private JList anglais;
+	private JList allemand;
+	private JList chinois;
+	private JList espagnole;
+	private JList italien;
+	private String ang;
+	private String all;
+	private String chi;
+	private String esp;
+	private String ita;
+	private boolean boolLang=false;
 	
 	protected JTextPane ExpA;
 	
@@ -100,15 +138,20 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 	protected JButton retour;
 	protected JButton ajouter;
 	
-	protected Choix retourAccueil;
+	protected Accueil retourAccueil;
 	protected ValidationProfil ajoutProfil;
 	
 	protected JLayeredPane layeredPane;
 
 	private JLabel lblVousNavezPas;
 	
+	private Demande demand;
+	
 /**************************** CONSTRUCTEUR *********************************/
 	
+	/**
+	 * Créer l'affichage du formualaire candidat.
+	 */
 	public FormulaireCand(){		  
 		// Fenetre du formulaire
 		super();
@@ -126,8 +169,9 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		  
 		// Phrase du début
 		JLabel label = new JLabel("Veuillez remplir ce formulaire pour ajouter votre profil dans notre base de données.");
-		label.setBounds(66, 43, 729, 24);
-		label.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		label.setForeground(new Color(50, 205, 50));
+		label.setBounds(28, 44, 801, 28);
+		label.setFont(new Font("Tw Cen MT", Font.BOLD, 23));
 		container.add(label);
 		  
 		// Création de la boite nom
@@ -190,7 +234,7 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		boiteRegion.addItem("Lorraine");
 		boiteRegion.addItem("Midi-Pyrénées");
 		boiteRegion.addItem("Nord-Pas-de-Calais");
-		boiteRegion.addItem("Pays de la Loire");
+		boiteRegion.addItem("Pays de la Loiret");
 		boiteRegion.addItem("Picardie");
 		boiteRegion.addItem("Poitou-Charentes");
 		boiteRegion.addItem("Provence-Alpes-Côte-d'Azur");
@@ -280,7 +324,7 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		boiteNivEtude.setBounds(358, 345, 269, 28);
 		boiteNivEtude.setPreferredSize(new Dimension(300, 50));
 		boiteNivEtude.addItem("Employé/Opérateur/Bac");
-		boiteNivEtude.addItem("Technicien/Employé bac+2");
+		boiteNivEtude.addItem("Technicien/Bac+2");
 		boiteNivEtude.addItem("Licence/Bac+3");
 		boiteNivEtude.addItem("Ingénieur/Cadre/Bac+5");
 		boiteNivEtude.addItem("Doctorant/Bac+7");
@@ -324,239 +368,119 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		
 		
 		// Langues pratiqué
-		languesPratique = new JLabel("Langue(s) pratiquée(s)");
-		languesPratique.setBounds(329, 552, 160, 20);
-		container.add(languesPratique);
-		anglais = new JLabel("Anglais:");
-		anglais.setBounds(51, 614, 80, 22);		  		  		  
-		container.add(anglais);	
-		bganglais = new ButtonGroup ();
-		NP = new JRadioButton("Non pratiqué");
-		NP.setBounds(140, 613, 125, 24);
-		NP.setSelected ( true );
-		NP.addActionListener(this);
-		bganglais.add(NP);
-		container.add(NP);
-		A1 = new JRadioButton("A1");
-		A1.setBounds(295, 614, 53, 29);
-		A1.addActionListener(this);
-		bganglais.add(A1);
-		container.add(A1);
-		A2 = new JRadioButton("A2");
-		A2.setBounds(374, 614, 53, 29);
-		A2.addActionListener(this);
-		bganglais.add(A2);
-		container.add(A2);
-		B1 = new JRadioButton("B1");
-		B1.setBounds(450, 614, 51, 29);
-		B1.addActionListener(this);
-		bganglais.add(B1);
-		container.add(B1);
-		B2 = new JRadioButton("B2");
-		B2.setBounds(528, 614, 51, 29);
-		B2.addActionListener(this);
-		bganglais.add(B2);
-		container.add(B2);
-		bganglais.add(A2);
-		container.add(A2);
-		C1 = new JRadioButton("C1");
-		C1.setBounds(601, 614, 51, 29);
-		C1.addActionListener(this);
-		bganglais.add(C1);
-		container.add(C1);
-		C2 = new JRadioButton("C2");
-		C2.setBounds(674, 614, 51, 29);
-		C2.addActionListener(this);
-		bganglais.add(C2);
-		container.add(C2);
+				languesPratique = new JLabel("Langue(s) pratiquée(s)");
+				languesPratique.setBounds(354, 541, 160, 20);
+				container.add(languesPratique);
+				
+				  // Anglais
+				anglais = new JList();
+				anglais.setValueIsAdjusting(true);
+				anglais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				anglais.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				anglais.setModel(new AbstractListModel() {
+					String[] values = new String[] {"Non pratiqué", "Anglais A1", "Anglais A2", "Anglais B1", "Anglais B2", "Anglais C1", "Anglais C2"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				anglais.setSelectedIndex(0);
+				anglais.setBounds(33, 587, 124, 158);
+				container.add(anglais);
+				
+				// Allemand
+				allemand = new JList();
+				allemand.setModel(new AbstractListModel() {
+					String[] values = new String[] {"Non pratiqué", "Allemand A1", "Allemand A2", "Allemand B1", "Allemand B2", "Allemand C1", "Allemand C2"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				allemand.setSelectedIndex(0);
+				allemand.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				allemand.setValueIsAdjusting(true);
+				allemand.setToolTipText("");
+				allemand.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				allemand.setBounds(197, 587, 124, 158);
+				container.add(allemand);
 				
 				
-		allemand = new JLabel("Allemand:");
-		allemand.setBounds(39, 649, 80, 22);		  		  		  
-		container.add(allemand);	
-		bgallemand = new ButtonGroup ();
-		NP = new JRadioButton("Non pratiqué");
-		NP.setBounds(140, 648, 125, 24);
-		NP.setSelected ( true );
-		NP.addActionListener(this);
-		bgallemand.add(NP);
-		container.add(NP);
-		A1 = new JRadioButton("A1");
-		A1.setBounds(295, 649, 53, 29);
-		A1.addActionListener(this);
-		bgallemand.add(A1);
-		container.add(A1);
-		A2 = new JRadioButton("A2");
-		A2.setBounds(374, 649, 53, 29);
-		A2.addActionListener(this);
-		bganglais.add(A2);
-		container.add(A2);
-		B1 = new JRadioButton("B1");
-		B1.setBounds(450, 649, 51, 29);
-		B1.addActionListener(this);
-		bgallemand.add(B1);
-		container.add(B1);
-		B2 = new JRadioButton("B2");
-		B2.setBounds(528, 649, 51, 29);
-		B2.addActionListener(this);
-		bgallemand.add(B2);
-		container.add(B2);
-		bgallemand.add(A2);
-		container.add(A2);
-		C1 = new JRadioButton("C1");
-		C1.setBounds(599, 649, 51, 29);
-		C1.addActionListener(this);
-		bgallemand.add(C1);
-		container.add(C1);
-		C2 = new JRadioButton("C2");
-		C2.setBounds(674, 649, 51, 29);
-		C2.addActionListener(this);
-		bgallemand.add(C2);
-		container.add(C2);
+				// Espagnole
+				espagnole = new JList();
+				espagnole.setModel(new AbstractListModel() {
+					String[] values = new String[] {"Non pratiqué", "Espagnol A1", "Espagnol A2", "Espagnol B1", "Espagnol B2", "Espagnol C1", "Espagnol C2"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				espagnole.setSelectedIndex(0);
+				espagnole.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				espagnole.setValueIsAdjusting(true);
+				espagnole.setToolTipText("");
+				espagnole.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				espagnole.setBounds(367, 589, 124, 158);
+				container.add(espagnole);
+				
+				// Italien
+				italien = new JList();
+				italien.setModel(new AbstractListModel() {
+					String[] values = new String[] {"Non pratiqué", "Italien A1", "Italien A2", "Italien B1", "Italien B2", "Italien C1", "Italien C2"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				italien.setSelectedIndex(0);
+				italien.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				italien.setValueIsAdjusting(true);
+				italien.setToolTipText("");
+				italien.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				italien.setBounds(539, 589, 124, 158);
+				container.add(italien);
 				
 				
-		espagnol = new JLabel("Espagnol:");
-		espagnol.setBounds(39, 687, 80, 22);		  		  		  
-		container.add(espagnol);	
-		bgespagnol = new ButtonGroup ();
-		NP = new JRadioButton("Non pratiqué");
-		NP.setBounds(140, 686, 125, 24);
-		NP.setSelected ( true );
-		NP.addActionListener(this);
-		bgespagnol.add(NP);
-		container.add(NP);
-		A1 = new JRadioButton("A1");
-		A1.setBounds(295, 687, 53, 29);
-		A1.addActionListener(this);
-		bgespagnol.add(A1);
-		container.add(A1);
-		A2 = new JRadioButton("A2");
-		A2.setBounds(374, 687, 53, 29);
-		A2.addActionListener(this);
-		bganglais.add(A2);
-		container.add(A2);
-		B1 = new JRadioButton("B1");
-		B1.setBounds(450, 687, 51, 29);
-		B1.addActionListener(this);
-		bgespagnol.add(B1);
-		container.add(B1);
-		B2 = new JRadioButton("B2");
-		B2.setBounds(528, 687, 51, 29);
-		B2.addActionListener(this);
-		bgespagnol.add(B2);
-		container.add(B2);
-		bgespagnol.add(A2);
-		container.add(A2);
-		C1 = new JRadioButton("C1");
-		C1.setBounds(599, 687, 51, 29);
-		C1.addActionListener(this);
-		bgespagnol.add(C1);
-		container.add(C1);
-		C2 = new JRadioButton("C2");
-		C2.setBounds(674, 687, 51, 29);
-		C2.addActionListener(this);
-		bgespagnol.add(C2);
-		container.add(C2);
-				
-		italien = new JLabel("Italien:");
-		italien.setBounds(51, 727, 50, 20);		  		  		  
-		container.add(italien);	
-		bgitalien = new ButtonGroup ();
-		NP = new JRadioButton("Non pratiqué");
-		NP.setBounds(140, 725, 125, 24);
-		NP.setSelected ( true );
-		NP.addActionListener(this);
-		bgitalien.add(NP);
-		container.add(NP);
-		A1 = new JRadioButton("A1");
-		A1.setBounds(295, 725, 53, 29);
-		A1.addActionListener(this);
-		bgitalien.add(A1);
-		container.add(A1);
-		A2 = new JRadioButton("A2");
-		A2.setBounds(374, 725, 53, 29);
-		A2.addActionListener(this);
-		bgitalien.add(A2);
-		container.add(A2);
-		B1 = new JRadioButton("B1");
-		B1.setBounds(450, 725, 51, 29);
-		B1.addActionListener(this);
-		bgitalien.add(B1);
-		container.add(B1);
-		B2 = new JRadioButton("B2");
-		B2.setBounds(528, 725, 51, 29);
-		B2.addActionListener(this);
-		bgitalien.add(B2);
-		container.add(B2);
-		bgitalien.add(A2);
-		container.add(A2);
-		C1 = new JRadioButton("C1");
-		C1.setBounds(599, 725, 51, 29);
-		C1.addActionListener(this);
-		bgitalien.add(C1);
-		container.add(C1);
-		C2 = new JRadioButton("C2");
-		C2.setBounds(674, 725, 51, 29);
-		C2.addActionListener(this);
-		bgitalien.add(C2);
-		container.add(C2);
-				
-		chinois = new JLabel("Chinois:");
-		chinois.setBounds(51, 765, 58, 20);		  		  		  
-		container.add(chinois);	
-		bgchinois = new ButtonGroup ();
-		NP = new JRadioButton("Non pratiqué");
-		NP.setBounds(140, 763, 125, 24);
-		NP.setSelected ( true );
-		NP.addActionListener(this);
-		bgchinois.add(NP);
-		container.add(NP);
-		A1 = new JRadioButton("A1");
-		A1.setBounds(295, 763, 80, 22);
-		A1.addActionListener(this);
-		bgchinois.add(A1);
-		container.add(A1);
-		A2 = new JRadioButton("A2");
-		A2.setBounds(374, 762, 53, 29);
-		A2.addActionListener(this);
-		bgchinois.add(A2);
-		container.add(A2);
-		B1 = new JRadioButton("B1");
-		B1.setBounds(450, 762, 51, 29);
-		B1.addActionListener(this);
-		bgchinois.add(B1);
-		container.add(B1);
-		B2 = new JRadioButton("B2");
-		B2.setBounds(527, 762, 51, 29);
-		B2.addActionListener(this);
-		bgchinois.add(B2);
-		container.add(B2);
-		bgchinois.add(A2);
-		container.add(A2);
-		C1 = new JRadioButton("C1");
-		C1.setBounds(599, 761, 51, 29);
-		C1.addActionListener(this);
-		bgchinois.add(C1);
-		container.add(C1);
-		C2 = new JRadioButton("C2");
-		C2.setBounds(674, 763, 51, 29);
-		C2.addActionListener(this);
-		bgchinois.add(C2);
-		container.add(C2);
+				// Chinois
+				chinois= new JList();
+				chinois.setModel(new AbstractListModel() {
+					String[] values = new String[] {"Non pratiqué", "Chinois A1", "Chinois A2", "Chinois B1", "Chinois B2", "Chinois C1", "Chinois C2"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				chinois.setSelectedIndex(0);
+				chinois.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				chinois.setValueIsAdjusting(true);
+				chinois.setToolTipText("");
+				chinois.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				chinois.setBounds(699, 587, 124, 158);
+				container.add(chinois);
 		
 		  
 		// Bouton ajouter
 		ajouter = new JButton ("Ajouter mon profil");
-		ajouter.setFont(new Font("Tahoma", Font.BOLD, 14));
-		ajouter.setBounds(216, 891, 191, 31);
+		ajouter.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		ajouter.setBounds(168, 877, 217, 45);
 		ajouter.addActionListener(this);
 		container.add(ajouter);
 			
 		  		  
 		//Bouton retour
 		retour = new JButton ("Retour");
-		retour.setFont(new Font("Tahoma", Font.BOLD, 14));
-		retour.setBounds(506, 891, 91, 31);
+		retour.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		retour.setBounds(469, 877, 118, 45);
 		retour.addActionListener(this);
 		container.add(retour);
 		 
@@ -564,13 +488,13 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		// Aide pour la compétence langue 
 		JLabel Aide = new JLabel("*Aide choix niveau(x) de langue(s)");
 		Aide.setFont(new Font("Tahoma", Font.ITALIC, 16));
-		Aide.setForeground(Color.BLUE);
-		Aide.setBounds(286, 834, 255, 20);
+		Aide.setForeground(new Color(50, 205, 50));
+		Aide.setBounds(281, 798, 255, 20);
 		container.add(Aide);
 		
 		// Panel pour afficher l'erreur de formulaire
 		layeredPane = new JLayeredPane();
-		layeredPane.setBounds(65, 70, 734, 45);
+		layeredPane.setBounds(66, 71, 734, 45);
 		container.add(layeredPane);
 		
 		
@@ -615,90 +539,323 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 	
 	
 /************************** METHODES ********************************/		
-	// Vérifie si le numero est bon
+	
+		/**
+		 *  Action sur les boutons
+		 */
+		  public void actionPerformed(ActionEvent e) {
+			  Object source = e.getSource();
+			  if(source == ajouter){
+				  if(Verification()){  // si le formulaire est bon on le récupère et on ajoute le profil.
+					  RecupererFormulaire();
+					  ajoutProfil=new ValidationProfil();
+					  this.setVisible(false);
+					  this.dispose();
+				  }
+			  } 
+			  if(source == retour){
+				  retourAccueil=new Accueil();	
+				  this.setVisible(false);
+				  this.dispose();
+			  }	
+		  }	
+	
+	
+	
+	
+	/**
+	 * Vérifie que le champ numéro est bien rempli c'est à dire avec 10 string de chiffres
+	 * @return boolean
+	 */
 	public boolean VerificationNumero(){
 		if((boiteNumero.getText().matches("[0-9]*" )) && (boiteNumero.getText().length()==10)){
 			numero.setForeground(Color.BLACK);	
-			return false;
-		}
-		else{
-			numero.setForeground(Color.RED);
 			return true;
-		}	
+		}
+		numero.setForeground(Color.RED);
+		return false;
 	}
 	
-	// Vérifie si l'email est du type: moi@coucou.com
+	
+	/**
+	 * Vérifie si le champ Email est bien rempli avec la forme moi@coucou.com
+	 * @return boolean
+	 */
 	public boolean VerificationEmail(){
 		if(boiteEmail.getText().matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$")){
 			email.setForeground(Color.BLACK);	
-			return false;
-		}
-		else{
-			email.setForeground(Color.RED);
 			return true;
-		}	
+		}
+		email.setForeground(Color.RED);
+		return false;
 	}
 			
 	
-	// Vérifie si tous les champs du formulaire sont remplis
-	public boolean VerificationTextFiled(){
-		if(boiteNom.getText().isEmpty() || boitePrenom.getText().isEmpty() || VerificationNumero() || VerificationEmail()){
-				lblVousNavezPas = new JLabel("Vous n'avez pas rempli tout le formulaire. Veuillez remplir le(s) champ(s) en rouge.");
-				lblVousNavezPas.setForeground(Color.RED);
-				lblVousNavezPas.setBounds(80, 10, 590, 20);
-				lblVousNavezPas.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-				layeredPane.add(lblVousNavezPas);
-				
-				if(boiteNom.getText().isEmpty()){
-					nom.setForeground(Color.RED);
-				}
-				else{
-					nom.setForeground(Color.BLACK);}
-					
-				if(boitePrenom.getText().isEmpty()){
-					prenom.setForeground(Color.RED);
-				}
-				else{
-					prenom.setForeground(Color.BLACK);}
-				
-				return false;
+	/**
+	 * Vérifie que le champ prénom n'est pas vide
+	 * @return boolean
+	 */
+	public boolean VerificationTextFiledPrenom(){					
+		if(boitePrenom.getText().isEmpty()){
+			prenom.setForeground(Color.RED);
+			return false;
 		}
 		else{
+			prenom.setForeground(Color.BLACK);
+			return true;
+		}				
+	}
+	
+	/**
+	 * Vérifie que le champ nom n'est pas vide
+	 * @return boolean
+	 */
+	public boolean VerificationTextFiledNom(){	
+		if(boiteNom.getText().isEmpty()){
+			nom.setForeground(Color.RED);
+			return false;
+		}
+		else{
+			nom.setForeground(Color.BLACK);
+			return true;
+		}							
+	}
+
+	/**
+	 * Affiche la phrase d'erreur si tous les champs ne sont pas bien remplis
+	 * @return boolean
+	 */
+	public boolean AffichagePhrase(){
+		if(!VerificationTextFiledNom() || !VerificationTextFiledPrenom() || !VerificationNumero() || !VerificationEmail()){
+			lblVousNavezPas = new JLabel("Vous n'avez pas rempli tout le formulaire. Veuillez remplir le(s) champ(s) en rouge.");
+			lblVousNavezPas.setForeground(Color.RED);
+			lblVousNavezPas.setBounds(80, 10, 590, 20);
+			lblVousNavezPas.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+			layeredPane.add(lblVousNavezPas);
+			return false;
+		}
+		else if(VerificationTextFiledNom() && VerificationTextFiledPrenom() && VerificationNumero() && VerificationEmail()){
 			nom.setForeground(Color.BLACK);
 			prenom.setForeground(Color.BLACK);
 			layeredPane.remove(lblVousNavezPas);
 			layeredPane.repaint();
 			return true;
-		}	
+		}
+		return false;
 	}
+
 	
-	
-	// Vérification finale
-	public boolean Verification(){
-		if(VerificationNumero() && VerificationEmail() && VerificationTextFiled())
-			return false;
-		else
+	/**
+	 * Vérification final qui reprend toute les vérification au dessus.
+	 * @return boolean
+	 */
+	public boolean Verification(){	
+		VerificationNumero();
+		VerificationEmail();
+		VerificationTextFiledNom();
+		VerificationTextFiledPrenom();
+		
+		if(AffichagePhrase())
 			return true;
+		else
+			return false;
 	}
 	
 	
 	
-	 // Action des boutons
-	@Override
-	  public void actionPerformed(ActionEvent e) {
-		  Object source = e.getSource();
-		  if(source == ajouter){
-			  if(!Verification()){
-				  ajoutProfil=new ValidationProfil();
-				  this.setVisible(false);
-				  this.dispose();
+	
+	
+	public void RecupererFormulaire(){
+		  
+		  // Region
+		reg= new Region((String) boiteRegion.getSelectedItem());
+		boolReg = true;
+		  
+		  // Permis
+		  if (oui.isSelected()){
+			  perm= new PermisB(true); 
+		  }
+		  else if (non.isSelected()){
+			  perm= new PermisB(false); 
+		  }
+
+		 
+		  // Borne Age
+		  ag= new Age ((Integer)boiteAge.getValue());
+		  
+		  // Emploi
+		  if (stage.isSelected()){
+			  empl = new Stage(true);		  
+		  }
+		  else if (CDD.isSelected()){
+			  empl = new CDD(true);
+		  }
+		  else if (CDI.isSelected()){
+			  empl = new CDI(true);
+		  }
+		  else if (interim.isSelected()){
+			  empl = new Interim(true);
+		  }
+		  
+		  // Niveau d'étude
+		  if((String) boiteNivEtude.getSelectedItem()== "Employé/Opérateur/Bac"){
+			  etu= new NiveauEtude(0);  
+		  }
+		  if((String) boiteNivEtude.getSelectedItem()== "Technicien/Employé bac+2"){
+			  etu= new NiveauEtude(2);  
+		  }
+		  if((String) boiteNivEtude.getSelectedItem()== "Licence/Bac+3"){
+			  etu= new NiveauEtude(3);  
+		  }
+		  if((String) boiteNivEtude.getSelectedItem()== "Ingénieur/Cadre/Bac+5"){
+			  etu= new NiveauEtude(5);  
+		  }
+		  if((String) boiteNivEtude.getSelectedItem()== "Doctorant/Bac+7"){
+			  etu= new NiveauEtude(7);  
+		  }
+		  
+		  fil= new Filiere((String) boiteFiliere.getSelectedItem());
+		  exp = new ExperiencePro((Integer)boiteExperience.getValue());
+		 
+		  
+		  ArrayList<Critere> crit = new ArrayList<>();
+		  crit.add(fil);
+		  crit.add(empl);
+		  crit.add(ag);
+		  crit.add(perm);
+		  crit.add(reg);
+		  crit.add(etu);
+		  crit.add(exp);
+		  
+		  //recuperer les langues 
+		  ArrayList<String> tmp = new ArrayList<>();
+		  	  
+		  if((String)anglais.getSelectedValue()!="Non pratiqué"){
+			  if((String)anglais.getSelectedValue()=="Anglais A1"){
+				  ang= "Anglais+1";
 			  }
-		  } 
-		  if(source == retour){
-			  retourAccueil=new Choix();	
-			  this.setVisible(false);
-			  this.dispose();
-		  }	
+			  if((String)anglais.getSelectedValue()=="Anglais A2"){
+				  ang= "Anglais+2";
+			  }			  
+			  if((String)anglais.getSelectedValue()=="Anglais B1"){
+				  ang= "Anglais+3";
+			  }		  
+			  if((String)anglais.getSelectedValue()=="Anglais B2"){
+				  ang= "Anglais+4";
+			  }
+			  if((String)anglais.getSelectedValue()=="Anglais C1"){
+				  ang= "Anglais+5";
+			  }
+			  if((String)anglais.getSelectedValue()=="Anglais C2"){
+				  ang= "Anglais+6";
+			  }
+			  boolLang=true;
+			  tmp.add(ang);
+		  }
+		  
+		  if((String)espagnole.getSelectedValue()!="Non pratiqué"){
+			  if((String)espagnole.getSelectedValue()=="Espagnol A1"){
+				  esp= "Espagnol+1";
+			  }
+			  if((String)espagnole.getSelectedValue()=="Espagnol A2"){
+				  esp= "Espagnol+2";
+			  }			  
+			  if((String)espagnole.getSelectedValue()=="Espagnol B1"){
+				  esp= "Espagnol+3";
+			  }		  
+			  if((String)espagnole.getSelectedValue()=="Espagnol B2"){
+				  esp= "Espagnol+4";
+			  }
+			  if((String)espagnole.getSelectedValue()=="Espagnol C1"){
+				  esp= "Espagnol+5";
+			  }
+			  if((String)espagnole.getSelectedValue()=="Espagnol C2"){
+				  esp= "Espagnol+6";
+			  }
+			  boolLang=true;
+			  tmp.add(esp);
+		  }
+		  
+		  if((String)allemand.getSelectedValue()!="Non pratiqué"){
+			  if((String)allemand.getSelectedValue()=="Allemand A1"){
+				  all= "Allemand+1";
+			  }
+			  if((String)allemand.getSelectedValue()=="Allemand A2"){
+				  all= "Allemand+2";
+			  }			  
+			  if((String)allemand.getSelectedValue()=="Allemand B1"){
+				  all= "Allemand+3";
+			  }		  
+			  if((String)allemand.getSelectedValue()=="Allemand B2"){
+				  all= "Allemand+4";
+			  }
+			  if((String)allemand.getSelectedValue()=="Allemand C1"){
+				  all= "Allemand+5";
+			  }
+			  if((String)allemand.getSelectedValue()=="Allemand C2"){
+				  all= "Allemand+6";
+			  }
+			  boolLang=true;
+			  tmp.add(all);
+		  }
+
+		  if((String)chinois.getSelectedValue()!="Non pratiqué"){
+			  if((String)chinois.getSelectedValue()=="Chinois A1"){
+				  chi= "Chinois+1";
+			  }
+			  if((String)chinois.getSelectedValue()=="Chinois A2"){
+				  chi= "Chinois+2";
+			  }			  
+			  if((String)chinois.getSelectedValue()=="Chinois B1"){
+				  chi= "Chinois+3";
+			  }		  
+			  if((String)chinois.getSelectedValue()=="Chinois B2"){
+				  chi= "Chinois+4";
+			  }
+			  if((String)chinois.getSelectedValue()=="Chinois C1"){
+				  chi= "Chinois+5";
+			  }
+			  if((String)chinois.getSelectedValue()=="Chinois C2"){
+				  chi= "Chinois+6";
+			  }
+			  boolLang=true;
+			  tmp.add(chi);
+		  }
+		  
+		  if((String)italien.getSelectedValue()!="Non pratiqué"){
+			  if((String)italien.getSelectedValue()=="Italien A1"){
+				  ita= "Italien+1";
+			  }
+			  if((String)italien.getSelectedValue()=="Italien A2"){
+				  ita= "Italien+2";
+			  }			  
+			  if((String)italien.getSelectedValue()=="Italien B1"){
+				  ita= "Italien+3";
+			  }		  
+			  if((String)italien.getSelectedValue()=="Italien B2"){
+				  ita= "Italien+4";
+			  }
+			  if((String)italien.getSelectedValue()=="Italien C1"){
+				  ita= "Italien+5";
+			  }
+			  if((String)italien.getSelectedValue()=="Italien C2"){
+				  ita= "Italien+6";
+			  }
+			  boolLang=true;
+			  tmp.add(ita);
+		  }
+		  Langue langue = new Langue(tmp);
+		  crit.add(langue);
+		  
+		  // Récuparation du nom, prenom, mail et telephone
+		  n= boiteNom.getText();;  
+          p=boitePrenom.getText();
+          em=boiteEmail.getText();
+          num= boiteNumero.getText();
+
+          Candidat candidat= new Candidat(n, p, em, num,Candidat.getUnusedId());
+          Billet billet = new Billet(Billet.getUnusedId(), candidat, crit) ;
+          billet.insertEntryIntoDatabase() ;
 	  }
 	
 	

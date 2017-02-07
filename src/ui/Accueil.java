@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -16,13 +17,18 @@ import java.awt.Label;
 import javax.swing.UIManager;
 import java.awt.Toolkit;
 
-public class Choix extends TailleFenetre implements ActionListener {
+
+/**
+ * 
+ * @author Utilisateur
+ *  Fenêtre d'accueil du comparateur de candidats
+ */
+
+@SuppressWarnings("unused")
+public class Accueil extends TailleFenetre implements ActionListener {
 	
 	private JPanel container;
 	private JLabel phraseDebut;
-	
-	private Label label_1;
-	private Label label_2;
 	
 	private JButton ajoutProfil;
 	private JButton rechercherCandidat;
@@ -33,7 +39,10 @@ public class Choix extends TailleFenetre implements ActionListener {
 	
 	protected MenuHeader menu;
 	
-	public Choix(){
+	/**
+	 * Constructeur de la classe Accueil
+	 */
+	public Accueil(){
 		// Création de la fenetre
 		super();
 		container = new JPanel();
@@ -50,41 +59,32 @@ public class Choix extends TailleFenetre implements ActionListener {
 		
 		// Phrase du début
 		phraseDebut = new JLabel("Bienvenue dans notre comparateur de candidats.");
-		phraseDebut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		phraseDebut.setBounds(180, 63, 438, 25);
+		phraseDebut.setForeground(new Color(0, 0, 0));
+		phraseDebut.setFont(new Font("Tw Cen MT", Font.PLAIN, 30));
+		phraseDebut.setBounds(127, 108, 588, 33);
 		container.add(phraseDebut);
-		
-		//Phrase vous pouvez... et OU
-		label_1 = new Label("Vous pouvez...");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_1.setBounds(336, 215, 111, 27);
-		container.add(label_1);
-		label_2 = new Label("ou");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_2.setBounds(377, 329, 31, 27);
-		container.add(label_2);
 		
 		// Bouton ajouter profil candidat
 		ajoutProfil = new JButton("Ajouter mon profil candidat");
 		ajoutProfil.setBackground(UIManager.getColor("activeCaption"));
-		ajoutProfil.setFont(new Font("Tahoma", Font.BOLD, 14));
-		ajoutProfil.setBounds(259, 258, 268, 50);
+		ajoutProfil.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		ajoutProfil.setBounds(51, 217, 348, 179);
 		ajoutProfil.addActionListener(this);
 		container.add(ajoutProfil);
 		
 		// Bouton rechercher candidats
 		rechercherCandidat = new JButton("Rechercher des candidats");
 		rechercherCandidat.setBackground(UIManager.getColor("activeCaption"));
-		rechercherCandidat.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rechercherCandidat.setBounds(259, 374, 268, 50);
+		rechercherCandidat.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		rechercherCandidat.setBounds(442, 217, 348, 179);
 		rechercherCandidat.addActionListener(this);
 		container.add(rechercherCandidat);
 		
 		// Bouton quitter
 		quitter = new JButton("Quitter");
 		quitter.setBackground(UIManager.getColor("activeCaption"));
-		quitter.setFont(new Font("Tahoma", Font.BOLD, 14));
-		quitter.setBounds(259, 803, 268, 50);
+		quitter.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		quitter.setBounds(242, 445, 348, 179);
 		quitter.addActionListener(this);
 		container.add(quitter);
 		
@@ -92,7 +92,9 @@ public class Choix extends TailleFenetre implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	// Action des boutons
+	/**
+	 *  Action faites sur les boutons
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
  
