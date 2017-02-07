@@ -5,16 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Candidat.Candidat;
-import Criteres.Age;
-import Criteres.Critere;
-import Criteres.CritereFort;
-import Criteres.ExperiencePro;
-import Criteres.Filiere;
-import Criteres.Langue;
-import Criteres.NiveauEtude;
-import Criteres.PermisB;
-import Criteres.Region;
+import Criteres.*;
 import database.SQLRequest;
+
 
 public class Recherche {
 
@@ -48,11 +41,24 @@ public class Recherche {
 			  
 			 while(resultat.next()) { 
 			   critere = new ArrayList<>();
-			   //cand = this.allCandidats.get(resultat.getInt("ID_candidat")) ;
 			   cand = Candidat.getAllCandidats().get(resultat.getInt("ID_candidat")) ;
-			   System.out.println("\nID_cand = "+resultat.getInt("ID_candidat")+"\n");
 			   fili = new Filiere(resultat.getString("Filiere"));
-			   type_c = new CritereFort(resultat.getString("Type_contrat"));
+			   switch(resultat.getString("Type_contrat")) {
+			   		case "CDD" : type_c = new CDD(true) ;
+			   					break ;
+			   					
+			   		case "CDI" : type_c = new CDI(true) ;
+			   					break ;
+			   					
+			   		case "Interim" : type_c = new Interim(true) ;
+			   						break ;
+			   		
+			   		case "Stage"	: type_c = new Interim(true) ;
+			   						break ;
+			   						
+			   		default	: type_c = new CritereFort(resultat.getString("Type_contrat")) ;
+ 			   }
+			   //type_c = new CritereFort(resultat.getString("Type_contrat"));
 			   age = new Age(resultat.getInt("Age"));
 			   if (resultat.getString("PermisB").equals("Oui") )
 					permis = new PermisB(true);
@@ -101,13 +107,40 @@ public class Recherche {
 		}
 	}
 	
+	/**
+	 * Recupere une sous collection avec des objets qui ont le meme contenu que le critere passee en parametre
+	 * @param critere	: Critere pour lequel les elements de la collection devront avoir la meme contenu
+	 */
 	public void searchFilter(Critere critere) {
-		this.subResults.removeAll(subResults) ;
+		this.subResults.removeAll(subResults) ;										//reset
+		Class<?> classe = critere.getClass() ;
 		for(Billet b : this.allResults) {
-			if( b.getCriteres().contains(critere))
-				subResults.add(b) ;
+			for(Critere c : b.getCriteres()) {
+				if( classe.isInstance(c) ) {
+					if( critere.getContent().equals(c.getContent())) {
+						subResults.add(b) ;
+						//System.out.println("Oui isInstance de"+classe.getClass());
+						//System.out.println("INSERTION");
+					}
+				}
+			}
 		}
-		
+	}
+
+	public ArrayList<Billet> getAllResults() {
+		return allResults;
+	}
+
+	public void setAllResults(ArrayList<Billet> allResults) {
+		this.allResults = allResults;
+	}
+
+	public ArrayList<Billet> getSubResults() {
+		return subResults;
+	}
+
+	public void setSubResults(ArrayList<Billet> subResults) {
+		this.subResults = subResults;
 	}
 	
 }
