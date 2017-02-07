@@ -14,26 +14,42 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class MenuHeader extends JMenuBar{
 	
 	protected ConnexionAdmin admin;
+	protected JMenuItem deconnexion;
+	protected JMenuItem connexion;
 	
+	/**
+	 * Création de la barre de menu
+	 */
 	public MenuHeader(){
 		JMenuBar jm = new JMenuBar();
 		JMenu fm = new JMenu("Fichier");
 		JMenu am = new JMenu("Aide");
-		JMenuItem connexion = new JMenuItem("Connexion");
-		connexion.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				ConnexionAdmin loginDlg = new ConnexionAdmin(new JFrame());
-                loginDlg.setVisible(true);
-                // if login successfully
-                if(loginDlg.isSucceeded()){
-                   	
-                }
-			}
-		});
+		if(ConnexionAdmin.isSucceeded()){
+			deconnexion = new JMenuItem("Deconnexion");
+			deconnexion.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					Accueil deco= new Accueil();
+				}
+			});
+		}
+		else{
+			connexion = new JMenuItem("Connexion");
+			connexion.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					ConnexionAdmin loginDlg = new ConnexionAdmin(new JFrame());
+	                loginDlg.setVisible(true);
+	                if(loginDlg.isSucceeded()){
+	                }
+				}
+			});
+		}
+		
 		
 		JMenuItem quitter = new JMenuItem("Quitter");
 		quitter.addActionListener(new ActionListener(){
@@ -56,7 +72,7 @@ public class MenuHeader extends JMenuBar{
 				jp.add(new JLabel	("Comparateur de Candidats - Projet POO 2016",JLabel.CENTER),gbc);
 				jp.add(new JLabel	("Fabien Quang et Lucile Texier",JLabel.CENTER),gbc);
 				jp.add(new JLabel	("Comparer des profils candidats à partir d'une demande, ces profils sont stockés dans une base de données",JLabel.CENTER),gbc);
-				jp.add(new JLabel   ("Version 1.0 - Dernière édition le 06/02/2016",JLabel.CENTER),gbc);
+				jp.add(new JLabel   ("Version 1.0 - Dernière édition le 06/02/2017",JLabel.CENTER),gbc);
 				JOptionPane.showMessageDialog(aprop, jp, "À propos", JOptionPane.INFORMATION_MESSAGE);
 				
 				
@@ -64,7 +80,10 @@ public class MenuHeader extends JMenuBar{
 		});
 		
 		// Ajout des boutons dans les sous-menus
-		fm.add(connexion);
+		if (ConnexionAdmin.isSucceeded()){
+			fm.add(deconnexion);
+		}
+		else fm.add(connexion);
 		fm.add(quitter);
 		am.add(aprop);
 		

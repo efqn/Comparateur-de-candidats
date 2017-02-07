@@ -1,26 +1,21 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-/**
- * 
- * Fenetre qui confirme la validation d'un profil candidat sur la base de données
- *
- */
-public class ValidationProfil extends JFrame implements ActionListener {
+public class ValidationSuppression extends JFrame implements ActionListener {
 	
 	protected static Dimension d;
 	private JPanel container;
@@ -28,9 +23,9 @@ public class ValidationProfil extends JFrame implements ActionListener {
 	protected JLabel validation;
 	protected JButton btnQuitter;
 	protected JButton btnRetourMenu;
-	protected Accueil menu;
+	protected ResultFrameAdmin menu;
 
-	public ValidationProfil(){
+	public ValidationSuppression(){
 		// Création de la fenêtre du programme avec ses dimensions
 		getContentPane().setLayout(new BorderLayout() );
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -51,22 +46,17 @@ public class ValidationProfil extends JFrame implements ActionListener {
 		container.setLayout(null);
 		this.setContentPane(container);
 		
-		validation = new JLabel(" Votre Profil a bien été ajouté dans notre base de données.");
-		validation.setBounds(145, 54, 512, 24);
+		validation = new JLabel(" Vos profils selectionnés ont bien été supprimés dans notre base de données.");
+		validation.setBackground(new Color(50, 205, 50));
+		validation.setBounds(83, 76, 681, 24);
 		validation.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		container.add(validation);
 		
-		btnRetourMenu = new JButton("Retour menu");
+		btnRetourMenu = new JButton("Ok");
 		btnRetourMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnRetourMenu.setBounds(196, 170, 138, 47);
+		btnRetourMenu.setBounds(332, 172, 138, 47);
 		btnRetourMenu.addActionListener(this);
 		container.add(btnRetourMenu);
-		
-		btnQuitter = new JButton("Quitter");
-		btnQuitter.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnQuitter.setBounds(476, 170, 108, 47);
-		btnQuitter.addActionListener(this);
-		container.add(btnQuitter);
 		
 		this.setVisible(true);
 	}
@@ -76,7 +66,7 @@ public class ValidationProfil extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if(source == btnRetourMenu){				  
-			menu=new Accueil();
+			menu=new ResultFrameAdmin();
 			this.setVisible(false);
 			this.dispose();
 		} 
