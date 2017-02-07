@@ -195,7 +195,9 @@ public class Billet implements ScoreFinal, Comparable<Billet> {
 	public void deleteEntryFromDatabase() {
 		SQLRequest request = new SQLRequest() ;
 		try {
-			request.deleteRequest("Critere", "ID_crit", this.id_crit);
+			request.deleteRequest("Retenus", "id_crit", this.id_crit) ;
+			Demande.getAllRetenus().remove(this.candidat.getId_candidat()) ;
+			request.deleteRequest("Critere", "ID_crit", this.id_crit) ;
 			this.candidat.deleteCandidatFromDatabase() ;
 			allBillets.remove(this.id_crit) ;
 		}
