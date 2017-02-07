@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import Candidat.Candidat;
@@ -24,6 +25,8 @@ public class Demande {
 	private ArrayList<Billet> all = new ArrayList<>() ;								//selection de la base de donnees
 	private boolean[] flags ;														//flags permettant d'ignorer ou non les criteres correspondants a une case
 	
+	private static HashMap<Integer, Integer> allRetenus = new HashMap<>() ;			//liste de toutes les entrees de la table "Retenus" dans la base de donnees
+	
 	/**
 	 * 
 	 * @param criteres : Criteres de references
@@ -38,6 +41,26 @@ public class Demande {
 				this.flags[i] = flags[i] ;
 	}
 	
+///////////////////////   METHODE STATIQUE   /////////////////////////////////
+	public static void initRetenus() {
+		SQLRequest request= new SQLRequest();
+		try {
+			request.selectRequest("Retenus") ;
+			ResultSet resultat = request.getResult();
+		
+			while( resultat.next() ){
+				 allRetenus.put(resultat.getInt("id_cand"), resultat.getInt("id_crit")) ;
+			 }
+		}
+		catch(SQLException e) {
+			e.printStackTrace() ;
+			System.out.println("ko");
+		}
+		finally {
+			request.closeConnection() ;
+		}
+	}
+////////////////////////////////////////////////////////////////////
 	/**
 	 * Recupere les entrees de la base de donnee pour lesquelles les champs specifies en parametres correspondent
 	 * @param filiere		: nom de la filiere pour laquelle la colonne "Filiere" de la base doit correspondre
@@ -158,6 +181,68 @@ public class Demande {
 		Collections.sort(this.resultats) ;
 		Collections.reverse(this.resultats) ;
 		System.out.println("Score min : "+Collections.min(this.resultats).getThisScore()) ;
+	}
+	
+	/**
+	 * Insere le billet reference par id_critere dans la "Retenus" de la base de donnees.
+	 * Un controle est effectue avant insertion pour verifier si le billet n'est pas deja dans la table.
+	 * @param id_critere : id du billet a inserer dans la table
+	 */
+	public void insertEntryIntoDatabase(int id_critere) {
+		
+		if ( !allRetenus.containsValue(id_critere) ) {
+			SQLRequest request = new SQLRequest() ;
+			Billet tmp = Billet.getAllBillets().get(id_critere) ;
+			System.out.println(tmp);
+			ArrayList<Critere> criteres = new ArrayList<>() ;
+			Candidat candidat = tmp.getCandidat() ;
+			int id_crit = tmp.getID_crit() ;
+			int id_candidat = candidat.getId_candidat() ;
+			
+			//Recupere les criteres dans une ArrayList pour etre au bon format d'insertion
+			for(Critere c : tmp.getCriteres())
+				criteres.add(c) ;
+			
+			try {	 
+				request.setInsertOption(id_candidat, id_crit) ;
+				request.insertRequest("Retenus") ;
+				allRetenus.put(id_candidat, id_crit) ;
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				request.closeConnection() ;
+			}
+		}
+		else
+			System.out.println("Entree pour la valeur "+id_critere+" deja presente dans la table Retenus");
+	}
+	
+	
+	/**
+	 * Supprime le billet reference par id_critere de la table "Retenus" de la base de donnee
+	 * @param id_critere : id du billet a supprimer de la table
+	 */
+	public void deleteEntryFromDatabase(int id_critere) {
+		
+		if ( allRetenus.containsValue(id_critere) ) {
+			SQLRequest request = new SQLRequest() ;
+			Billet tmp = Billet.getAllBillets().get(id_critere) ;
+			int id_candidat = tmp.getCandidat().getId_candidat() ;
+			try {	 
+				request.deleteRequest("Retenus", "id_crit", id_critere) ;
+				allRetenus.remove(id_candidat, id_critere) ;
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				request.closeConnection() ;
+			}
+		}
+		else
+			System.out.println("Entree deja inexistante dans la table Retenus");
 	}
 	
 	public ArrayList<Critere> getRecherche() {
