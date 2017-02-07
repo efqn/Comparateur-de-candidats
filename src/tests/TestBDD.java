@@ -63,7 +63,8 @@ public class TestBDD {
 		// TEST DE RECUPERATION DU CONTENU DE LA BASE
 		
 		Candidat.initCandidats() ;
-		Billet.initBillets();
+		Billet.initBillets() ;
+		Demande.initRetenus() ;
 		/*System.out.println("////////////////////////////    TESTS BDD    //////////////////////////////////");
 		SQLRequest request = new SQLRequest();
 		SQLRequest request_cand = new SQLRequest();
@@ -249,6 +250,10 @@ public class TestBDD {
 			//request.closeConnection();
 			//request2.closeConnection();
 		}
+		
+		System.out.println("\nTEST INSERT Retenus\n") ;
+		//d.insertEntryIntoDatabase(1) ;
+		d.deleteEntryFromDatabase(1) ;
 	}
 ///////////////////////////////////////////////////////////////////////////////	
 }

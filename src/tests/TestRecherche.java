@@ -54,7 +54,7 @@ public class TestRecherche {
 		if(classe.isInstance(crit))
 			System.out.println("Instance ok");
 		else
-			System.out.println("caca");
+			System.out.println("ko");
 		
 		/*System.out.println("test boucle");
 		for(Critere c : billet.getCriteres()) {
