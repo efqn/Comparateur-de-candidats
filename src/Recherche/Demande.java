@@ -220,6 +220,14 @@ public class Demande {
 	}
 	
 	
+	public static HashMap<Integer, Integer> getAllRetenus() {
+		return allRetenus;
+	}
+
+	public static void setAllRetenus(HashMap<Integer, Integer> allRetenus) {
+		Demande.allRetenus = allRetenus;
+	}
+
 	/**
 	 * Supprime le billet reference par id_critere de la table "Retenus" de la base de donnee
 	 * @param id_critere : id du billet a supprimer de la table

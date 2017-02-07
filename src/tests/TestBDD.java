@@ -228,7 +228,7 @@ public class TestBDD {
 		
 		System.out.println("\n\n TEST INSERT\n\n");
 		//Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",Candidat.getUnusedId()) ;
-		Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",804) ;
+		Candidat cadi = new Candidat("YOHOHO", "YOOOOOOOORRRR", "123456789", "aze@aze.aze",801) ;
 		ArrayList<Critere> crit2 = new ArrayList<>() ;
 		addC3(crit2, 50) ;
 		//Billet bambi = new Billet(Billet.getUnusedId(), cadi, crit2) ;
@@ -253,7 +253,7 @@ public class TestBDD {
 		
 		System.out.println("\nTEST INSERT Retenus\n") ;
 		//d.insertEntryIntoDatabase(1) ;
-		d.deleteEntryFromDatabase(1) ;
+		//d.deleteEntryFromDatabase(1) ;
 	}
 ///////////////////////////////////////////////////////////////////////////////	
 }
