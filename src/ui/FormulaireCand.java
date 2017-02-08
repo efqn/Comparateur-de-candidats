@@ -701,7 +701,7 @@ public class FormulaireCand extends TailleFenetre implements ActionListener{
 		  if((String) boiteNivEtude.getSelectedItem()== "Employé/Opérateur/Bac"){
 			  etu= new NiveauEtude(0);  
 		  }
-		  if((String) boiteNivEtude.getSelectedItem()== "Technicien/Employé bac+2"){
+		  if((String) boiteNivEtude.getSelectedItem()== "Technicien/Bac+2"){
 			  etu= new NiveauEtude(2);  
 		  }
 		  if((String) boiteNivEtude.getSelectedItem()== "Licence/Bac+3"){

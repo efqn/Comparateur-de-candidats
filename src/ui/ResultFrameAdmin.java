@@ -141,6 +141,9 @@ public class ResultFrameAdmin extends TailleFenetre implements ActionListener {
 			  for(Entry<JCheckBox, ProfilCandidats> entry : map.entrySet()) {
 					JCheckBox cle = entry.getKey();
 					if(cle.isSelected()){
+						ProfilCandidats tmp= entry.getValue();
+						Billet tmp2= tmp.getBillet();
+						tmp2.deleteEntryFromDatabase();
 						itemChecked=true;
 					}
 			  }

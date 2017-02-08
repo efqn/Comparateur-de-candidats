@@ -69,6 +69,8 @@ public class ResultFrame extends TailleFenetre implements ActionListener,ItemLis
 	
 	protected HashMap<JCheckBox, ProfilCandidats> map;
 	
+	private Demande r;
+	
 	/**
 	 * 
 	 * @param r  Tous les résultats des candidats d'une recherche
@@ -76,6 +78,8 @@ public class ResultFrame extends TailleFenetre implements ActionListener,ItemLis
 	public ResultFrame( Demande r) {
 		super();
 		
+		this.r=r;
+			
 		getContentPane().setLayout(new BorderLayout());
 		
 		// Menu 
@@ -178,7 +182,9 @@ public class ResultFrame extends TailleFenetre implements ActionListener,ItemLis
 			  for(Entry<JCheckBox, ProfilCandidats> entry : map.entrySet()) {
 					JCheckBox cle = entry.getKey();
 					if(cle.isSelected()){
-						
+						ProfilCandidats tmp= entry.getValue();
+						Billet tmp2= tmp.getBillet();
+						r.insertEntryIntoDatabase(tmp2.getID_crit());
 						itemChecked=true;
 					}
 			  }
