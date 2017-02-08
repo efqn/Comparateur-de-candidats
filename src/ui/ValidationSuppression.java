@@ -66,7 +66,7 @@ public class ValidationSuppression extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if(source == btnRetourMenu){				  
-			menu=new ResultFrameAdmin();
+			//menu=new ResultFrameAdmin();
 			this.setVisible(false);
 			this.dispose();
 		} 

@@ -56,6 +56,8 @@ public class ProfilCandidats extends JPanel {
 	private JButton selectionBouton;
 	
 	private ResultFrame rechercherCand;
+	
+	private Billet billet;
 
 
 
@@ -64,6 +66,8 @@ public class ProfilCandidats extends JPanel {
 	 * @param c Représente un candidat
 	 */
 	public ProfilCandidats(Billet c){
+		
+		this.billet=c;
 		
 		// Layout
 		setLayout(new MigLayout("insets 10 10 10 10", "[][][][][][][120px][195.00px][][160px!][]", "[][][][][][][16.00][][]"));
@@ -122,6 +126,20 @@ public class ProfilCandidats extends JPanel {
 			add(JLcritere, "cell 3 6 6 4,grow");
 		}				
 	}
+
+
+
+	public Billet getBillet() {
+		return billet;
+	}
+
+
+
+	public void setBillet(Billet billet) {
+		this.billet = billet;
+	}
+	
+	
 
 
 }
